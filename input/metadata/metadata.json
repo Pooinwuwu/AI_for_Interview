@@ -1,0 +1,26 @@
+{
+  "vid_0021": {
+    "file_path": "videos/vid_0021.mp4",
+    "duration_sec": 34.17,
+    "fps": 30.0,
+    "resolution": "640x480",
+    "frame_count": 1025,
+    "language": "en",
+    "interviewer_present": true,
+    "recorded_date": null,
+    "consent_obtained": false,
+    "notes": ""
+  },
+  "vid_0042": {
+    "file_path": "videos/vid_0042.mp4",
+    "duration_sec": 60.5,
+    "fps": 30.0,
+    "resolution": "640x480",
+    "frame_count": 1815,
+    "language": "en",
+    "interviewer_present": true,
+    "recorded_date": null,
+    "consent_obtained": false,
+    "notes": ""
+  }
+}

@@ -1,0 +1,9 @@
+# Requirements for AI Interview - Video to Audio Extractor
+#
+# The script utilizes Python standard libraries:
+# os, sys, subprocess, pathlib, shutil
+#
+# Optional / portable fallback:
+# Bundles an FFmpeg binary directly via pip so audio extraction works
+# even if system-wide FFmpeg is not installed or not in PATH.
+imageio-ffmpeg>=0.5.1
