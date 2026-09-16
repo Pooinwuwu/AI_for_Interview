@@ -1,0 +1,51 @@
+{
+  "key": "vid_0021",
+  "aspect_used": 1.3333,
+  "total_frames": 171,
+  "detection_stats": {
+    "face": 171,
+    "hands": 0,
+    "pose": 171
+  },
+  "gaze": {
+    "eye_contact_ratio": 0.9784,
+    "gaze_stability_x": 0.0273,
+    "gaze_stability_y": 0.0397,
+    "mean_iris_x": 0.4414,
+    "mean_iris_y": 0.4179,
+    "valid_frames": 324
+  },
+  "head_pose": {
+    "mean_yaw": -1.64,
+    "mean_pitch": -45.45,
+    "mean_roll": -2.9,
+    "yaw_std": 1.12,
+    "pitch_std": 0.67,
+    "roll_std": 1.26,
+    "yaw_range": 36.19,
+    "pitch_range": 70.06,
+    "valid_frames": 171,
+    "rejected_outliers": 0
+  },
+  "hand_gesture": {
+    "hand_presence_ratio": 0.0,
+    "movement_speed_mean": 0.0,
+    "movement_speed_std": 0.0,
+    "fidget_x": 0.0,
+    "fidget_y": 0.0,
+    "hand_frames": 0,
+    "total_frames": 171
+  },
+  "facial_expression": {
+    "mouth_aspect_ratio_mean": 0.0769,
+    "mouth_aspect_ratio_std": 0.0658,
+    "mouth_width_ratio_mean": 0.5328,
+    "mouth_width_ratio_std": 0.0127,
+    "smile_ratio": 0.538,
+    "brow_height_mean": 0.0446,
+    "brow_height_std": 0.0026,
+    "eye_aspect_ratio_mean": 0.3539,
+    "expressiveness": 0.0786,
+    "valid_frames": 171
+  }
+}
