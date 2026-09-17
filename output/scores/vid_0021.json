@@ -1,0 +1,113 @@
+{
+  "key": "vid_0021",
+  "dimensions": {
+    "eye_contact": {
+      "score": 88.5,
+      "components": {
+        "eye_contact_ratio": 86.4,
+        "gaze_stability": 93.3
+      },
+      "raw": {
+        "eye_contact_ratio": 0.9784,
+        "gaze_stability_x": 0.0273,
+        "gaze_stability_y": 0.0397
+      }
+    },
+    "head_pose": {
+      "score": 59.4,
+      "components": {
+        "pitch_movement": 55.6,
+        "yaw_movement": 66.1,
+        "pitch_deviation": 6.1,
+        "yaw_deviation": 100.0
+      },
+      "raw": {
+        "pitch_std": 0.67,
+        "yaw_std": 1.12,
+        "mean_pitch": -45.45,
+        "mean_yaw": -1.64
+      }
+    },
+    "hand_gesture": {
+      "score": 53.5,
+      "components": {
+        "presence": 30.0,
+        "movement_speed": 50.0,
+        "fidget": 100.0
+      },
+      "raw": {
+        "hand_presence_ratio": 0.0,
+        "movement_speed_mean": 0.0,
+        "fidget_x": 0.0,
+        "fidget_y": 0.0
+      }
+    },
+    "facial_expression": {
+      "score": 92.4,
+      "components": {
+        "smile": 86.8,
+        "expressiveness": 100.0,
+        "eye_openness": 100.0,
+        "brow_movement": 80.4
+      },
+      "raw": {
+        "smile_ratio": 0.538,
+        "expressiveness": 0.0786,
+        "eye_aspect_ratio_mean": 0.3539,
+        "brow_height_std": 0.0026
+      }
+    },
+    "answer_quality": {
+      "score": 97.9,
+      "components": {
+        "speech_rate": 92.9,
+        "filler_ratio": 100.0,
+        "pause_freq": 100.0,
+        "long_pauses": 100.0
+      },
+      "raw": {
+        "speech_rate_wpm": 124.67,
+        "filler_ratio": 0.0,
+        "pause_per_min": 8.78,
+        "long_pause_ratio": 0.0
+      }
+    }
+  },
+  "fusion": {
+    "overall_score": 85.0,
+    "breakdown": {
+      "eye_contact": {
+        "score": 88.5,
+        "weight": 0.2,
+        "contribution": 17.7
+      },
+      "head_pose": {
+        "score": 59.4,
+        "weight": 0.15,
+        "contribution": 8.91
+      },
+      "hand_gesture": {
+        "score": 53.5,
+        "weight": 0.1,
+        "contribution": 5.35
+      },
+      "facial_expression": {
+        "score": 92.4,
+        "weight": 0.15,
+        "contribution": 13.86
+      },
+      "answer_quality": {
+        "score": 97.9,
+        "weight": 0.4,
+        "contribution": 39.16
+      }
+    },
+    "weights_used": {
+      "eye_contact": 0.2,
+      "head_pose": 0.15,
+      "hand_gesture": 0.1,
+      "facial_expression": 0.15,
+      "answer_quality": 0.4
+    }
+  }
+}

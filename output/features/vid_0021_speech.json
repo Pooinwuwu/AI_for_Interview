@@ -1,0 +1,478 @@
+{
+  "key": "vid_0021",
+  "language": "en",
+  "language_prob": 1,
+  "model": "medium",
+  "transcript": "Good morning, my name is Thakshap Patil. I am currently in my third year in department AIML branch CAC computer science engineering from Manipal Institute of Technology, Jaipur. I am keen to study artificial intelligence and machine learning. So, I selected this course and therefore, enjoying studying this course. I would like to pursue my career in artificial intelligence and neural networks. Also, I have a keen interest in data science.",
+  "segments": [
+    {
+      "start": 1.26,
+      "end": 6.98,
+      "text": "Good morning, my name is Thakshap Patil. I am currently in my third year in department AIML"
+    },
+    {
+      "start": 7.66,
+      "end": 13.08,
+      "text": "branch CAC computer science engineering from Manipal Institute of Technology, Jaipur."
+    },
+    {
+      "start": 14.18,
+      "end": 21.04,
+      "text": "I am keen to study artificial intelligence and machine learning. So, I selected this course and"
+    },
+    {
+      "start": 22.32,
+      "end": 28.54,
+      "text": "therefore, enjoying studying this course. I would like to pursue my career in artificial intelligence and neural networks."
+    },
+    {
+      "start": 29.31,
+      "end": 31.57,
+      "text": "Also, I have a keen interest in data science."
+    }
+  ],
+  "words": [
+    {
+      "word": "Good",
+      "start": 1.26,
+      "end": 1.82,
+      "prob": 0.752
+    },
+    {
+      "word": "morning,",
+      "start": 1.82,
+      "end": 2.1,
+      "prob": 0.954
+    },
+    {
+      "word": "my",
+      "start": 2.24,
+      "end": 2.38,
+      "prob": 0.972
+    },
+    {
+      "word": "name",
+      "start": 2.38,
+      "end": 2.6,
+      "prob": 0.995
+    },
+    {
+      "word": "is",
+      "start": 2.6,
+      "end": 2.8,
+      "prob": 0.996
+    },
+    {
+      "word": "Thakshap",
+      "start": 2.8,
+      "end": 3.18,
+      "prob": 0.482
+    },
+    {
+      "word": "Patil.",
+      "start": 3.18,
+      "end": 3.64,
+      "prob": 0.907
+    },
+    {
+      "word": "I",
+      "start": 3.76,
+      "end": 3.9,
+      "prob": 0.995
+    },
+    {
+      "word": "am",
+      "start": 3.9,
+      "end": 4.0,
+      "prob": 0.851
+    },
+    {
+      "word": "currently",
+      "start": 4.0,
+      "end": 4.32,
+      "prob": 0.997
+    },
+    {
+      "word": "in",
+      "start": 4.32,
+      "end": 4.54,
+      "prob": 0.972
+    },
+    {
+      "word": "my",
+      "start": 4.54,
+      "end": 4.66,
+      "prob": 0.974
+    },
+    {
+      "word": "third",
+      "start": 4.66,
+      "end": 4.86,
+      "prob": 0.936
+    },
+    {
+      "word": "year",
+      "start": 4.86,
+      "end": 5.18,
+      "prob": 0.993
+    },
+    {
+      "word": "in",
+      "start": 5.18,
+      "end": 5.88,
+      "prob": 0.85
+    },
+    {
+      "word": "department",
+      "start": 5.88,
+      "end": 6.46,
+      "prob": 0.657
+    },
+    {
+      "word": "AIML",
+      "start": 6.46,
+      "end": 6.98,
+      "prob": 0.443
+    },
+    {
+      "word": "branch",
+      "start": 7.66,
+      "end": 8.2,
+      "prob": 0.471
+    },
+    {
+      "word": "CAC",
+      "start": 8.2,
+      "end": 8.68,
+      "prob": 0.637
+    },
+    {
+      "word": "computer",
+      "start": 8.68,
+      "end": 9.02,
+      "prob": 0.519
+    },
+    {
+      "word": "science",
+      "start": 9.02,
+      "end": 9.32,
+      "prob": 0.983
+    },
+    {
+      "word": "engineering",
+      "start": 9.32,
+      "end": 9.72,
+      "prob": 0.981
+    },
+    {
+      "word": "from",
+      "start": 9.72,
+      "end": 9.98,
+      "prob": 0.987
+    },
+    {
+      "word": "Manipal",
+      "start": 9.98,
+      "end": 11.1,
+      "prob": 0.789
+    },
+    {
+      "word": "Institute",
+      "start": 11.36,
+      "end": 11.88,
+      "prob": 0.89
+    },
+    {
+      "word": "of",
+      "start": 11.88,
+      "end": 11.9,
+      "prob": 0.565
+    },
+    {
+      "word": "Technology,",
+      "start": 11.9,
+      "end": 12.46,
+      "prob": 0.816
+    },
+    {
+      "word": "Jaipur.",
+      "start": 12.72,
+      "end": 13.08,
+      "prob": 0.78
+    },
+    {
+      "word": "I",
+      "start": 14.18,
+      "end": 14.42,
+      "prob": 0.981
+    },
+    {
+      "word": "am",
+      "start": 14.42,
+      "end": 14.98,
+      "prob": 0.919
+    },
+    {
+      "word": "keen",
+      "start": 14.98,
+      "end": 15.26,
+      "prob": 0.939
+    },
+    {
+      "word": "to",
+      "start": 15.26,
+      "end": 15.62,
+      "prob": 0.997
+    },
+    {
+      "word": "study",
+      "start": 15.62,
+      "end": 16.02,
+      "prob": 0.986
+    },
+    {
+      "word": "artificial",
+      "start": 16.02,
+      "end": 17.7,
+      "prob": 0.401
+    },
+    {
+      "word": "intelligence",
+      "start": 17.7,
+      "end": 18.3,
+      "prob": 0.994
+    },
+    {
+      "word": "and",
+      "start": 18.3,
+      "end": 18.52,
+      "prob": 0.928
+    },
+    {
+      "word": "machine",
+      "start": 18.52,
+      "end": 18.76,
+      "prob": 0.971
+    },
+    {
+      "word": "learning.",
+      "start": 18.76,
+      "end": 19.18,
+      "prob": 0.995
+    },
+    {
+      "word": "So,",
+      "start": 19.48,
+      "end": 19.68,
+      "prob": 0.982
+    },
+    {
+      "word": "I",
+      "start": 19.68,
+      "end": 19.78,
+      "prob": 0.996
+    },
+    {
+      "word": "selected",
+      "start": 19.78,
+      "end": 20.12,
+      "prob": 0.978
+    },
+    {
+      "word": "this",
+      "start": 20.12,
+      "end": 20.42,
+      "prob": 0.993
+    },
+    {
+      "word": "course",
+      "start": 20.42,
+      "end": 20.74,
+      "prob": 0.999
+    },
+    {
+      "word": "and",
+      "start": 20.74,
+      "end": 21.04,
+      "prob": 0.92
+    },
+    {
+      "word": "therefore,",
+      "start": 22.32,
+      "end": 22.92,
+      "prob": 0.985
+    },
+    {
+      "word": "enjoying",
+      "start": 22.92,
+      "end": 23.52,
+      "prob": 0.938
+    },
+    {
+      "word": "studying",
+      "start": 23.52,
+      "end": 24.0,
+      "prob": 0.985
+    },
+    {
+      "word": "this",
+      "start": 24.0,
+      "end": 24.28,
+      "prob": 0.986
+    },
+    {
+      "word": "course.",
+      "start": 24.28,
+      "end": 24.52,
+      "prob": 0.999
+    },
+    {
+      "word": "I",
+      "start": 25.08,
+      "end": 25.22,
+      "prob": 0.997
+    },
+    {
+      "word": "would",
+      "start": 25.22,
+      "end": 25.4,
+      "prob": 0.998
+    },
+    {
+      "word": "like",
+      "start": 25.4,
+      "end": 25.56,
+      "prob": 0.999
+    },
+    {
+      "word": "to",
+      "start": 25.56,
+      "end": 25.76,
+      "prob": 0.998
+    },
+    {
+      "word": "pursue",
+      "start": 25.76,
+      "end": 25.9,
+      "prob": 0.999
+    },
+    {
+      "word": "my",
+      "start": 25.9,
+      "end": 26.12,
+      "prob": 0.99
+    },
+    {
+      "word": "career",
+      "start": 26.12,
+      "end": 26.34,
+      "prob": 0.99
+    },
+    {
+      "word": "in",
+      "start": 26.34,
+      "end": 26.76,
+      "prob": 0.998
+    },
+    {
+      "word": "artificial",
+      "start": 26.76,
+      "end": 27.1,
+      "prob": 0.978
+    },
+    {
+      "word": "intelligence",
+      "start": 27.1,
+      "end": 27.54,
+      "prob": 0.998
+    },
+    {
+      "word": "and",
+      "start": 27.54,
+      "end": 27.8,
+      "prob": 0.972
+    },
+    {
+      "word": "neural",
+      "start": 27.8,
+      "end": 28.0,
+      "prob": 0.961
+    },
+    {
+      "word": "networks.",
+      "start": 28.0,
+      "end": 28.54,
+      "prob": 0.992
+    },
+    {
+      "word": "Also,",
+      "start": 29.31,
+      "end": 29.71,
+      "prob": 0.528
+    },
+    {
+      "word": "I",
+      "start": 29.91,
+      "end": 30.03,
+      "prob": 0.954
+    },
+    {
+      "word": "have",
+      "start": 30.03,
+      "end": 30.13,
+      "prob": 0.929
+    },
+    {
+      "word": "a",
+      "start": 30.13,
+      "end": 30.19,
+      "prob": 0.919
+    },
+    {
+      "word": "keen",
+      "start": 30.19,
+      "end": 30.33,
+      "prob": 0.202
+    },
+    {
+      "word": "interest",
+      "start": 30.33,
+      "end": 30.57,
+      "prob": 0.98
+    },
+    {
+      "word": "in",
+      "start": 30.57,
+      "end": 30.73,
+      "prob": 0.994
+    },
+    {
+      "word": "data",
+      "start": 30.73,
+      "end": 30.97,
+      "prob": 0.962
+    },
+    {
+      "word": "science.",
+      "start": 30.97,
+      "end": 31.57,
+      "prob": 0.994
+    }
+  ],
+  "features": {
+    "duration_sec": 34.17,
+    "speaking_sec": 24.64,
+    "word_count": 71,
+    "segment_count": 5,
+    "speech_rate_wpm": 124.67,
+    "articulation_wpm": 172.89,
+    "pause_count": 5,
+    "long_pause_count": 0,
+    "pause_total_sec": 4.39,
+    "pause_mean_sec": 0.88,
+    "pause_max_sec": 1.28,
+    "filler_count": 0,
+    "filler_ratio": 0.0,
+    "filler_breakdown": {}
+  }
+}

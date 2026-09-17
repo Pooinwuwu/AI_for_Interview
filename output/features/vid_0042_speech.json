@@ -1,0 +1,1052 @@
+{
+  "key": "vid_0042",
+  "language": "en",
+  "language_prob": 1,
+  "model": "medium",
+  "transcript": "Hi, I am Harshit Shah. I am currently studying CSE, IIML. I consider myself to have a lot of different skills and qualities that might be useful. One of them being that I am an extremely good team player. I have a lot of different management skills. I love stepping up and taking the initiative to things. That is basically ingrained in my personality. If I know that something needs to happen, I just feel like it needs to be me that makes it happen with the help of my entire team. Apart from that, a very good example of that is that I am the chairperson of ACM, which is the largest technical college club on campus, and I had over 220 members in my team itself. Apart from that, I have had a couple of internships. One as a process analyst at JSW State. Another one as an intern with Slick, where my direct contributions resulted in over...",
+  "segments": [
+    {
+      "start": 2.35,
+      "end": 7.15,
+      "text": "Hi, I am Harshit Shah. I am currently studying CSE, IIML."
+    },
+    {
+      "start": 7.9,
+      "end": 14.38,
+      "text": "I consider myself to have a lot of different skills and qualities that might be useful."
+    },
+    {
+      "start": 15.05,
+      "end": 17.93,
+      "text": "One of them being that I am an extremely good team player."
+    },
+    {
+      "start": 19.57,
+      "end": 24.03,
+      "text": "I have a lot of different management skills. I love stepping up and taking the initiative to things."
+    },
+    {
+      "start": 24.89,
+      "end": 26.91,
+      "text": "That is basically ingrained in my personality."
+    },
+    {
+      "start": 27.41,
+      "end": 32.87,
+      "text": "If I know that something needs to happen, I just feel like it needs to be me that makes it happen"
+    },
+    {
+      "start": 32.87,
+      "end": 34.75,
+      "text": "with the help of my entire team."
+    },
+    {
+      "start": 35.39,
+      "end": 41.79,
+      "text": "Apart from that, a very good example of that is that I am the chairperson of ACM,"
+    },
+    {
+      "start": 42.31,
+      "end": 45.65,
+      "text": "which is the largest technical college club on campus,"
+    },
+    {
+      "start": 46.6,
+      "end": 49.24,
+      "text": "and I had over 220 members in my team itself."
+    },
+    {
+      "start": 49.82,
+      "end": 51.86,
+      "text": "Apart from that, I have had a couple of internships."
+    },
+    {
+      "start": 52.02,
+      "end": 53.92,
+      "text": "One as a process analyst at JSW State."
+    },
+    {
+      "start": 54.44,
+      "end": 60.5,
+      "text": "Another one as an intern with Slick, where my direct contributions resulted in over..."
+    }
+  ],
+  "words": [
+    {
+      "word": "Hi,",
+      "start": 2.35,
+      "end": 2.35,
+      "prob": 0.429
+    },
+    {
+      "word": "I",
+      "start": 2.35,
+      "end": 3.15,
+      "prob": 0.97
+    },
+    {
+      "word": "am",
+      "start": 3.15,
+      "end": 3.15,
+      "prob": 0.344
+    },
+    {
+      "word": "Harshit",
+      "start": 3.15,
+      "end": 3.55,
+      "prob": 0.878
+    },
+    {
+      "word": "Shah.",
+      "start": 3.55,
+      "end": 3.89,
+      "prob": 0.952
+    },
+    {
+      "word": "I",
+      "start": 4.61,
+      "end": 4.67,
+      "prob": 0.989
+    },
+    {
+      "word": "am",
+      "start": 4.67,
+      "end": 5.29,
+      "prob": 0.941
+    },
+    {
+      "word": "currently",
+      "start": 5.29,
+      "end": 5.63,
+      "prob": 0.865
+    },
+    {
+      "word": "studying",
+      "start": 5.63,
+      "end": 5.89,
+      "prob": 0.975
+    },
+    {
+      "word": "CSE,",
+      "start": 5.89,
+      "end": 6.35,
+      "prob": 0.452
+    },
+    {
+      "word": "IIML.",
+      "start": 6.63,
+      "end": 7.15,
+      "prob": 0.82
+    },
+    {
+      "word": "I",
+      "start": 7.9,
+      "end": 7.96,
+      "prob": 0.976
+    },
+    {
+      "word": "consider",
+      "start": 7.96,
+      "end": 8.38,
+      "prob": 0.979
+    },
+    {
+      "word": "myself",
+      "start": 8.38,
+      "end": 8.94,
+      "prob": 0.996
+    },
+    {
+      "word": "to",
+      "start": 8.94,
+      "end": 9.46,
+      "prob": 0.987
+    },
+    {
+      "word": "have",
+      "start": 9.46,
+      "end": 10.34,
+      "prob": 0.995
+    },
+    {
+      "word": "a",
+      "start": 10.34,
+      "end": 10.76,
+      "prob": 0.91
+    },
+    {
+      "word": "lot",
+      "start": 10.76,
+      "end": 10.98,
+      "prob": 0.997
+    },
+    {
+      "word": "of",
+      "start": 10.98,
+      "end": 11.46,
+      "prob": 0.996
+    },
+    {
+      "word": "different",
+      "start": 11.46,
+      "end": 12.1,
+      "prob": 0.972
+    },
+    {
+      "word": "skills",
+      "start": 12.1,
+      "end": 12.36,
+      "prob": 0.984
+    },
+    {
+      "word": "and",
+      "start": 12.36,
+      "end": 12.58,
+      "prob": 0.973
+    },
+    {
+      "word": "qualities",
+      "start": 12.58,
+      "end": 12.84,
+      "prob": 0.997
+    },
+    {
+      "word": "that",
+      "start": 12.84,
+      "end": 13.12,
+      "prob": 0.978
+    },
+    {
+      "word": "might",
+      "start": 13.12,
+      "end": 13.4,
+      "prob": 0.994
+    },
+    {
+      "word": "be",
+      "start": 13.4,
+      "end": 13.74,
+      "prob": 0.997
+    },
+    {
+      "word": "useful.",
+      "start": 13.74,
+      "end": 14.38,
+      "prob": 0.996
+    },
+    {
+      "word": "One",
+      "start": 15.05,
+      "end": 15.19,
+      "prob": 0.968
+    },
+    {
+      "word": "of",
+      "start": 15.19,
+      "end": 15.27,
+      "prob": 0.986
+    },
+    {
+      "word": "them",
+      "start": 15.27,
+      "end": 15.35,
+      "prob": 0.997
+    },
+    {
+      "word": "being",
+      "start": 15.35,
+      "end": 15.65,
+      "prob": 0.987
+    },
+    {
+      "word": "that",
+      "start": 15.65,
+      "end": 16.15,
+      "prob": 0.985
+    },
+    {
+      "word": "I",
+      "start": 16.15,
+      "end": 16.39,
+      "prob": 0.84
+    },
+    {
+      "word": "am",
+      "start": 16.39,
+      "end": 16.73,
+      "prob": 0.721
+    },
+    {
+      "word": "an",
+      "start": 16.73,
+      "end": 16.95,
+      "prob": 0.951
+    },
+    {
+      "word": "extremely",
+      "start": 16.95,
+      "end": 17.31,
+      "prob": 0.994
+    },
+    {
+      "word": "good",
+      "start": 17.31,
+      "end": 17.43,
+      "prob": 0.997
+    },
+    {
+      "word": "team",
+      "start": 17.43,
+      "end": 17.69,
+      "prob": 0.978
+    },
+    {
+      "word": "player.",
+      "start": 17.69,
+      "end": 17.93,
+      "prob": 0.953
+    },
+    {
+      "word": "I",
+      "start": 19.57,
+      "end": 19.71,
+      "prob": 0.997
+    },
+    {
+      "word": "have",
+      "start": 19.71,
+      "end": 19.91,
+      "prob": 0.998
+    },
+    {
+      "word": "a",
+      "start": 19.91,
+      "end": 19.97,
+      "prob": 0.981
+    },
+    {
+      "word": "lot",
+      "start": 19.97,
+      "end": 20.13,
+      "prob": 1.0
+    },
+    {
+      "word": "of",
+      "start": 20.13,
+      "end": 20.29,
+      "prob": 0.994
+    },
+    {
+      "word": "different",
+      "start": 20.29,
+      "end": 20.47,
+      "prob": 0.94
+    },
+    {
+      "word": "management",
+      "start": 20.47,
+      "end": 20.83,
+      "prob": 0.99
+    },
+    {
+      "word": "skills.",
+      "start": 20.83,
+      "end": 21.15,
+      "prob": 0.998
+    },
+    {
+      "word": "I",
+      "start": 21.17,
+      "end": 21.41,
+      "prob": 0.997
+    },
+    {
+      "word": "love",
+      "start": 21.41,
+      "end": 21.79,
+      "prob": 0.995
+    },
+    {
+      "word": "stepping",
+      "start": 21.79,
+      "end": 22.09,
+      "prob": 0.997
+    },
+    {
+      "word": "up",
+      "start": 22.09,
+      "end": 22.29,
+      "prob": 0.999
+    },
+    {
+      "word": "and",
+      "start": 22.29,
+      "end": 22.43,
+      "prob": 0.974
+    },
+    {
+      "word": "taking",
+      "start": 22.43,
+      "end": 22.63,
+      "prob": 0.998
+    },
+    {
+      "word": "the",
+      "start": 22.63,
+      "end": 22.87,
+      "prob": 0.946
+    },
+    {
+      "word": "initiative",
+      "start": 22.87,
+      "end": 23.19,
+      "prob": 0.991
+    },
+    {
+      "word": "to",
+      "start": 23.19,
+      "end": 23.43,
+      "prob": 0.978
+    },
+    {
+      "word": "things.",
+      "start": 23.43,
+      "end": 24.03,
+      "prob": 0.95
+    },
+    {
+      "word": "That",
+      "start": 24.89,
+      "end": 25.07,
+      "prob": 0.896
+    },
+    {
+      "word": "is",
+      "start": 25.07,
+      "end": 25.41,
+      "prob": 0.957
+    },
+    {
+      "word": "basically",
+      "start": 25.41,
+      "end": 25.75,
+      "prob": 0.933
+    },
+    {
+      "word": "ingrained",
+      "start": 25.75,
+      "end": 26.13,
+      "prob": 0.952
+    },
+    {
+      "word": "in",
+      "start": 26.13,
+      "end": 26.31,
+      "prob": 0.965
+    },
+    {
+      "word": "my",
+      "start": 26.31,
+      "end": 26.49,
+      "prob": 0.978
+    },
+    {
+      "word": "personality.",
+      "start": 26.49,
+      "end": 26.91,
+      "prob": 0.996
+    },
+    {
+      "word": "If",
+      "start": 27.41,
+      "end": 27.49,
+      "prob": 0.521
+    },
+    {
+      "word": "I",
+      "start": 27.49,
+      "end": 28.37,
+      "prob": 0.976
+    },
+    {
+      "word": "know",
+      "start": 28.37,
+      "end": 28.63,
+      "prob": 0.997
+    },
+    {
+      "word": "that",
+      "start": 28.63,
+      "end": 28.81,
+      "prob": 0.954
+    },
+    {
+      "word": "something",
+      "start": 28.81,
+      "end": 28.99,
+      "prob": 0.99
+    },
+    {
+      "word": "needs",
+      "start": 28.99,
+      "end": 29.25,
+      "prob": 0.996
+    },
+    {
+      "word": "to",
+      "start": 29.25,
+      "end": 29.47,
+      "prob": 0.999
+    },
+    {
+      "word": "happen,",
+      "start": 29.47,
+      "end": 29.85,
+      "prob": 0.997
+    },
+    {
+      "word": "I",
+      "start": 30.61,
+      "end": 30.83,
+      "prob": 0.923
+    },
+    {
+      "word": "just",
+      "start": 30.83,
+      "end": 31.07,
+      "prob": 0.96
+    },
+    {
+      "word": "feel",
+      "start": 31.07,
+      "end": 31.21,
+      "prob": 0.993
+    },
+    {
+      "word": "like",
+      "start": 31.21,
+      "end": 31.35,
+      "prob": 0.595
+    },
+    {
+      "word": "it",
+      "start": 31.35,
+      "end": 31.35,
+      "prob": 0.857
+    },
+    {
+      "word": "needs",
+      "start": 31.35,
+      "end": 31.55,
+      "prob": 0.988
+    },
+    {
+      "word": "to",
+      "start": 31.55,
+      "end": 31.71,
+      "prob": 0.992
+    },
+    {
+      "word": "be",
+      "start": 31.71,
+      "end": 31.81,
+      "prob": 0.976
+    },
+    {
+      "word": "me",
+      "start": 31.81,
+      "end": 31.97,
+      "prob": 0.987
+    },
+    {
+      "word": "that",
+      "start": 31.97,
+      "end": 32.19,
+      "prob": 0.982
+    },
+    {
+      "word": "makes",
+      "start": 32.19,
+      "end": 32.31,
+      "prob": 0.996
+    },
+    {
+      "word": "it",
+      "start": 32.31,
+      "end": 32.57,
+      "prob": 0.994
+    },
+    {
+      "word": "happen",
+      "start": 32.57,
+      "end": 32.87,
+      "prob": 0.999
+    },
+    {
+      "word": "with",
+      "start": 32.87,
+      "end": 33.29,
+      "prob": 0.682
+    },
+    {
+      "word": "the",
+      "start": 33.29,
+      "end": 33.45,
+      "prob": 0.992
+    },
+    {
+      "word": "help",
+      "start": 33.45,
+      "end": 33.57,
+      "prob": 0.996
+    },
+    {
+      "word": "of",
+      "start": 33.57,
+      "end": 33.79,
+      "prob": 0.997
+    },
+    {
+      "word": "my",
+      "start": 33.79,
+      "end": 33.95,
+      "prob": 0.996
+    },
+    {
+      "word": "entire",
+      "start": 33.95,
+      "end": 34.23,
+      "prob": 0.985
+    },
+    {
+      "word": "team.",
+      "start": 34.23,
+      "end": 34.75,
+      "prob": 0.996
+    },
+    {
+      "word": "Apart",
+      "start": 35.39,
+      "end": 35.49,
+      "prob": 0.793
+    },
+    {
+      "word": "from",
+      "start": 35.49,
+      "end": 35.75,
+      "prob": 0.996
+    },
+    {
+      "word": "that,",
+      "start": 35.75,
+      "end": 36.41,
+      "prob": 0.997
+    },
+    {
+      "word": "a",
+      "start": 37.85,
+      "end": 37.93,
+      "prob": 0.774
+    },
+    {
+      "word": "very",
+      "start": 37.93,
+      "end": 38.29,
+      "prob": 0.863
+    },
+    {
+      "word": "good",
+      "start": 38.29,
+      "end": 38.43,
+      "prob": 0.994
+    },
+    {
+      "word": "example",
+      "start": 38.43,
+      "end": 38.77,
+      "prob": 0.999
+    },
+    {
+      "word": "of",
+      "start": 38.77,
+      "end": 38.95,
+      "prob": 0.965
+    },
+    {
+      "word": "that",
+      "start": 38.95,
+      "end": 39.17,
+      "prob": 0.996
+    },
+    {
+      "word": "is",
+      "start": 39.17,
+      "end": 39.43,
+      "prob": 0.95
+    },
+    {
+      "word": "that",
+      "start": 39.43,
+      "end": 39.87,
+      "prob": 0.877
+    },
+    {
+      "word": "I",
+      "start": 39.87,
+      "end": 40.39,
+      "prob": 0.775
+    },
+    {
+      "word": "am",
+      "start": 40.39,
+      "end": 40.55,
+      "prob": 0.353
+    },
+    {
+      "word": "the",
+      "start": 40.55,
+      "end": 40.75,
+      "prob": 0.969
+    },
+    {
+      "word": "chairperson",
+      "start": 40.75,
+      "end": 41.01,
+      "prob": 0.807
+    },
+    {
+      "word": "of",
+      "start": 41.01,
+      "end": 41.21,
+      "prob": 0.99
+    },
+    {
+      "word": "ACM,",
+      "start": 41.21,
+      "end": 41.79,
+      "prob": 0.989
+    },
+    {
+      "word": "which",
+      "start": 42.31,
+      "end": 42.45,
+      "prob": 0.989
+    },
+    {
+      "word": "is",
+      "start": 42.45,
+      "end": 42.79,
+      "prob": 0.997
+    },
+    {
+      "word": "the",
+      "start": 42.79,
+      "end": 42.93,
+      "prob": 0.994
+    },
+    {
+      "word": "largest",
+      "start": 42.93,
+      "end": 43.19,
+      "prob": 0.993
+    },
+    {
+      "word": "technical",
+      "start": 43.19,
+      "end": 43.59,
+      "prob": 0.913
+    },
+    {
+      "word": "college",
+      "start": 43.59,
+      "end": 43.95,
+      "prob": 0.941
+    },
+    {
+      "word": "club",
+      "start": 43.95,
+      "end": 45.01,
+      "prob": 0.532
+    },
+    {
+      "word": "on",
+      "start": 45.01,
+      "end": 45.23,
+      "prob": 0.992
+    },
+    {
+      "word": "campus,",
+      "start": 45.23,
+      "end": 45.65,
+      "prob": 0.99
+    },
+    {
+      "word": "and",
+      "start": 46.6,
+      "end": 46.78,
+      "prob": 0.967
+    },
+    {
+      "word": "I",
+      "start": 46.78,
+      "end": 46.96,
+      "prob": 0.994
+    },
+    {
+      "word": "had",
+      "start": 46.96,
+      "end": 47.16,
+      "prob": 0.962
+    },
+    {
+      "word": "over",
+      "start": 47.16,
+      "end": 47.44,
+      "prob": 0.989
+    },
+    {
+      "word": "220",
+      "start": 47.44,
+      "end": 47.94,
+      "prob": 0.961
+    },
+    {
+      "word": "members",
+      "start": 47.94,
+      "end": 48.36,
+      "prob": 0.994
+    },
+    {
+      "word": "in",
+      "start": 48.36,
+      "end": 48.54,
+      "prob": 0.899
+    },
+    {
+      "word": "my",
+      "start": 48.54,
+      "end": 48.66,
+      "prob": 0.962
+    },
+    {
+      "word": "team",
+      "start": 48.66,
+      "end": 48.8,
+      "prob": 0.998
+    },
+    {
+      "word": "itself.",
+      "start": 48.8,
+      "end": 49.24,
+      "prob": 0.961
+    },
+    {
+      "word": "Apart",
+      "start": 49.82,
+      "end": 50.08,
+      "prob": 0.987
+    },
+    {
+      "word": "from",
+      "start": 50.08,
+      "end": 50.34,
+      "prob": 0.999
+    },
+    {
+      "word": "that,",
+      "start": 50.34,
+      "end": 50.64,
+      "prob": 0.999
+    },
+    {
+      "word": "I",
+      "start": 50.74,
+      "end": 50.9,
+      "prob": 0.996
+    },
+    {
+      "word": "have",
+      "start": 50.9,
+      "end": 50.98,
+      "prob": 0.347
+    },
+    {
+      "word": "had",
+      "start": 50.98,
+      "end": 51.12,
+      "prob": 0.961
+    },
+    {
+      "word": "a",
+      "start": 51.12,
+      "end": 51.14,
+      "prob": 0.979
+    },
+    {
+      "word": "couple",
+      "start": 51.14,
+      "end": 51.36,
+      "prob": 0.998
+    },
+    {
+      "word": "of",
+      "start": 51.36,
+      "end": 51.58,
+      "prob": 0.992
+    },
+    {
+      "word": "internships.",
+      "start": 51.58,
+      "end": 51.86,
+      "prob": 0.994
+    },
+    {
+      "word": "One",
+      "start": 52.02,
+      "end": 52.2,
+      "prob": 0.99
+    },
+    {
+      "word": "as",
+      "start": 52.2,
+      "end": 52.42,
+      "prob": 0.81
+    },
+    {
+      "word": "a",
+      "start": 52.42,
+      "end": 52.56,
+      "prob": 0.983
+    },
+    {
+      "word": "process",
+      "start": 52.56,
+      "end": 52.78,
+      "prob": 0.907
+    },
+    {
+      "word": "analyst",
+      "start": 52.78,
+      "end": 53.08,
+      "prob": 0.965
+    },
+    {
+      "word": "at",
+      "start": 53.08,
+      "end": 53.28,
+      "prob": 0.843
+    },
+    {
+      "word": "JSW",
+      "start": 53.28,
+      "end": 53.68,
+      "prob": 0.938
+    },
+    {
+      "word": "State.",
+      "start": 53.68,
+      "end": 53.92,
+      "prob": 0.355
+    },
+    {
+      "word": "Another",
+      "start": 54.44,
+      "end": 54.78,
+      "prob": 0.981
+    },
+    {
+      "word": "one",
+      "start": 54.78,
+      "end": 55.02,
+      "prob": 0.969
+    },
+    {
+      "word": "as",
+      "start": 55.02,
+      "end": 55.36,
+      "prob": 0.792
+    },
+    {
+      "word": "an",
+      "start": 55.36,
+      "end": 55.56,
+      "prob": 0.855
+    },
+    {
+      "word": "intern",
+      "start": 55.56,
+      "end": 56.2,
+      "prob": 0.994
+    },
+    {
+      "word": "with",
+      "start": 56.2,
+      "end": 56.48,
+      "prob": 0.918
+    },
+    {
+      "word": "Slick,",
+      "start": 56.48,
+      "end": 56.82,
+      "prob": 0.566
+    },
+    {
+      "word": "where",
+      "start": 57.34,
+      "end": 58.42,
+      "prob": 0.991
+    },
+    {
+      "word": "my",
+      "start": 58.42,
+      "end": 58.74,
+      "prob": 0.986
+    },
+    {
+      "word": "direct",
+      "start": 58.74,
+      "end": 58.98,
+      "prob": 0.992
+    },
+    {
+      "word": "contributions",
+      "start": 58.98,
+      "end": 59.62,
+      "prob": 0.969
+    },
+    {
+      "word": "resulted",
+      "start": 59.62,
+      "end": 60.06,
+      "prob": 0.968
+    },
+    {
+      "word": "in",
+      "start": 60.06,
+      "end": 60.32,
+      "prob": 0.936
+    },
+    {
+      "word": "over...",
+      "start": 60.32,
+      "end": 60.5,
+      "prob": 0.337
+    }
+  ],
+  "features": {
+    "duration_sec": 60.53,
+    "speaking_sec": 46.52,
+    "word_count": 160,
+    "segment_count": 13,
+    "speech_rate_wpm": 158.61,
+    "articulation_wpm": 206.36,
+    "pause_count": 14,
+    "long_pause_count": 0,
+    "pause_total_sec": 11.07,
+    "pause_mean_sec": 0.79,
+    "pause_max_sec": 1.64,
+    "filler_count": 0,
+    "filler_ratio": 0.0,
+    "filler_breakdown": {}
+  }
+}
