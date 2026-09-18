@@ -36,17 +36,18 @@ WHISPER_MODEL   = "medium"       # tiny / base / small / medium / large-v3
 WHISPER_DEVICE  = "cpu"         # "auto" | "cpu" | "cuda"
 WHISPER_COMPUTE = "int8"         # "auto" | "int8" (CPU) | "float16" (GPU)
 WHISPER_LANG    = "en"           # None = auto-detect
-INITIAL_PROMPT  = "บทสนทนาสัมภาษณ์งานภาษาไทย"  # ช่วยให้ Whisper แม่นขึ้น
+INITIAL_PROMPT  = "Job interview in English"  # ช่วยให้ Whisper แม่นขึ้น
 
 # ---- Pause detection ----
 PAUSE_THRESHOLD_SEC = 0.5        # ช่วงว่าง >= 0.5s ถือเป็น pause
 LONG_PAUSE_SEC      = 2.0        # ช่วงว่าง >= 2s ถือเป็น long pause
 
-# ---- Filler words ภาษาไทย ----
+# ---- Filler words ภาษาอังกฤษ ---- ตาม datasets ตอนนี้
 FILLER_WORDS = [
-    "อืม", "อืมม", "เอ่อ", "เอ่ออ", "เอ้", "เอิ่ม", "อ่า",
-    "คือ", "แบบ", "แบบว่า", "ประมาณว่า", "อะไรอย่างงี้",
-    "นะ", "นะครับ", "นะคะ", "เนอะ",
+    "um", "uh", "er", "ah", "hmm",
+    "like", "you know", "i mean",
+    "kind of", "sort of", "basically",
+    "actually", "literally",
 ]
 
 # ---- Paths ----

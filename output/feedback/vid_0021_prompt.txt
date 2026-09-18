@@ -1,0 +1,100 @@
+You are an expert interview coach analyzing a candidate's response to a "Tell me about yourself" question in a job interview.
+
+CONTEXT
+-------
+• Question: "Tell me about yourself" (opening question)
+• Duration: 34.17 seconds
+• Word count: 71
+• Language: English
+
+MULTIMODAL SCORES (rule-based, from video + audio analysis)
+-----------------------------------------------------------
+OVERALL: 85.0/100
+
+• Eye Contact: 88.5/100
+    - eye_contact_ratio: 86.4
+    - gaze_stability: 93.3
+    raw eye_contact_ratio: 0.9784
+    raw gaze_stability_x: 0.0273
+    raw gaze_stability_y: 0.0397
+
+• Head Movement: 59.4/100
+    - pitch_movement: 55.6
+    - yaw_movement: 66.1
+    - pitch_deviation: 6.1
+    - yaw_deviation: 100.0
+    raw pitch_std: 0.67
+    raw yaw_std: 1.12
+    raw mean_pitch: -45.45
+    raw mean_yaw: -1.64
+
+• Hand Gestures: 53.5/100
+    - presence: 30.0
+    - movement_speed: 50.0
+    - fidget: 100.0
+    raw hand_presence_ratio: 0.0
+    raw movement_speed_mean: 0.0
+    raw fidget_x: 0.0
+    raw fidget_y: 0.0
+
+• Facial Expression: 92.4/100
+    - smile: 86.8
+    - expressiveness: 100.0
+    - eye_openness: 100.0
+    - brow_movement: 80.4
+    raw smile_ratio: 0.538
+    raw expressiveness: 0.0786
+    raw eye_aspect_ratio_mean: 0.3539
+    raw brow_height_std: 0.0026
+
+• Answer Quality: 97.9/100
+    - speech_rate: 92.9
+    - filler_ratio: 100.0
+    - pause_freq: 100.0
+    - long_pauses: 100.0
+    raw speech_rate_wpm: 124.67
+    raw filler_ratio: 0.0
+    raw pause_per_min: 8.78
+    raw long_pause_ratio: 0.0
+
+
+CANDIDATE'S TRANSCRIPT
+----------------------
+"Good morning, my name is Thakshap Patil. I am currently in my third year in department AIML branch CAC computer science engineering from Manipal Institute of Technology, Jaipur. I am keen to study artificial intelligence and machine learning. So, I selected this course and therefore, enjoying studying this course. I would like to pursue my career in artificial intelligence and neural networks. Also, I have a keen interest in data science."
+
+YOUR TASK
+---------
+Provide structured, actionable feedback. The candidate is practicing for real job interviews, so your feedback must be:
+1. Specific (reference actual scores and transcript content)
+2. Actionable (concrete steps, not vague advice)
+3. Encouraging (acknowledge strengths before critique)
+4. Prioritized (focus on the 3-5 most impactful improvements)
+
+LANGUAGE REQUIREMENTS
+---------------------
+• Primary content: English (detailed, natural, professional)
+• Thai fields (ending in _th): concise but complete Thai translations
+  NOT one-word — should convey the same meaning as the English field
+
+FOCUS AREAS FOR "TELL ME ABOUT YOURSELF"
+-----------------------------------------
+This question is about FIRST IMPRESSION. Key things to evaluate:
+• Opening hook — does it grab attention in the first 5 seconds?
+• Structure — Present → Past → Future, or Hook → Background → Value?
+• Relevance — does it connect to the target role?
+• Conciseness — 60-90 seconds is ideal; too short = incomplete, too long = rambling
+• Delivery — pace, filler words, eye contact, confident posture
+
+For the 'improved_answer':
+• Take the FIRST 1-2 sentences from the transcript as 'original_snippet'
+• Rewrite as a stronger opening (with hook, structure, and clear value proposition)
+• Keep it realistic for the candidate's apparent experience level
+
+For 'seven_day_plan':
+• Each day should be 15-30 minutes of focused practice
+• Day 1-2: Foundation (structure, script)
+• Day 3-4: Delivery (pace, filler, gestures)
+• Day 5-6: Recording + self-review
+• Day 7: Mock interview + final polish
+
+Generate the JSON now following the schema exactly.
