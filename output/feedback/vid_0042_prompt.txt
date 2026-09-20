@@ -7,55 +7,80 @@ CONTEXT
 • Word count: 160
 • Language: English
 
-MULTIMODAL SCORES (rule-based, from video + audio analysis)
------------------------------------------------------------
-OVERALL: 85.3/100
+MULTIMODAL ANALYSIS
+-------------------
+The candidate's behavior was measured across 5 dimensions.
+Each dimension is reported as a QUALITATIVE BAND:
 
-• Eye Contact: 90.6/100
-    - eye_contact_ratio: 97.9
-    - gaze_stability: 73.3
-    raw eye_contact_ratio: 0.762
-    raw gaze_stability_x: 0.1113
-    raw gaze_stability_y: 0.072
+  85-100  Excellent    ดีมาก
+  70-84   Good         ดี
+  55-69   Fair         ปานกลาง
+  40-54   Needs Work   ควรปรับ
+  0-39    Priority     ควรปรับมาก
 
-• Head Movement: 58.7/100
-    - pitch_movement: 93.8
-    - yaw_movement: 41.4
-    - pitch_deviation: 26.5
-    - yaw_deviation: 32.7
-    raw pitch_std: 2.63
-    raw yaw_std: 17.71
-    raw mean_pitch: 32.58
-    raw mean_yaw: -41.48
+OVERALL: - / -
+  (numeric reference: 86.4/100)
 
-• Hand Gestures: 99.2/100
-    - presence: 100.0
-    - movement_speed: 100.0
-    - fidget: 96.9
-    raw hand_presence_ratio: 0.3498
-    raw movement_speed_mean: 0.0767
-    raw fidget_x: 0.0663
-    raw fidget_y: 0.0541
+• Eye Contact (การสบตา): - / -
+  (numeric reference: 92.9/100)
+  Sub-components (0-100):
+    - สัดส่วนการสบตา (eye_contact_ratio): 98.8
+    - ความนิ่งของสายตา (gaze_stability): 79.2
+  Raw measurements:
+    - eye_contact_ratio: 0.762
+    - gaze_stability_x: 0.1113
+    - gaze_stability_y: 0.072
 
-• Facial Expression: 69.1/100
-    - smile: 31.8
-    - expressiveness: 78.2
-    - eye_openness: 100.0
-    - brow_movement: 89.6
-    raw smile_ratio: 0.8411
-    raw expressiveness: 0.1636
-    raw eye_aspect_ratio_mean: 0.3542
-    raw brow_height_std: 0.0049
+• Head Movement (การขยับศีรษะ): - / -
+  (numeric reference: 63.0/100)
+  Sub-components (0-100):
+    - การก้ม-เงย (pitch_movement): 93.8
+    - การหันซ้าย-ขวา (yaw_movement): 41.4
+    - การก้ม-เงยเฉลี่ย (pitch_deviation): 37.3
+    - การหันเฉลี่ย (yaw_deviation): 46.5
+  Raw measurements:
+    - pitch_std: 2.63
+    - yaw_std: 17.71
+    - mean_pitch: 32.58
+    - mean_yaw: -41.48
 
-• Answer Quality: 95.2/100
-    - speech_rate: 100.0
-    - filler_ratio: 100.0
-    - pause_freq: 80.6
-    - long_pauses: 100.0
-    raw speech_rate_wpm: 158.61
-    raw filler_ratio: 0.0
-    raw pause_per_min: 13.88
-    raw long_pause_ratio: 0.0
+• Hand Gestures (การขยับมือ): - / -
+  (numeric reference: 99.2/100)
+  Sub-components (0-100):
+    - การปรากฏของมือ (presence): 100.0
+    - ความเร็วมือ (movement_speed): 100.0
+    - ความสั่นของมือ (fidget): 96.9
+  Raw measurements:
+    - hand_presence_ratio: 0.3498
+    - movement_speed_mean: 0.0767
+    - fidget_x: 0.0663
+    - fidget_y: 0.0541
+
+• Facial Expression (สีหน้า): - / -
+  (numeric reference: 69.1/100)
+  Sub-components (0-100):
+    - การยิ้ม (smile): 31.8
+    - การแสดงออกทางสีหน้า (expressiveness): 78.2
+    - การเปิดตา (eye_openness): 100.0
+    - การขยับคิ้ว (brow_movement): 89.6
+  Raw measurements:
+    - smile_ratio: 0.8411
+    - expressiveness: 0.1636
+    - eye_aspect_ratio_mean: 0.3542
+    - brow_height_std: 0.0049
+
+• Answer Quality (การตอบคำถาม): - / -
+  (numeric reference: 95.2/100)
+  Sub-components (0-100):
+    - ความเร็วในการพูด (speech_rate): 100.0
+    - คำฟุ่มเฟือย (filler_ratio): 100.0
+    - ความถี่การหยุด (pause_freq): 80.6
+    - การหยุดนาน (long_pauses): 100.0
+  Raw measurements:
+    - speech_rate_wpm: 158.61
+    - filler_ratio: 0.0
+    - pause_per_min: 13.88
+    - long_pause_ratio: 0.0
 
 
 CANDIDATE'S TRANSCRIPT
@@ -65,10 +90,28 @@ CANDIDATE'S TRANSCRIPT
 YOUR TASK
 ---------
 Provide structured, actionable feedback. The candidate is practicing for real job interviews, so your feedback must be:
-1. Specific (reference actual scores and transcript content)
+1. Specific (reference actual behaviors and transcript content)
 2. Actionable (concrete steps, not vague advice)
 3. Encouraging (acknowledge strengths before critique)
 4. Prioritized (focus on the 3-5 most impactful improvements)
+
+⚠️ CRITICAL — HOW TO TALK ABOUT SCORES
+---------------------------------------
+• DO NOT quote numeric scores (e.g., "68.4", "72", "85") in your feedback.
+• DO speak in QUALITATIVE TERMS using these Thai bands:
+    - ดีมาก (excellent)
+    - ดี (good)
+    - ปานกลาง (fair)
+    - ควรปรับ (needs work)
+    - ควรปรับมาก (priority)
+• Example GOOD phrasing:
+    ✅ "การสบตาของคุณอยู่ในระดับปานกลาง"
+    ✅ "Your eye contact was fair — you maintained focus most of the time."
+• Example BAD phrasing (DO NOT USE):
+    ❌ "คะแนนการสบตาคือ 68.4"
+    ❌ "You scored 72/100 on head movement."
+• Use the numeric scores and raw measurements internally to justify your reasoning,
+  but express the conclusion as a band.
 
 LANGUAGE REQUIREMENTS
 ---------------------
@@ -85,16 +128,26 @@ This question is about FIRST IMPRESSION. Key things to evaluate:
 • Conciseness — 60-90 seconds is ideal; too short = incomplete, too long = rambling
 • Delivery — pace, filler words, eye contact, confident posture
 
-For the 'improved_answer':
+PRIORITIZATION RULES
+--------------------
+• Order improvements by priority: high → medium → low
+• If overall band is "ดีมาก", focus on fine-tuning rather than major changes
+• If overall band is "ควรปรับมาก", focus on the top 2-3 critical issues first
+• Reference dimensions using the BAND labels (e.g., "your hand gestures were fair")
+
+FOR THE 'improved_answer' FIELD
+--------------------------------
 • Take the FIRST 1-2 sentences from the transcript as 'original_snippet'
 • Rewrite as a stronger opening (with hook, structure, and clear value proposition)
 • Keep it realistic for the candidate's apparent experience level
+• Explain WHY it's better (mention specific techniques like "signposting", "STAR", etc.)
 
-For 'seven_day_plan':
+FOR THE 'seven_day_plan' FIELD
+------------------------------
 • Each day should be 15-30 minutes of focused practice
 • Day 1-2: Foundation (structure, script)
 • Day 3-4: Delivery (pace, filler, gestures)
 • Day 5-6: Recording + self-review
 • Day 7: Mock interview + final polish
 
-Generate the JSON now following the schema exactly.
+Generate the JSON now following the schema exactly. Remember: NO numeric scores in the output — only qualitative bands.

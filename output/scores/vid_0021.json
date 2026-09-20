@@ -2,10 +2,10 @@
   "key": "vid_0021",
   "dimensions": {
     "eye_contact": {
-      "score": 88.5,
+      "score": 81.0,
       "components": {
-        "eye_contact_ratio": 86.4,
-        "gaze_stability": 93.3
+        "eye_contact_ratio": 72.9,
+        "gaze_stability": 100.0
       },
       "raw": {
         "eye_contact_ratio": 0.9784,
@@ -14,11 +14,11 @@
       }
     },
     "head_pose": {
-      "score": 59.4,
+      "score": 60.8,
       "components": {
         "pitch_movement": 55.6,
         "yaw_movement": 66.1,
-        "pitch_deviation": 6.1,
+        "pitch_deviation": 12.7,
         "yaw_deviation": 100.0
       },
       "raw": {
@@ -74,17 +74,17 @@
     }
   },
   "fusion": {
-    "overall_score": 85.0,
+    "overall_score": 83.7,
     "breakdown": {
       "eye_contact": {
-        "score": 88.5,
+        "score": 81.0,
         "weight": 0.2,
-        "contribution": 17.7
+        "contribution": 16.2
       },
       "head_pose": {
-        "score": 59.4,
+        "score": 60.8,
         "weight": 0.15,
-        "contribution": 8.91
+        "contribution": 9.12
       },
       "hand_gesture": {
         "score": 53.5,
