@@ -1,9 +1,9 @@
 """
-detect_face_hand.py  (MediaPipe Tasks API version)
+detect_face_hand.py  (MediaPipe Tasks API)
 
 อ่านเฟรมจาก output/frames/{key}/*.jpg
-ใช้ MediaPipe Tasks API สกัด landmark:
-  - Face Landmarker : 478 จุด (รวม iris)
+ใช้ MediaPipe สกัด landmark:
+  - Face Landmarker : 478 จุด
   - Hand Landmarker : 21 จุด/มือ (สูงสุด 2 มือ)
   - Pose Landmarker : 33 จุด
 บันทึกผล -> output/landmarks/{key}.json
@@ -13,10 +13,19 @@ import sys
 import json
 from pathlib import Path
 
+# ไฟล์อยู่ที่ root/base/preprocessing/
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+
+from base._paths import (
+    FRAMES_DIR, LANDMARKS_DIR,
+    FACE_MODEL, HAND_MODEL, POSE_MODEL,
+)
+
 import cv2
 import mediapipe as mp
 
-# ---------- UTF-8 fix สำหรับ Windows ----------
+
+# ---------- UTF-8 fix Windows ----------
 if sys.platform == "win32":
     try:
         if sys.stdout and hasattr(sys.stdout, "reconfigure"):
@@ -41,18 +50,8 @@ MAX_NUM_HANDS      = 2
 POSE_MIN_DETECTION = 0.5
 POSE_MIN_TRACKING  = 0.5
 
-MAX_FRAMES     = None      # ทดสอบเร็วๆ: ตั้งเป็น 100
+MAX_FRAMES     = None
 PROGRESS_EVERY = 100
-
-# Paths
-PROJECT_ROOT      = Path(__file__).resolve().parent.parent
-FRAMES_DIR        = PROJECT_ROOT / "output" / "frames"
-LANDMARKS_OUT_DIR = PROJECT_ROOT / "output" / "landmarks"
-MODEL_DIR         = PROJECT_ROOT / "models"
-
-FACE_MODEL = MODEL_DIR / "face_landmarker.task"
-HAND_MODEL = MODEL_DIR / "hand_landmarker.task"
-POSE_MODEL = MODEL_DIR / "pose_landmarker_lite.task"
 
 
 # ============================================================
@@ -89,7 +88,6 @@ def parse_timestamp(filename: str):
 
 
 def landmarks_to_list(landmarks):
-    """list[NormalizedLandmark] -> list[dict]"""
     if not landmarks:
         return None
     return [
@@ -105,17 +103,14 @@ def landmarks_to_list(landmarks):
 # ============================================================
 
 def process_frame(mp_image, timestamp_ms, face_lmk, hand_lmk, pose_lmk):
-    """รัน landmarkers บน mp.Image -> dict ของ landmark"""
     face_result = face_lmk.detect_for_video(mp_image, timestamp_ms)
     hand_result = hand_lmk.detect_for_video(mp_image, timestamp_ms)
     pose_result = pose_lmk.detect_for_video(mp_image, timestamp_ms)
 
-    # ---- Face ----
     face_lms = None
     if face_result.face_landmarks:
         face_lms = landmarks_to_list(face_result.face_landmarks[0])
 
-    # ---- Hands ----
     hand_lms = []
     if hand_result.hand_landmarks:
         for i, hand_pts in enumerate(hand_result.hand_landmarks):
@@ -129,7 +124,6 @@ def process_frame(mp_image, timestamp_ms, face_lmk, hand_lmk, pose_lmk):
                 "landmarks": landmarks_to_list(hand_pts),
             })
 
-    # ---- Pose ----
     pose_lms = None
     if pose_result.pose_landmarks:
         pose_lms = landmarks_to_list(pose_result.pose_landmarks[0])
@@ -150,7 +144,6 @@ def process_video(key: str, frame_dir: Path, out_path: Path) -> bool:
     if MAX_FRAMES is not None:
         frame_files = frame_files[:MAX_FRAMES]
 
-    # ---- Build landmarkers ----
     BaseOptions = mp.tasks.BaseOptions
     VisionRunningMode = mp.tasks.vision.RunningMode
 
@@ -193,10 +186,9 @@ def process_video(key: str, frame_dir: Path, out_path: Path) -> bool:
             rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
             mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=rgb)
 
-            # timestamp_ms ต้องเป็น int และเพิ่มขึ้นเรื่อยๆ
             ts = parse_timestamp(fp.name)
             if ts is None:
-                ts_ms = int(i * 1000 / 5)   # fallback 5 fps
+                ts_ms = int(i * 1000 / 5)
             else:
                 ts_ms = int(round(ts * 1000))
 
@@ -258,10 +250,9 @@ def main():
         print(f"[ERROR] ไม่มีโฟลเดอร์ย่อยใน {FRAMES_DIR}")
         sys.exit(1)
 
-    LANDMARKS_OUT_DIR.mkdir(parents=True, exist_ok=True)
-    print(f"[INFO] Input  : {FRAMES_DIR.relative_to(PROJECT_ROOT)}")
-    print(f"[INFO] Output : {LANDMARKS_OUT_DIR.relative_to(PROJECT_ROOT)}")
-    print(f"[INFO] Models : {MODEL_DIR.relative_to(PROJECT_ROOT)}")
+    LANDMARKS_DIR.mkdir(parents=True, exist_ok=True)
+    print(f"[INFO] Input  : {FRAMES_DIR}")
+    print(f"[INFO] Output : {LANDMARKS_DIR}")
     print(f"[INFO] พบ {len(subdirs)} วิดีโอ")
     if MAX_FRAMES is not None:
         print(f"[INFO] โหมดทดสอบ: {MAX_FRAMES} เฟรมแรก/วิดีโอ")
@@ -270,14 +261,13 @@ def main():
     success, failed = 0, 0
     for d in subdirs:
         key = d.name
-        out_path = LANDMARKS_OUT_DIR / f"{key}.json"
+        out_path = LANDMARKS_DIR / f"{key}.json"
         print(f"[RUN ] {key}")
         try:
             ok = process_video(key, d, out_path)
             if ok:
                 size_mb = out_path.stat().st_size / (1024 * 1024)
-                print(f"       file : {out_path.relative_to(PROJECT_ROOT)} "
-                      f"({size_mb:.1f} MB)\n")
+                print(f"       file : {out_path.name} ({size_mb:.1f} MB)\n")
                 success += 1
             else:
                 failed += 1

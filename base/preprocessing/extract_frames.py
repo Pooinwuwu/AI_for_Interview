@@ -1,21 +1,23 @@
 """
-extract_frames.py  (pipeline version)
+extract_frames.py
 
-อ่าน metadata.json -> สุ่มเฟรมภาพจากทุกวิดีโอใน input/videos/
+อ่าน metadata.json -> สุ่มเฟรมภาพจากทุกวิดีโอ
 output -> output/frames/{key}/frame_XXXXX_tSS.SS.jpg
-
-หมายเหตุ:
-- timestamp ในชื่อไฟล์ (วินาที) ใช้ sync กับ audio / transcript
-- ค่า target fps และขนาดภาพ ปรับได้ที่ CONFIG ด้านล่าง
 """
 
 import sys
 import json
 from pathlib import Path
 
+# ไฟล์อยู่ที่ root/base/preprocessing/
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+
+from base._paths import ROOT, METADATA_FILE, FRAMES_DIR
+
 import cv2
 
-# ---------- UTF-8 fix สำหรับ Windows ----------
+
+# ---------- UTF-8 fix Windows ----------
 if sys.platform == "win32":
     try:
         if sys.stdout and hasattr(sys.stdout, "reconfigure"):
@@ -30,21 +32,10 @@ if sys.platform == "win32":
 # CONFIG
 # ============================================================
 
-# สุ่มกี่เฟรมต่อวินาที (5 fps เพียงพอสำหรับ gaze/head/hand/face)
 TARGET_FPS = 5
-
-# ย่อขนาดภาพเพื่อประหยัดพื้นที่และเร็วขึ้น (เก็บ aspect ratio)
-# ถ้าไม่ต้องการย่อ ตั้งเป็น None
 RESIZE_WIDTH = 640
-
-# รูปแบบภาพ
 IMAGE_EXT = "jpg"
-JPEG_QUALITY = 90        # 0-100 (ใช้เมื่อ IMAGE_EXT = "jpg")
-
-# Paths
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
-METADATA_FILE = PROJECT_ROOT / "input" / "metadata" / "metadata.json"
-FRAMES_OUT_DIR = PROJECT_ROOT / "output" / "frames"
+JPEG_QUALITY = 90
 
 
 # ============================================================
@@ -63,7 +54,6 @@ def load_metadata() -> dict:
 # ============================================================
 
 def resize_keep_ratio(frame, target_w):
-    """ย่อภาพโดยคงสัดส่วน ถ้า target_w เป็น None หรือภาพเล็กกว่า ก็คืนค่าเดิม"""
     if target_w is None:
         return frame
     h, w = frame.shape[:2]
@@ -75,7 +65,6 @@ def resize_keep_ratio(frame, target_w):
 
 
 def save_image(path: Path, frame) -> bool:
-    """บันทึกภาพตามนามสกุลที่กำหนด"""
     ext = path.suffix.lower().lstrip(".")
     if ext in ("jpg", "jpeg"):
         params = [cv2.IMWRITE_JPEG_QUALITY, JPEG_QUALITY]
@@ -91,10 +80,6 @@ def save_image(path: Path, frame) -> bool:
 # ============================================================
 
 def extract_frames(video_path: Path, out_dir: Path, target_fps: int) -> int:
-    """
-    สุ่มเฟรมจากวิดีโอ 1 ไฟล์
-    คืนค่าจำนวนเฟรมที่บันทึกสำเร็จ
-    """
     cap = cv2.VideoCapture(str(video_path))
     if not cap.isOpened():
         raise RuntimeError(f"เปิดวิดีโอไม่ได้: {video_path}")
@@ -104,9 +89,7 @@ def extract_frames(video_path: Path, out_dir: Path, target_fps: int) -> int:
         cap.release()
         raise RuntimeError("อ่าน fps จากวิดีโอไม่ได้")
 
-    # คำนวณว่าต้องข้ามกี่เฟรม
     step = max(1, int(round(src_fps / target_fps)))
-
     out_dir.mkdir(parents=True, exist_ok=True)
 
     saved = 0
@@ -119,7 +102,7 @@ def extract_frames(video_path: Path, out_dir: Path, target_fps: int) -> int:
 
         if frame_idx % step == 0:
             frame = resize_keep_ratio(frame, RESIZE_WIDTH)
-            ts = frame_idx / src_fps     # วินาที
+            ts = frame_idx / src_fps
             fname = f"frame_{saved:05d}_t{ts:.2f}.{IMAGE_EXT}"
             save_image(out_dir / fname, frame)
             saved += 1
@@ -144,32 +127,31 @@ def main():
         print("[ERROR] metadata.json ว่างเปล่า")
         sys.exit(1)
 
-    FRAMES_OUT_DIR.mkdir(parents=True, exist_ok=True)
-    print(f"[INFO] Output folder : {FRAMES_OUT_DIR.relative_to(PROJECT_ROOT)}")
+    FRAMES_DIR.mkdir(parents=True, exist_ok=True)
+    print(f"[INFO] Output folder : {FRAMES_DIR}")
     print(f"[INFO] Target FPS    : {TARGET_FPS}")
     print(f"[INFO] Resize width  : {RESIZE_WIDTH}")
-    print(f"[INFO] พบ {len(metadata)} รายการใน metadata")
-    print()
+    print(f"[INFO] พบ {len(metadata)} รายการ\n")
 
     success, failed = 0, 0
 
     for key, info in metadata.items():
         rel_path = info.get("file_path")
         if not rel_path:
-            print(f"[SKIP] {key}: ไม่มี 'file_path' ใน metadata")
+            print(f"[SKIP] {key}: ไม่มี 'file_path'")
             failed += 1
             continue
 
-        video_path = PROJECT_ROOT / "input" / rel_path
+        video_path = ROOT / "input" / rel_path
         if not video_path.exists():
-            print(f"[SKIP] {key}: ไม่พบไฟล์ {video_path}")
+            print(f"[SKIP] {key}: ไม่พบ {video_path}")
             failed += 1
             continue
 
-        out_dir = FRAMES_OUT_DIR / key
+        out_dir = FRAMES_DIR / key
         print(f"[RUN ] {key}")
-        print(f"       video : {video_path.relative_to(PROJECT_ROOT)}")
-        print(f"       out   : {out_dir.relative_to(PROJECT_ROOT)}/")
+        print(f"       video : {video_path.name}")
+        print(f"       out   : {out_dir.name}/")
 
         try:
             n = extract_frames(video_path, out_dir, TARGET_FPS)
