@@ -1,0 +1,117 @@
+{
+  "overall_summary_en": "Your response provides a clear foundation regarding your current studies and technical interests in AI and machine learning. However, your delivery feels somewhat stiff and flat, with completely hidden hands and a persistent downward head tilt. Enhancing your facial expressiveness and structuring your response around concrete projects or achievements will make your self-introduction much more memorable.",
+  "overall_summary_th": "คำตอบของคุณให้ข้อมูลพื้นฐานที่ชัดเจนเกี่ยวกับการศึกษาและความสนใจด้าน AI และ Machine Learning แต่การนำเสนอยังดูแข็งและเรียบเฉย โดยมือซ่อนอยู่นอกกล้องตลอดเวลาและศีรษะก้มต่ำอย่างต่อเนื่อง การเพิ่มรอยยิ้มและการเรียบเรียงคำตอบโดยเน้นโครงงานหรือทักษะที่ทำได้จริงจะช่วยให้การแนะนำตัวน่าสนใจยิ่งขึ้น",
+  "strengths_en": [
+    "Clear and understandable vocal delivery with steady pacing.",
+    "Well-defined technical interest and focus areas within AI, neural networks, and data science."
+  ],
+  "strengths_th": [
+    "การพูดออกเสียงชัดเจนและมีจังหวะความเร็วสม่ำเสมอเข้าใจง่าย",
+    "ระบุเป้าหมายและความสนใจด้านเทคนิคอย่างชัดเจนในสาขา AI, โครงข่ายประสาทเทียม และ Data Science"
+  ],
+  "improvements": [
+    {
+      "dimension": "answer_quality",
+      "priority": "high",
+      "band_th": "ควรปรับ",
+      "issue_en": "The response is repetitive and lists general fields of interest without mentioning specific projects, technical skills, or practical achievements.",
+      "issue_th": "เนื้อหาคำตอบยังคงวนอยู่กับสาขาและวิชาที่เรียน ไม่ได้ระบุถึงโครงงาน ทักษะการปฏิบัติ หรือผลงานรูปธรรมที่เคยทำ",
+      "suggestion_en": "Use the Present-Past-Future framework to talk about your current major, a key project or skill you built, and what you aim to contribute in the role.",
+      "suggestion_th": "ใช้โครงสร้าง ปัจจุบัน-อดีต-อนาคต เพื่อเล่าถึงสถานะปัจจุบัน โครงงานหรือทักษะสำคัญที่ได้ลงมือทำ และเป้าหมายที่คุณต้องการมุ่งไปต่อในสายงานนี้",
+      "action_steps_en": [
+        "Select one practical machine learning or data science project to highlight in your introduction.",
+        "Mention specific tools, libraries, or frameworks you have worked with (e.g., Python, PyTorch, TensorFlow).",
+        "Conclude with why you are excited about the specific role or opportunity you are applying for."
+      ],
+      "action_steps_th": [
+        "เลือกโครงงานด้าน ML หรือ Data Science ที่โดดเด่น 1 โครงงานมาสรุปสั้นๆ ในการแนะนำตัว",
+        "ระบุชื่อเครื่องมือหรือเฟรมเวิร์กที่เชี่ยวชาญ เช่น Python, PyTorch หรือ TensorFlow",
+        "จบคำตอบด้วยเป้าหมายและเหตุผลที่คุณสนใจตำแหน่งงานที่กำลังสมัคร"
+      ]
+    },
+    {
+      "dimension": "head_pose",
+      "priority": "high",
+      "band_th": "ควรปรับ",
+      "issue_en": "Your head remained tilted downward for the majority of the video, creating a closed-off and passive impression.",
+      "issue_th": "ศีรษะก้มต่ำตลอดช่วงการพูดส่วนใหญ่ ทำให้ภาพรวมดูขาดความมั่นใจและไม่เปิดรับเท่าที่ควร",
+      "suggestion_en": "Elevate your camera so it aligns directly with your eye level, allowing your chin to stay parallel to the floor.",
+      "suggestion_th": "ปรับระดับกล้องให้อยู่ในระดับสายตา เพื่อช่วยให้คางขนานกับพื้นและมองตรงอย่างเป็นธรรมชาติ",
+      "action_steps_en": [
+        "Place your laptop or webcam on a stand or stack of books until the lens matches your eye level.",
+        "Position your chair upright and sit back comfortably to maintain an open posture.",
+        "Check your video preview before speaking to ensure your head is centered and level."
+      ],
+      "action_steps_th": [
+        "วางคอมพิวเตอร์หรือกล้องบนแท่นวางหรือหนังสือให้เลนส์อยู่ตรงกับระดับสายตาพอดี",
+        "ปรับเก้าอี้และนั่งหลังตรงเพื่อเปิดสรีระท่าทางให้ดูสง่า",
+        "ตรวจสอบภาพพรีวิวกล้องก่อนเริ่มพูดเพื่อให้แน่ใจว่าใบหน้าตั้งตรงไม่งองุ้ม"
+      ]
+    },
+    {
+      "dimension": "facial_expression",
+      "priority": "medium",
+      "band_th": "ควรปรับ",
+      "issue_en": "Your expression was mostly neutral and serious throughout the response, lacking visible enthusiasm for your chosen field.",
+      "issue_th": "สีหน้าดูเรียบเฉยและจริงจังตลอดเวลา ทำให้ขาดพลังความกระตือรือร้นในการเล่าถึงสิ่งที่สนใจ",
+      "suggestion_en": "Incorporate a warm smile at the beginning and end, and allow subtle facial expressions to communicate passion.",
+      "suggestion_th": "ส่งยิ้มอย่างเป็นมิตรในช่วงเปิดและปิดการแนะนำตัว พร้อมใช้สีหน้าแสดงความสนใจเมื่อพูดถึงหัวข้อที่ชอบ",
+      "action_steps_en": [
+        "Start your greeting with a genuine, welcoming smile to set a positive tone.",
+        "Relax your facial muscles and soften your brow before recording.",
+        "Practice delivering your pitch while smiling slightly to naturally infuse warmth into your voice."
+      ],
+      "action_steps_th": [
+        "เริ่มต้นทักทายด้วยรอยยิ้มที่เป็นมิตรเพื่อสร้างความประทับใจแรกที่ดี",
+        "ผ่อนคลายกล้ามเนื้อใบหน้าและหัวคิ้วก่อนเริ่มพูดเพื่อไม่ให้ดูตึงเครียด",
+        "ฝึกซ้อมพูดโดยอมยิ้มเล็กน้อยเพื่อให้น้ำเสียงมีความอบอุ่นและมีพลังมากขึ้น"
+      ]
+    },
+    {
+      "dimension": "hand_gesture",
+      "priority": "medium",
+      "band_th": "ควรปรับ",
+      "issue_en": "Your hands remained completely hidden out of frame for the entire duration, reducing dynamic visual engagement.",
+      "issue_th": "มือซ่อนอยู่ใต้กรอบภาพตลอด 34 วินาที ทำให้การสื่อสารทางกายภาพดูนิ่งและขาดความมีชีวิตชีวา",
+      "suggestion_en": "Widen your camera frame slightly and use occasional open-palm gestures to emphasize key technical topics.",
+      "suggestion_th": "ถอยห่างจากกล้องเล็กน้อยเพื่อให้เห็นช่วงอกและใช้ท่าทางมือประกอบเมื่อเน้นประเด็นสำคัญ",
+      "action_steps_en": [
+        "Step back or push the camera back so your upper torso and hands are visible.",
+        "Rest hands lightly on the desk and raise them briefly when enumerating skills or project highlights.",
+        "Avoid keeping hands glued below the desk table line during the interview."
+      ],
+      "action_steps_th": [
+        "ขยับถอยห่างจากกล้องพอประมาณเพื่อให้เห็นช่วงลำตัวส่วนบนและมือได้สะดวก",
+        "วางมือไว้บนโต๊ะอย่างสบายๆ และยกมือขึ้นประกอบจังหวะเมื่อพูดถึงทักษะหรือโครงงาน",
+        "หลีกเลี่ยงการเก็บมือไว้ใต้โต๊ะตลอดการสัมภาษณ์"
+      ]
+    }
+  ],
+  "improved_answer": {
+    "original_snippet": "Good morning, my name is Takshak Patil. I am currently in my third year in department AIML Branch CSE Computer Science Engineering from Manipal Institute of Technology.",
+    "rewritten_en": "Good morning! My name is Takshak Patil, and I'm a third-year Computer Science student at Manipal Institute of Technology, specializing in AI and Machine Learning. Over the past couple of years, I've developed a strong passion for neural networks and predictive modeling through hands-on coursework and data science projects. Today, I'm eager to apply these skills to solve real-world industry problems.",
+    "rewritten_th": "สวัสดีครับ ผมชื่อ ตักษัก ปาติล ปัจจุบันเป็นนักศึกษาชั้นปีที่ 3 สาขาวิทยาการคอมพิวเตอร์ที่สถาบันเทคโนโลยีมณีปาล มุ่งเน้นด้าน AI และ Machine Learning ตลอดช่วงการเรียนที่ผ่านมา ผมได้ลงมือทำโครงงานด้าน Data Science และโครงข่ายประสาทเทียมอย่างต่อเนื่อง และมีความพร้อมที่จะนำทักษะเหล่านี้มาประยุกต์แก้ปัญหาจริงในสายงานครับ",
+    "why_better_en": "The revised answer condenses unnecessary administrative jargon, introduces enthusiasm right away, and explicitly connects academic background to practical application and career readiness.",
+    "why_better_th": "บทพูดที่ปรับปรุงใหม่ตัดการระบุชื่อภาควิชาที่ซ้ำซ้อนออก ใส่ความกระตือรือร้นตั้งแต่เริ่ม และเชื่อมโยงสิ่งที่เรียนเข้ากับการลงมือทำโครงงานจริงและความพร้อมในการทำงาน"
+  },
+  "seven_day_plan_en": [
+    "Day 1: Adjust camera placement to eye level and ensure head is upright and centered.",
+    "Day 2: Script your introduction using the Present-Past-Future format, adding one specific project.",
+    "Day 3: Practice delivering the first greeting sentence with a natural, friendly smile.",
+    "Day 4: Rehearse with your hands placed naturally on the desk, introducing one or two purposeful gestures.",
+    "Day 5: Record a 60-second mock introduction and review eye contact and head posture.",
+    "Day 6: Conduct a timed dry run focusing on steady vocal energy and conversational warmth.",
+    "Day 7: Record your final polished version and verify that all nonverbal and content improvements are integrated."
+  ],
+  "seven_day_plan_th": [
+    "วันที่ 1: ปรับระดับกล้องให้อยู่ในระดับสายตาและฝึกมองตรงโดยไม่ก้มหน้า",
+    "วันที่ 2: เขียนสคริปต์แนะนำตัวใหม่ตามโครงสร้าง ปัจจุบัน-อดีต-อนาคต โดยเพิ่มโครงงานรูปธรรม 1 ชิ้น",
+    "วันที่ 3: ฝึกพูดประโยคทักทายแรกพร้อมรอยยิ้มที่เป็นมิตรและเป็นธรรมชาติ",
+    "วันที่ 4: วางมือบนโต๊ะในมุมกล้อง และฝึกใช้ท่าทางมือประกอบเมื่อเน้นประเด็นสำคัญ",
+    "วันที่ 5: บันทึกวิดีโอซ้อม 60 วินาที แล้วเปิดเช็กการสบตาและมุมศีรษะ",
+    "วันที่ 6: ซ้อมจับเวลาจริงเพื่อปรับพลังเสียงให้กระตือรือร้นและน่าฟัง",
+    "วันที่ 7: บันทึกวิดีโอรอบสุดท้ายและตรวจสอบความพร้อมทั้งภาษากายและเนื้อหา"
+  ],
+  "key": "vid_0021",
+  "model": "gemini-3.8-flash (hybrid)"
+}

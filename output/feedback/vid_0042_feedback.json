@@ -1,98 +1,101 @@
 {
-  "overall_summary_en": "Harshit delivered a highly fluent and confident 60-second response with excellent pacing (158.6 WPM), zero filler words, and solid eye contact. However, his head position showed a significant side turn (mean yaw -41.5 degrees), and his opening introduction could be more compelling by structuring it around a strong value pitch rather than general statements.",
-  "overall_summary_th": "ฮาร์ชิตตอบคำถามได้คล่องแคล่วและมีความมั่นใจภายในเวลา 60 วินาทีด้วยจังหวะการพูดที่ดีเยี่ยม (158.6 คำต่อนาที) ไม่มีการใช้คำฟุ่มเฟือย และสบตาได้ดี อย่างไรก็ตาม ท่าทางศีรษะมีการหันออกด้านข้างค่อนข้างมาก (เฉลี่ย -41.5 องศา) และการเกริ่นนำช่วงแรกสามารถเพิ่มความน่าสนใจได้อีกโดยใช้โครงสร้างนำเสนอคุณค่าที่ชัดเจนแทนการแนะนำตัวทั่วไป",
+  "overall_summary_en": "Overall, your interview response was excellent, displaying strong confidence, fluid speech, and outstanding eye contact throughout. Your answer highlighted impressive leadership achievements, though bringing more warmth into your facial expressions will elevate your connection with the interviewer. Refining your opening hook will make your first impression even more impactful.",
+  "overall_summary_th": "โดยรวมแล้วการสัมภาษณ์ของคุณอยู่ในระดับดีมาก มีการสื่อสารที่คล่องแคล่ว จังหวะการพูดดีเยี่ยม และสบตาได้เป็นธรรมชาติอย่างยิ่ง แม้จะนำเสนอประสบการณ์ผู้นำได้อย่างน่าประทับใจ แต่การแสดงออกทางสีหน้าและการยิ้มยังอยู่ในระดับปานกลาง ซึ่งสามารถปรับเพิ่มเสน่ห์และความเป็นกันเองได้มากขึ้น",
   "strengths_en": [
-    "Outstanding speech delivery with an ideal pacing of 158.6 WPM, zero filler words, and natural hand gestures.",
-    "Strong eye contact maintainance (90.6/100) alongside impactful concrete examples, such as leading ACM with over 220 members.",
-    "Great vocal confidence and smooth flow throughout the 60-second opening response."
+    "Excellent eye contact and engagement, maintaining focus on the interviewer consistently.",
+    "Strong spoken cadence with no filler words and a very natural speech rate.",
+    "Impactful real-world examples, such as leading a major technical club with over 220 members."
   ],
   "strengths_th": [
-    "การจังหวะพูดและการออกเสียงยอดเยี่ยมในอัตรา 158.6 คำต่อนาที โดยไม่มีคำฟุ่มเฟือย และใช้ภาษามือประกอบอย่างเป็นธรรมชาติ",
-    "การรักษาสายตาและสบตาที่ดีเยี่ยม (90.6/100) พร้อมทั้งมีตัวอย่างที่เป็นรูปธรรม เช่น การเป็นประธานชมรม ACM ที่ดูแลสมาชิกกว่า 220 คน",
-    "น้ำเสียงมีความมั่นใจและเรียบเรียงเนื้อหาได้อย่างราบรื่นตลอดระยะเวลา 60 วินาที"
+    "การสบตาอยู่ในระดับดีมาก สามารถรักษาจุดสนใจกับผู้สัมภาษณ์ได้อย่างสม่ำเสมอ",
+    "จังหวะการพูดชัดเจน คล่องแคล่ว และไม่มีคำฟุ่มเฟือย",
+    "มีการยกตัวอย่างที่เป็นรูปธรรมและน่าประทับใจ เช่น การเป็นประธานชมรมที่มีสมาชิกกว่า 220 คน"
   ],
   "improvements": [
     {
-      "dimension": "head_pose",
+      "dimension": "facial_expression",
       "priority": "high",
-      "issue_en": "Head angle is turned noticeably to the side (mean yaw -41.48 degrees), giving the impression of looking away from the camera or interviewer.",
-      "issue_th": "มุมศีรษะเอียงหรือหันไปด้านข้างมากเกินไป (ค่าเฉลี่ย Yaw อยู่ที่ -41.48 องศา) ทำให้ดูเหมือนไม่ได้มองตรงไปยังกล้องหรือผู้สัมภาษณ์",
-      "suggestion_en": "Center your body and web camera directly facing forward so your head pose remains straight and professional.",
-      "suggestion_th": "ปรับตำแหน่งร่างกายและหน้าจอให้ตรงกับกล้อง เพื่อรักษาบุคลิกภาพที่ตรงและเป็นมืออาชีพตลอดการตอบ",
+      "band_th": "ปานกลาง",
+      "issue_en": "Your facial expression was fair, as limited smiling made your delivery feel somewhat formal and serious despite high content quality.",
+      "issue_th": "การแสดงออกทางสีหน้าอยู่ในระดับปานกลาง เนื่องจากมีการยิ้มค่อนข้างน้อย ทำให้ดูลักษณะเป็นทางการและจริงจังเกินไปเล็กน้อย",
+      "suggestion_en": "Incorporate natural, warm smiles at key moments, especially during your opening greeting and when sharing personal leadership highlights.",
+      "suggestion_th": "เพิ่มการยิ้มอย่างเป็นธรรมชาติในจังหวะสำคัญ เช่น ตอนกล่าวทักทายและตอนเล่าถึงความสำเร็จในการเป็นผู้นำ",
       "action_steps_en": [
-        "Adjust web camera height so it sits directly at eye level in front of you.",
-        "Practice speaking while keeping your nose aligned with the center of the camera lens.",
-        "Use a mirror or video preview during practice to correct head-tilting or side-facing tendencies."
+        "Practice your opening sentence in front of a mirror while maintaining a relaxed smile.",
+        "Record video takes and observe your expression to ensure you look approachable and warm.",
+        "Incorporate smiling cues into your script when mentioning topics you are passionate about."
       ],
       "action_steps_th": [
-        "ปรับระดับกล้องให้อยู่ในระดับสายตาตรงหน้าพอดี",
-        "ฝึกพูดโดยรักษาทิศทางของใบหน้าให้อยู่ตรงกลางเลนส์กล้อง",
-        "ใช้กระจกหรือบันทึกวิดีโอเพื่อตรวจสอบและแก้ไขอาการหันหน้าออกข้าง"
+        "ซ้อมพูดประโยคเปิดหน้ากระจกโดยตั้งใจรักษา รอยยิ้มที่ผ่อนคลาย",
+        "อัดวิดีโอเพื่อสังเกตสีหน้าตนเองและปรับให้ดูเป็นมิตรและเข้าถึงง่ายขึ้น",
+        "ทำเครื่องหมายเตือนให้ยิ้มในสคริปต์เมื่อพูดถึงหัวข้อที่ตนเองหลงใหล"
+      ]
+    },
+    {
+      "dimension": "head_pose",
+      "priority": "medium",
+      "band_th": "ดี",
+      "issue_en": "Your head posture was good, though slight movements occurred when searching for words toward the end of your response.",
+      "issue_th": "การขยับศีรษะอยู่ในระดับดี แต่มีการเคลื่อนไหวหรือหันศีรษะเล็กน้อยขณะกำลังคิดคำพูดช่วงท้าย",
+      "suggestion_en": "Maintain a steady, upright head position while speaking to project calm authority and confidence.",
+      "suggestion_th": "รักษาสีหน้าและตำแหน่งศีรษะให้นิ่งและตั้งตรงมากขึ้นเพื่อส่งเสริมบุคลิกภาพที่มั่นคง",
+      "action_steps_en": [
+        "Ensure your camera lens is placed directly at eye level.",
+        "Practice pausing silently instead of moving your head when collecting your thoughts.",
+        "Do mock recordings focusing on maintaining a stable head posture."
+      ],
+      "action_steps_th": [
+        "ตั้งระดับกล้องให้อยู่ในระดับสายตาพอดีเพื่อลดการเอียงศีรษะ",
+        "ฝึกหยุดคิดเงียบๆ แทนการเคลื่อนไหวศีรษะเมื่อคิดคำพูด",
+        "ซ้อมพูดโดยโฟกัสการรักษาตำแหน่งศีรษะให้อยู่ตรงกลางอย่างผ่อนคลาย"
       ]
     },
     {
       "dimension": "answer_quality",
-      "priority": "medium",
-      "issue_en": "The introduction relies on passive, general phrasing ('I consider myself to have a lot of different skills... that might be useful') instead of a punchy pitch.",
-      "issue_th": "การเปิดเรื่องใช้ประโยคที่ดูไม่มั่นใจนัก ('ฉันคิดว่าตัวเองมีทักษะหลากหลายที่น่าจะมีประโยชน์') แทนที่จะนำเสนอจุดเด่นสั้นๆ ที่ดึงดูดใจ",
-      "suggestion_en": "Adopt a concise Present-Past-Future structure to state your technical identity, core achievements, and target value immediately.",
-      "suggestion_th": "ใช้โครงสร้าง ปัจจุบัน-อดีต-อนาคต เพื่อนำเสนอทักษะ ผลงาน และคุณค่าของคุณได้อย่างชัดเจนทันที",
+      "priority": "low",
+      "band_th": "ดีมาก",
+      "issue_en": "While answer quality was overall excellent, the opening sentence felt somewhat generic ('I consider myself to have a lot of different skills') rather than a strong pitch.",
+      "issue_th": "แม้คุณภาพการตอบโดยรวมจะอยู่ในระดับดีมาก แต่ประโยคเปิดยังดูเป็นคำพูดทั่วไปและขาดสปอตไลท์ที่ดึงดูดใจ",
+      "suggestion_en": "Reframe your response with a structured Present-Past-Future narrative that immediately states your unique professional identity.",
+      "suggestion_th": "ปรับโครงสร้างการตอบเป็นแบบ ปัจจุบัน-อดีต-อนาคต (Present-Past-Future) เพื่อสรุปตัวตนและความสามารถหลักของคุณทันที",
       "action_steps_en": [
-        "Replace passive self-evaluations with a clear 1-sentence headline summarizing your expertise.",
-        "Structure your response: Present (degree & core strength) -> Past (ACM leadership & internship impact) -> Future (value to this role).",
-        "Practice delivering the pitch within 60 to 75 seconds with a decisive closing statement."
+        "Craft a 15-second concise hook that summarizes your core strengths and background.",
+        "Use structured transitions like 'Currently...', 'Previously...', and 'Looking forward...'",
+        "Focus on value creation for the potential role rather than listing general qualities."
       ],
       "action_steps_th": [
-        "เปลี่ยนคำแนะนำตัวทั่วไปเป็นสรุปคุณค่าเด่นของตนเองภายใน 1 ประโยค",
-        "จัดโครงสร้างตอบแบบ ปัจจุบัน (การศึกษาและจุดแข็ง) -> อดีต (บทบาทผู้นำ ACM และประสบการณ์ฝึกงาน) -> อนาคต (สิ่งที่จะมอบให้บริษัท)",
-        "ฝึกนำเสนอให้กระชับลงตัวภายใน 60 ถึง 75 วินาทีพร้อมประโยคจบที่หนักแน่น"
-      ]
-    },
-    {
-      "dimension": "facial_expression",
-      "priority": "medium",
-      "issue_en": "Low smile ratio (31.8/100) makes the delivery feel somewhat overly formal rather than warm and enthusiastic.",
-      "issue_th": "อัตราการยิ้มค่อนข้างน้อย (31.8/100) ทำให้การนำเสนอเสนอดูเป็นทางการและจริงจังเกินไป",
-      "suggestion_en": "Incorporate a subtle smile during the opening greeting and when mentioning leadership highlights to show passion.",
-      "suggestion_th": "เพิ่มรอยยิ้มอย่างเป็นธรรมชาติเมื่อเริ่มทักทายและเมื่อพูดถึงความสำเร็จสำคัญ เพื่อแสดงความกระตือรือร้น",
-      "action_steps_en": [
-        "Smile warmheartedly during the first 3 seconds when saying 'Hi, I'm Harshit'.",
-        "Maintain a relaxed facial expression while describing key accomplishments like leading 220+ members.",
-        "Record yourself to review facial warmth and ensure natural expression transitions."
-      ],
-      "action_steps_th": [
-        "ฝึกยิ้มทักทายอย่างอบอุ่นในประโยคแรกของการแนะนำตัว",
-        "ผ่อนคลายสีหน้าขณะเล่าถึงผลงานสำคัญ เช่น การดูแลทีมกว่า 220 คน",
-        "บันทึกวิดีโอเพื่อตรวจสอบความเป็นกันเองและการเปลี่ยนแปลงของสีหน้า"
+        "สร้างประโยคเปิด 15 วินาทีที่สรุปจุดเด่นและความเชี่ยวชาญหลักของคุณ",
+        "ใช้คำเชื่อมโครงสร้าง เช่น 'ปัจจุบันผม...', 'ที่ผ่านมาผมได้...', และ 'เป้าหมายถัดไปคือ...'",
+        "เน้นย้ำถึงคุณค่าที่จะมอบให้องค์กรมากกว่าการระบุทักษะทั่วไป"
       ]
     }
   ],
   "improved_answer": {
-    "original_snippet": "Hi, I am Harshit Shah. I am currently studying CSE, IIML.",
-    "rewritten_en": "Hi, I'm Harshit Shah, a Computer Science student at IIML with a passion for technical leadership and analytics. As Chairperson of ACM, I managed over 220 members to execute large-scale technical initiatives, while building real-world experience as a process analyst intern. I'm excited to combine my technical grounding and leadership drive to deliver impact in this role.",
-    "rewritten_th": "สวัสดีครับผม ฮาร์ชิต ชาห์ นักศึกษาด้านวิทยาการคอมพิวเตอร์ที่ IIML มีความเชี่ยวชาญด้านการเป็นผู้นำทางเทคโนโลยีและการวิเคราะห์ ในฐานะประธานชมรม ACM ผมได้นำทีมสมาชิกกว่า 220 คนในการจัดทำโครงการทางเทคโนโลยี ควบคู่กับการสะสมประสบการณ์ฝึกงานเป็นนักวิเคราะห์กระบวนการ ผมมีความยินดีอย่างยิ่งที่จะนำทักษะทางเทคนิคและภาวะผู้นำนี้มาสร้างผลงานในตำแหน่งนี้ครับ",
-    "why_better_en": "The rewritten version creates an immediate hook by framing Harshit as a technical leader, seamlessly connects his ACM leadership and internship background, and ends with target-oriented enthusiasm.",
-    "why_better_th": "ประโยคเปิดใหม่ช่วยสร้างความประทับใจแรกได้ทันที โดยชูจุดเด่นเรื่องความเป็นผู้นำทางเทคโนโลยี เชื่อมโยงบทบาทประธาน ACM และประสบการณ์ฝึกงานไว้อย่างลงตัว พร้อมจบด้วยความกระตือรือร้นต่อตำแหน่งงาน"
+    "original_snippet": "Hi, I am Harshit Shah. I am currently studying CSE, IIML. I consider myself to have a lot of different skills and qualities that might be useful.",
+    "rewritten_en": "Hi, I'm Harshit Shah, a Computer Science student at IIML with a passion for tech leadership and process optimization. Over the past few years, I've led technical teams of over 200 members as ACM Chairperson and delivered tangible impact through analyst roles at companies like JSW and Slick. Today, I'm eager to bring my leadership background and analytical skills to drive results in this position.",
+    "rewritten_th": "สวัสดีครับ ผม Harshit Shah กำลังศึกษาด้านวิทยาการคอมพิวเตอร์ที่ IIML มีความเชี่ยวชาญด้านการเป็นผู้นำทีมเทคโนโลยีและการปรับปรุงกระบวนการทำงาน ที่ผ่านมาผมได้บริหารทีมกว่า 220 คนในฐานะประธาน ACM และสร้างผลงานในฐานะนักวิเคราะห์จาก JSW และ Slick วันนี้ผมมุ่งหวังนำทักษะการบริหารและวิเคราะห์มาขับเคลื่อนความสำเร็จในตำแหน่งนี้ครับ",
+    "why_better_en": "This rewrite instantly establishes a strong professional identity, utilizes a structured Present-Past-Future timeline, replaces generic self-assessments with concrete achievements, and clearly states value to the employer.",
+    "why_better_th": "การปรับแก้ไขนี้ช่วยสร้างอัตลักษณ์ที่ชัดเจนตั้งแต่ประโยคแรก โดยใช้โครงสร้าง ปัจจุบัน-อดีต-อนาคต ที่มีลำดับขั้นตอน พร้อมทดแทนคำพูดทั่วไปด้วยผลงานที่เป็นรูปธรรมและเชื่อมโยงกับคุณค่าที่องค์กรจะได้รับ"
   },
   "seven_day_plan_en": [
-    "Day 1: Refine response script using Present-Past-Future structure and eliminate passive phrasing.",
-    "Day 2: Adjust camera placement to eye level directly in front to fix head alignment and yaw offset.",
-    "Day 3: Practice vocal delivery to maintain the current ideal 158 WPM rate with strong confidence.",
-    "Day 4: Work on facial warmth by intentionally introducing natural smiles at the opening and key wins.",
-    "Day 5: Record a 60-90 second practice video to evaluate alignment, facial warmth, and structure.",
-    "Day 6: Conduct timed mock practice sessions maintaining camera contact and zero filler words.",
-    "Day 7: Perform a final mock interview recording for complete polish and readiness."
+    "Day 1: Refine your elevator pitch script using the Present-Past-Future structure.",
+    "Day 2: Practice delivering the opening greeting with an engaging smile and warm posture.",
+    "Day 3: Record your answer while maintaining a steady head position and centered alignment.",
+    "Day 4: Review video recordings specifically evaluating facial expression and warmth.",
+    "Day 5: Practice maintaining conversational pacing within a 60 to 75 second time frame.",
+    "Day 6: Perform mock interview sessions with unexpected follow-up questions.",
+    "Day 7: Record a final video pitch to confirm steady eye contact, warmth, and strong messaging."
   ],
   "seven_day_plan_th": [
-    "วันที่ 1: ปรับปรุงบทพูดโดยใช้โครงสร้าง ปัจจุบัน-อดีต-อนาคต และตัดประโยคที่ไม่มั่นใจออก",
-    "วันที่ 2: ปรับตำแหน่งกล้องให้อยู่ในระดับสายตาตรงหน้า เพื่อแก้ไขมุมหันของศีรษะ",
-    "วันที่ 3: ฝึกการใช้น้ำเสียงและจังหวะพูดโดยรักษาความเร็วที่เหมาะสม 158 คำต่อนาที",
-    "วันที่ 4: ฝึกแสดงสีหน้าโดยยิ้มอย่างเป็นธรรมชาติช่วงทักทายและพูดถึงความสำเร็จ",
-    "วันที่ 5: อัดวิดีโอฝึกพูด 60-90 วินาที พร้อมตรวจสอบมุมศีรษะ รอยยิ้ม และโครงสร้างเนื้อหา",
-    "วันที่ 6: ซ้อมสัมภาษณ์จำลองจับเวลา รักษากรอบบุคลิกภาพ และควบคุมไม่ให้มีคำฟุ่มเฟือย",
-    "วันที่ 7: บันทึกวิดีโอสัมภาษณ์จำลองรอบสุดท้ายเพื่อตรวจเช็คความพร้อมก่อนใช้งานจริง"
+    "วันที่ 1: ปรับสคริปต์การแนะนำตัวให้ใช้โครงสร้าง ปัจจุบัน-อดีต-อนาคต ที่กระชับและโดดเด่น",
+    "วันที่ 2: ซ้อมพูดพร้อมตั้งใจยิ้มในช่วงเปิดและช่วงปิดการแนะนำตัว",
+    "วันที่ 3: ซ้อมพูดโดยเน้นการรักษาตำแหน่งศีรษะให้นิ่งและสมดุล",
+    "วันที่ 4: อัดวิดีโอเพื่อตรวจสอบสีหน้า ความสดใส และการวางท่าทาง",
+    "วันที่ 5: ตรวจสอบความยาวการพูดให้อยู่ในช่วง 60-75 วินาทีได้อย่างราบรื่น",
+    "วันที่ 6: ซ้อมสัมภาษณ์เสมือนจริงเพื่อฝึกความมั่นใจและการตอบอย่างเป็นธรรมชาติ",
+    "วันที่ 7: บันทึกวิดีโอรอบสุดท้ายเพื่อประเมินความพร้อมและบุคลิกภาพโดยรวม"
   ],
   "key": "vid_0042",
   "model": "gemini-3.6-flash",
-  "overall_score": 85.3
+  "overall_score": 88.8
 }

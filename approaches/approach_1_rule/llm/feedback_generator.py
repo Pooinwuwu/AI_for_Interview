@@ -13,7 +13,7 @@ from llm_client import GeminiClient
 from prompt_builder import build_prompt, FEEDBACK_SCHEMA
 
 
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
 SCORES_DIR   = PROJECT_ROOT / "output" / "scores"
 FEATURES_DIR = PROJECT_ROOT / "output" / "features"
 FEEDBACK_DIR = PROJECT_ROOT / "output" / "feedback"

@@ -1,6 +1,6 @@
 {
   "key": "vid_0042",
-  "aspect_used": 1.3333,
+  "aspect_used": 1.7778,
   "total_frames": 303,
   "detection_stats": {
     "face": 302,
@@ -16,16 +16,16 @@
     "valid_frames": 521
   },
   "head_pose": {
-    "mean_yaw": -41.48,
-    "mean_pitch": 32.58,
-    "mean_roll": -11.83,
-    "yaw_std": 17.71,
-    "pitch_std": 2.63,
-    "roll_std": 5.98,
-    "yaw_range": 102.5,
-    "pitch_range": 104.05,
-    "valid_frames": 301,
-    "rejected_outliers": 1
+    "mean_yaw": -18.57,
+    "mean_pitch": 40.32,
+    "mean_roll": -6.67,
+    "yaw_std": 9.98,
+    "pitch_std": 3.36,
+    "roll_std": 4.04,
+    "yaw_range": 72.02,
+    "pitch_range": 67.25,
+    "valid_frames": 300,
+    "rejected_outliers": 2
   },
   "hand_gesture": {
     "hand_presence_ratio": 0.3498,

@@ -3,6 +3,12 @@
   "dimensions": {
     "eye_contact": {
       "score": 92.9,
+      "band": {
+        "label_en": "Excellent",
+        "label_th": "ดีมาก",
+        "color": "#4CAF50",
+        "priority": "none"
+      },
       "components": {
         "eye_contact_ratio": 98.8,
         "gaze_stability": 79.2
@@ -14,22 +20,34 @@
       }
     },
     "head_pose": {
-      "score": 63.0,
+      "score": 79.1,
+      "band": {
+        "label_en": "Good",
+        "label_th": "ดี",
+        "color": "#8BC34A",
+        "priority": "low"
+      },
       "components": {
-        "pitch_movement": 93.8,
-        "yaw_movement": 41.4,
-        "pitch_deviation": 37.3,
-        "yaw_deviation": 46.5
+        "pitch_movement": 100.0,
+        "yaw_movement": 85.1,
+        "pitch_deviation": 19.6,
+        "yaw_deviation": 92.9
       },
       "raw": {
-        "pitch_std": 2.63,
-        "yaw_std": 17.71,
-        "mean_pitch": 32.58,
-        "mean_yaw": -41.48
+        "pitch_std": 3.36,
+        "yaw_std": 9.98,
+        "mean_pitch": 40.32,
+        "mean_yaw": -18.57
       }
     },
     "hand_gesture": {
       "score": 99.2,
+      "band": {
+        "label_en": "Excellent",
+        "label_th": "ดีมาก",
+        "color": "#4CAF50",
+        "priority": "none"
+      },
       "components": {
         "presence": 100.0,
         "movement_speed": 100.0,
@@ -44,6 +62,12 @@
     },
     "facial_expression": {
       "score": 69.1,
+      "band": {
+        "label_en": "Fair",
+        "label_th": "ปานกลาง",
+        "color": "#FFC107",
+        "priority": "medium"
+      },
       "components": {
         "smile": 31.8,
         "expressiveness": 78.2,
@@ -59,6 +83,12 @@
     },
     "answer_quality": {
       "score": 95.2,
+      "band": {
+        "label_en": "Excellent",
+        "label_th": "ดีมาก",
+        "color": "#4CAF50",
+        "priority": "none"
+      },
       "components": {
         "speech_rate": 100.0,
         "filler_ratio": 100.0,
@@ -74,30 +104,46 @@
     }
   },
   "fusion": {
-    "overall_score": 86.4,
+    "overall_score": 88.8,
+    "overall_band": {
+      "label_en": "Excellent",
+      "label_th": "ดีมาก",
+      "color": "#4CAF50",
+      "priority": "none"
+    },
     "breakdown": {
       "eye_contact": {
         "score": 92.9,
+        "band_label_th": "ดีมาก",
+        "band_label_en": "Excellent",
         "weight": 0.2,
         "contribution": 18.58
       },
       "head_pose": {
-        "score": 63.0,
+        "score": 79.1,
+        "band_label_th": "ดี",
+        "band_label_en": "Good",
         "weight": 0.15,
-        "contribution": 9.45
+        "contribution": 11.86
       },
       "hand_gesture": {
         "score": 99.2,
+        "band_label_th": "ดีมาก",
+        "band_label_en": "Excellent",
         "weight": 0.1,
         "contribution": 9.92
       },
       "facial_expression": {
         "score": 69.1,
+        "band_label_th": "ปานกลาง",
+        "band_label_en": "Fair",
         "weight": 0.15,
         "contribution": 10.36
       },
       "answer_quality": {
         "score": 95.2,
+        "band_label_th": "ดีมาก",
+        "band_label_en": "Excellent",
         "weight": 0.4,
         "contribution": 38.08
       }

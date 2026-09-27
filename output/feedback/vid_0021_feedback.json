@@ -1,0 +1,101 @@
+{
+  "overall_summary_en": "The candidate delivered a good overall performance highlighted by excellent vocal pacing, zero filler words, and a warm, smiling demeanor. However, hand gestures need work as hands were completely absent from the frame, and head pose was fair due to a persistent downward tilt. Structurally, the response was a bit brief and could be enhanced by framing technical background with concrete projects.",
+  "overall_summary_th": "ผู้สมัครทำผลงานได้ในระดับดี โดยมีจุดเด่นเรื่องจังหวะการพูดที่ฉะฉาน ไม่มีคำฟุ่มเฟือย และมีสีหน้าที่ยิ้มแย้มแจ่มใสในระดับดีมาก อย่างไรก็ตาม การใช้ภาษากายและการขยับมืออยู่ในระดับควรปรับเนื่องจากไม่เห็นมือในเฟรม และการวางตำแหน่งศีรษะอยู่ในระดับปานกลาง นอกจากนี้เนื้อหาการตอบยังค่อนข้างสั้น สามารถเพิ่มรายละเอียดด้านประสบการณ์หรือเป้าหมายให้ชัดเจนขึ้นได้",
+  "strengths_en": [
+    "Excellent facial expression and warmth, maintaining a positive smile and clear eye contact throughout.",
+    "Flawless speech delivery with articulate pacing, clear pauses, and zero filler words.",
+    "Direct and clear statement of core academic interests in artificial intelligence, machine learning, and data science."
+  ],
+  "strengths_th": [
+    "การแสดงออกทางสีหน้าและความมั่นใจอยู่ในระดับดีมาก โดยมีการยิ้มแย้มและสบตากับกล้องได้อย่างเป็นธรรมชาติ",
+    "จังหวะการพูดและความชัดเจนอยู่ในระดับดีมาก ไม่มีคำฟุ่มเฟือย และเว้นวรรคได้อย่างเหมาะสม",
+    "การสื่อสารประวัติการศึกษาและความสนใจในด้าน AI, Machine Learning และ Data Science มีความชัดเจนและตรงประเด็น"
+  ],
+  "improvements": [
+    {
+      "dimension": "hand_gesture",
+      "priority": "high",
+      "band_th": "ควรปรับ",
+      "issue_en": "Hands were completely invisible within the camera frame throughout the entire response.",
+      "issue_th": "มือไม่ได้ปรากฏอยู่ในเฟรมกล้องเลยตลอดการตอบคำถาม ทำให้ขาดภาษากายในการสื่อสาร",
+      "suggestion_en": "Position your camera slightly further back to capture natural hand gestures above chest level, which builds trust and dynamic energy.",
+      "suggestion_th": "ปรับมุมกล้องให้เห็นช่วงลำตัวส่วนบนและใช้การขยับมืออย่างเป็นธรรมชาติเพื่อเพิ่มความน่าเชื่อถือและความกระตือรือร้น",
+      "action_steps_en": [
+        "Adjust your webcam setup to frame yourself from the chest or waist up.",
+        "Practice using open-palm gestures when highlighting key points or expressing enthusiasm.",
+        "Record a short test video to ensure your hand gestures remain visible within the frame."
+      ],
+      "action_steps_th": [
+        "ตั้งมุมกล้องใหม่อยู่ในระดับลำตัวช่วงบนเพื่อให้เห็นการขยับมือ",
+        "ฝึกใช้ท่าทางมือแบบเปิดฝ่ามือขณะเน้นย้ำประเด็นสำคัญหรือแสดงความสนใจ",
+        "อัดวิดีโอลองซ้อมเพื่อตรวจสอบว่าการขยับมือน่ามองและไม่หลุดเฟรม"
+      ]
+    },
+    {
+      "dimension": "head_pose",
+      "priority": "medium",
+      "band_th": "ปานกลาง",
+      "issue_en": "The overall head alignment was in the fair range, tilting noticeably downward relative to the camera throughout the answer.",
+      "issue_th": "การวางตำแหน่งศีรษะอยู่ในระดับปานกลาง เนื่องจากมีการก้มหน้าลงต่ำกว่าระดับสายตาอย่างต่อเนื่อง",
+      "suggestion_en": "Raise your camera to eye level to avoid looking downward, ensuring an upright and confident posture.",
+      "suggestion_th": "ยกระดับกล้องให้อยู่ในระดับสายตาพอดี เพื่อหลีกเลี่ยงการก้มมองลงต่ำและช่วยให้บุคลิกภาพดูมั่นใจขึ้น",
+      "action_steps_en": [
+        "Elevate your laptop or camera using a stand or books so the lens aligns straight with your eyes.",
+        "Maintain an upright posture with shoulders relaxed and chin parallel to the ground.",
+        "Perform a 10-second test recording to verify that your head is centered and facing straight ahead."
+      ],
+      "action_steps_th": [
+        "วางโน้ตบุ๊กหรือกล้องบนแท่นวางหรือหนังสือเพื่อให้เลนส์ตรงกับระดับสายตา",
+        "นั่งหลังตรง ดึงไหล่ไปด้านหลังเล็กน้อย และรักษาระดับคางให้อยู่ในแนวระนาบ",
+        "บันทึกวิดีโอทดสอบ 10 วินาทีเพื่อตรวจสอบว่าศีรษะตั้งตรงและมองตรงไปที่เลนส์กล้อง"
+      ]
+    },
+    {
+      "dimension": "answer_quality",
+      "priority": "medium",
+      "band_th": "ดีมาก",
+      "issue_en": "While delivery mechanics were in the excellent range, the answer duration (34 seconds) was somewhat brief and lacked specific project achievements.",
+      "issue_th": "แม้เทคนิคการพูดจะอยู่ในระดับดีมาก แต่เนื้อหายังค่อนข้างสั้นและขาดการยกตัวอย่างโครงการหรือคุณค่าที่คุณจะมอบให้กับองค์กร",
+      "suggestion_en": "Expand your response to 60-90 seconds using a Present-Past-Future narrative, mentioning practical project experience.",
+      "suggestion_th": "ขยายเนื้อหาการตอบให้อยู่ในช่วง 60-90 วินาที โดยใช้โครงสร้าง ปัจจุบัน-อดีต-อนาคต พร้อมระบุโครงการหรือความสำเร็จทางเทคนิคที่เคยทำ",
+      "action_steps_en": [
+        "Structure your pitch into three parts: Present status, Key past project/skills, and Future career goal.",
+        "Incorporate 1-2 practical project examples involving AI, neural networks, or data science.",
+        "Conclude by stating how your skill set adds tangible value to prospective employers."
+      ],
+      "action_steps_th": [
+        "จัดโครงสร้างคำตอบเป็น 3 ส่วน: สถานะปัจจุบัน โครงการเด่น/ผลงานที่ภาคภูมิใจ และเป้าหมายในอนาคต",
+        "ระบุชื่อเครื่องมือหรือโครงการที่เคยทำจริง 1-2 อย่าง เช่น การสร้างโมเดล Neural Network หรือ Data Science",
+        "สรุปปิดท้ายด้วยการเชื่อมโยงความสนใจของคุณเข้ากับตำแหน่งงานหรือเป้าหมายขององค์กร"
+      ]
+    }
+  ],
+  "improved_answer": {
+    "original_snippet": "Good morning, my name is Thakshap Patil. I am currently in my third year in department AIML branch CAC computer science engineering from Manipal Institute of Technology, Jaipur.",
+    "rewritten_en": "Good morning, my name is Thakshap Patil. I am a third-year Computer Science student specializing in AI and Machine Learning at Manipal Institute of Technology, Jaipur. Over the past three years, I have built a strong foundation in neural networks and data science through hands-on coding projects, including building predictive machine learning models. I am eager to leverage these technical skills to solve complex real-world problems in an innovative engineering role.",
+    "rewritten_th": "สวัสดีครับ ผมชื่อ ทักษ์ชาป ปาติล ปัจจุบันเป็นนักศึกษาชั้นปีที่ 3 สาขาวิชาวิทยาการคอมพิวเตอร์ เชี่ยวชาญด้านปัญญาประดิษฐ์และแมชชีนเลิร์นนิง จาก Manipal Institute of Technology, Jaipur ในช่วงสามปีที่ผ่านมา ผมได้สร้างพื้นฐานที่แข็งแกร่งด้านโครงข่ายประสาทเทียมและวิทยาการข้อมูลผ่านการทำโครงการจริง เช่น การพัฒนาโมเดลแมชชีนเลิร์นนิงเพื่อการทำนาย ผมมีความกระตือรือร้นที่จะนำทักษะทางเทคนิคเหล่านี้ไปใช้แก้ปัญหาจริงและร่วมสร้างนวัตกรรมในสายงานวิศวกรรมครับ",
+    "why_better_en": "This rewritten version streamlines complex departmental jargon into concise language, adopts the Present-Past-Future signposting framework, highlights practical project experience, and clearly articulates value for potential employers.",
+    "why_better_th": "บทตอบที่ปรับปรุงใหม่นี้ใช้โครงสร้าง ปัจจุบัน-อดีต-อนาคต (Present-Past-Future) ในการเล่าเรื่อง โดยตัดคำย่อชื่อภาควิชาที่ซับซ้อนออก แล้วแทนที่ด้วยการเน้นประสบการณ์ทำโครงการจริงและคุณค่าที่สามารถมอบให้กับองค์กรได้อย่างเป็นระบบ"
+  },
+  "seven_day_plan_en": [
+    "Day 1: Draft an expanded script outline using the Present-Past-Future formula focused on your AI projects.",
+    "Day 2: Refine the draft to a 60-90 second response, cutting out redundant acronyms and stating key accomplishments.",
+    "Day 3: Adjust your workspace and setup so the camera lens is strictly at eye level with waist-up framing.",
+    "Day 4: Practice delivering the script while introducing subtle, open-palm hand gestures to emphasize points.",
+    "Day 5: Record a 90-second practice video to self-evaluate framing, head posture, gesture usage, and smile stability.",
+    "Day 6: Conduct timed delivery sessions and practice smoothly answering follow-up questions about your data science work.",
+    "Day 7: Perform a full mock interview session integrating all posture, visual framing, and content enhancements."
+  ],
+  "seven_day_plan_th": [
+    "วันที่ 1: ร่างโครงร่างคำตอบใหม่โดยใช้โครงสร้าง ปัจจุบัน-อดีต-อนาคต เน้นโครงการ AI ที่เคยทำ",
+    "วันที่ 2: ปรับปรุงสคริปต์ให้มีความยาว 60-90 วินาที ตัดตัวย่อที่ไม่จำเป็นออก และเพิ่มส่วนแสดงคุณค่าของคุณ",
+    "วันที่ 3: จัดมุมกล้องให้อยู่ระดับสายตา และปรับมุมมองภาพให้เห็นตั้งแต่ช่วงเอวขึ้นไปเพื่อแสดงภาษามือ",
+    "วันที่ 4: ฝึกซ้อมการพูดโดยเน้นการใช้ท่าทางมือแบบเปิดฝ่ามือและการรักษาลำตัวให้ตั้งตรง",
+    "วันที่ 5: อัดวิดีโอการตอบ 90 วินาที แล้วเปิดเช็กระดับสายตา การแสดงท่าทางมือ และน้ำเสียง",
+    "วันที่ 6: ฝึกซ้อมตอบแบบจับเวลา พร้อมลองตั้งคำถามเจาะลึกเกี่ยวกับโครงการ AI/Data Science ที่อ้างถึง",
+    "วันที่ 7: จำลองการสัมภาษณ์จริงแบบครบถ้วน ทั้งเนื้อหา ท่าทาง สภาพแวดล้อม และระดับสายตา"
+  ],
+  "key": "vid_0021",
+  "model": "gemini-3.6-flash",
+  "overall_score": 83.1
+}

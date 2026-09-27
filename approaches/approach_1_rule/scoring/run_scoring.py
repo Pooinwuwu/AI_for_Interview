@@ -22,7 +22,7 @@ from dimension_scores import (
 from fusion import weighted_sum, DEFAULT_WEIGHTS
 
 
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
 FEATURES_DIR = PROJECT_ROOT / "output" / "features"
 SCORES_DIR   = PROJECT_ROOT / "output" / "scores"
 

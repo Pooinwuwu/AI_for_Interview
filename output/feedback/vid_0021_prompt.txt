@@ -18,10 +18,10 @@ Each dimension is reported as a QUALITATIVE BAND:
   40-54   Needs Work   ควรปรับ
   0-39    Priority     ควรปรับมาก
 
-OVERALL: - / -
-  (numeric reference: 83.7/100)
+OVERALL: ดี / Good
+  (numeric reference: 83.1/100)
 
-• Eye Contact (การสบตา): - / -
+• Eye Contact (การสบตา): ดี / Good
   (numeric reference: 81.0/100)
   Sub-components (0-100):
     - สัดส่วนการสบตา (eye_contact_ratio): 72.9
@@ -31,20 +31,20 @@ OVERALL: - / -
     - gaze_stability_x: 0.0273
     - gaze_stability_y: 0.0397
 
-• Head Movement (การขยับศีรษะ): - / -
-  (numeric reference: 60.8/100)
+• Head Movement (การขยับศีรษะ): ปานกลาง / Fair
+  (numeric reference: 56.8/100)
   Sub-components (0-100):
-    - การก้ม-เงย (pitch_movement): 55.6
-    - การหันซ้าย-ขวา (yaw_movement): 66.1
-    - การก้ม-เงยเฉลี่ย (pitch_deviation): 12.7
+    - การก้ม-เงย (pitch_movement): 54.0
+    - การหันซ้าย-ขวา (yaw_movement): 56.6
+    - การก้ม-เงยเฉลี่ย (pitch_deviation): 7.2
     - การหันเฉลี่ย (yaw_deviation): 100.0
   Raw measurements:
-    - pitch_std: 0.67
-    - yaw_std: 1.12
-    - mean_pitch: -45.45
-    - mean_yaw: -1.64
+    - pitch_std: 0.6
+    - yaw_std: 0.71
+    - mean_pitch: -49.6
+    - mean_yaw: -2.7
 
-• Hand Gestures (การขยับมือ): - / -
+• Hand Gestures (การขยับมือ): ควรปรับ / Needs Work
   (numeric reference: 53.5/100)
   Sub-components (0-100):
     - การปรากฏของมือ (presence): 30.0
@@ -56,7 +56,7 @@ OVERALL: - / -
     - fidget_x: 0.0
     - fidget_y: 0.0
 
-• Facial Expression (สีหน้า): - / -
+• Facial Expression (สีหน้า): ดีมาก / Excellent
   (numeric reference: 92.4/100)
   Sub-components (0-100):
     - การยิ้ม (smile): 86.8
@@ -69,7 +69,7 @@ OVERALL: - / -
     - eye_aspect_ratio_mean: 0.3539
     - brow_height_std: 0.0026
 
-• Answer Quality (การตอบคำถาม): - / -
+• Answer Quality (การตอบคำถาม): ดีมาก / Excellent
   (numeric reference: 97.9/100)
   Sub-components (0-100):
     - ความเร็วในการพูด (speech_rate): 92.9

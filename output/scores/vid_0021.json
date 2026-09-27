@@ -3,6 +3,12 @@
   "dimensions": {
     "eye_contact": {
       "score": 81.0,
+      "band": {
+        "label_en": "Good",
+        "label_th": "ดี",
+        "color": "#8BC34A",
+        "priority": "low"
+      },
       "components": {
         "eye_contact_ratio": 72.9,
         "gaze_stability": 100.0
@@ -14,22 +20,34 @@
       }
     },
     "head_pose": {
-      "score": 60.8,
+      "score": 56.8,
+      "band": {
+        "label_en": "Fair",
+        "label_th": "ปานกลาง",
+        "color": "#FFC107",
+        "priority": "medium"
+      },
       "components": {
-        "pitch_movement": 55.6,
-        "yaw_movement": 66.1,
-        "pitch_deviation": 12.7,
+        "pitch_movement": 54.0,
+        "yaw_movement": 56.6,
+        "pitch_deviation": 7.2,
         "yaw_deviation": 100.0
       },
       "raw": {
-        "pitch_std": 0.67,
-        "yaw_std": 1.12,
-        "mean_pitch": -45.45,
-        "mean_yaw": -1.64
+        "pitch_std": 0.6,
+        "yaw_std": 0.71,
+        "mean_pitch": -49.6,
+        "mean_yaw": -2.7
       }
     },
     "hand_gesture": {
       "score": 53.5,
+      "band": {
+        "label_en": "Needs Work",
+        "label_th": "ควรปรับ",
+        "color": "#FF9800",
+        "priority": "high"
+      },
       "components": {
         "presence": 30.0,
         "movement_speed": 50.0,
@@ -44,6 +62,12 @@
     },
     "facial_expression": {
       "score": 92.4,
+      "band": {
+        "label_en": "Excellent",
+        "label_th": "ดีมาก",
+        "color": "#4CAF50",
+        "priority": "none"
+      },
       "components": {
         "smile": 86.8,
         "expressiveness": 100.0,
@@ -59,6 +83,12 @@
     },
     "answer_quality": {
       "score": 97.9,
+      "band": {
+        "label_en": "Excellent",
+        "label_th": "ดีมาก",
+        "color": "#4CAF50",
+        "priority": "none"
+      },
       "components": {
         "speech_rate": 92.9,
         "filler_ratio": 100.0,
@@ -74,30 +104,46 @@
     }
   },
   "fusion": {
-    "overall_score": 83.7,
+    "overall_score": 83.1,
+    "overall_band": {
+      "label_en": "Good",
+      "label_th": "ดี",
+      "color": "#8BC34A",
+      "priority": "low"
+    },
     "breakdown": {
       "eye_contact": {
         "score": 81.0,
+        "band_label_th": "ดี",
+        "band_label_en": "Good",
         "weight": 0.2,
         "contribution": 16.2
       },
       "head_pose": {
-        "score": 60.8,
+        "score": 56.8,
+        "band_label_th": "ปานกลาง",
+        "band_label_en": "Fair",
         "weight": 0.15,
-        "contribution": 9.12
+        "contribution": 8.52
       },
       "hand_gesture": {
         "score": 53.5,
+        "band_label_th": "ควรปรับ",
+        "band_label_en": "Needs Work",
         "weight": 0.1,
         "contribution": 5.35
       },
       "facial_expression": {
         "score": 92.4,
+        "band_label_th": "ดีมาก",
+        "band_label_en": "Excellent",
         "weight": 0.15,
         "contribution": 13.86
       },
       "answer_quality": {
         "score": 97.9,
+        "band_label_th": "ดีมาก",
+        "band_label_en": "Excellent",
         "weight": 0.4,
         "contribution": 39.16
       }

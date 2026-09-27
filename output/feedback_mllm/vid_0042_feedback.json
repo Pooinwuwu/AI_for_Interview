@@ -1,0 +1,117 @@
+{
+  "overall_summary_en": "Your overall delivery is fair, with impressive underlying leadership and internship credentials that show strong potential. However, frequent face-touching, language switching into Hindi, and inconsistent eye contact undermine your executive presence and confidence.",
+  "overall_summary_th": "ภาพรวมการตอบอยู่ในระดับปานกลาง คุณมีประสบการณ์ความเป็นผู้นำและการฝึกงานที่น่าประทับใจและมีศักยภาพสูง แต่การเอามือจับคางและบังปากบ่อยครั้ง รวมถึงการสลับภาษาและการสบตาที่ไม่สม่ำเสมอทำให้ความน่าเชื่อถือและความมั่นใจลดลง",
+  "strengths_en": [
+    "Relevant, high-impact background including leadership of a 220+ member ACM collegiate club and practical technical internships.",
+    "Natural, conversational tone with genuine enthusiasm for taking initiative and working in teams."
+  ],
+  "strengths_th": [
+    "มีประวัติและประสบการณ์ที่โดดเด่น เช่น การเป็นประธานชมรม ACM ที่มีสมาชิกกว่า 220 คน และมีประสบการณ์ฝึกงานจริง",
+    "น้ำเสียงเป็นธรรมชาติและแสดงให้เห็นถึงความกระตือรือร้นในการริเริ่มงานและการทำงานร่วมกับผู้อื่น"
+  ],
+  "improvements": [
+    {
+      "dimension": "hand_gesture",
+      "priority": "high",
+      "band_th": "ควรปรับมาก",
+      "issue_en": "You repeatedly rest your hand on your chin, touch your lips, and cover your mouth, which looks nervous and muffles your voice.",
+      "issue_th": "คุณเอามือแตะคาง ลูบริมฝีปาก และบังปากตัวเองบ่อยครั้งตลอดการตอบ ทำให้ดูประหม่าและอาจบดบังเสียงพูด",
+      "suggestion_en": "Keep your hands anchored on the table or lap when not gesturing, and restrict gestures to open, waist-level movements.",
+      "suggestion_th": "วางมือพักไว้บนโต๊ะหรือตักอย่างผ่อนคลายเมื่อไม่ได้ขยับ และใช้ภาษามือเปิดกว้างในระดับอกหรือเอวเท่านั้น",
+      "action_steps_en": [
+        "Practice speaking while clasping your hands loosely on the desk to build muscle memory against touching your face.",
+        "Record a 60-second self-introduction and flag any instance where a hand rises above the collarbone.",
+        "Use open-palm gestures deliberately to emphasize key achievements rather than unconscious fidgeting."
+      ],
+      "action_steps_th": [
+        "ฝึกซ้อมพูดโดยประสานมือหลวมๆ ไว้บนโต๊ะเพื่อสร้างความเคยชินไม่ให้ยกมือขึ้นมาสัมผัสใบหน้า",
+        "อัดคลิปแนะนำตัว 60 วินาทีและตรวจเช็กว่ามีจังหวะที่มือยกสูงเกินระดับไหปลาร้าหรือไม่",
+        "ใช้การผายมือแบบเปิดกว้างอย่างตั้งใจเพื่อเน้นย้ำความสำเร็จสำคัญแทนการขยับมือโดยไม่รู้ตัว"
+      ]
+    },
+    {
+      "dimension": "answer_quality",
+      "priority": "high",
+      "band_th": "ควรปรับ",
+      "issue_en": "The narrative lacks a crisp structure, slips briefly into Hindi ('jahaan pe'), and relies on vague intros like 'I consider myself to have a lot of different skills' before reaching solid accomplishments.",
+      "issue_th": "โครงสร้างคำตอบยังไม่กระชับ มีการหลุดพูดภาษาฮินดีแทรกขึ้นมา ('jahaan pe') และเริ่มด้วยวลีที่คลุมเครือก่อนจะเข้าสู่ผลงานจริง",
+      "suggestion_en": "Adopt the Present-Past-Future framework entirely in formal English, leading directly with your degree, top leadership impact, and target career direction.",
+      "suggestion_th": "ใช้โครงสร้าง ปัจจุบัน-อดีต-อนาคต (Present-Past-Future) เป็นภาษาอังกฤษล้วนอย่างเป็นทางการ โดยเริ่มจากสถานะปัจจุบัน ผลงานผู้นำเด่น และเป้าหมายอาชีพ",
+      "action_steps_en": [
+        "Script a tight 60-to-75-second pitch adhering to the Present-Past-Future framework.",
+        "Practice eliminating filler phrases and language switching by speaking slowly and pausing silently.",
+        "Quantify your ACM leadership and internship achievements right up front to hook the interviewer."
+      ],
+      "action_steps_th": [
+        "ร่างสคริปต์แนะนำตัวความยาว 60-75 วินาทีตามโครงสร้าง ปัจจุบัน-อดีต-อนาคต ให้ชัดเจน",
+        "ฝึกขจัดคำฟุ่มเฟือยและการสลับภาษาโดยการพูดให้ช้าลงและใช้การหยุดนิ่งสั้นๆ แทน",
+        "ระบุตัวเลขความสำเร็จจากบทบาทผู้นำ ACM และการฝึกงานตั้งแต่ช่วงต้นเพื่อดึงดูดความสนใจ"
+      ]
+    },
+    {
+      "dimension": "eye_contact",
+      "priority": "medium",
+      "band_th": "ควรปรับ",
+      "issue_en": "Your gaze frequently shifts sideways and downward while recalling details, reducing direct engagement through the webcam.",
+      "issue_th": "สายตามักจะมองเฉออกไปด้านข้างหรือก้มลงด้านล่างเวลาคิด ทำให้ขาดการสบตากับกล้องอย่างสม่ำเสมอ",
+      "suggestion_en": "Train your gaze directly toward the camera lens to create a strong sense of connection and authority with the interviewer.",
+      "suggestion_th": "มองตรงไปที่เลนส์กล้องเว็บแคมให้มากขึ้น เพื่อสร้างความรู้สึกเชื่อมโยงและความมั่นใจในการสื่อสาร",
+      "action_steps_en": [
+        "Place a small colored sticker next to your webcam lens as a visual target.",
+        "Keep your eye contact steady on the lens for at least 3-4 consecutive sentences during key points.",
+        "Elevate your laptop so the camera sits right at eye level to prevent looking downwards."
+      ],
+      "action_steps_th": [
+        "ติดสติกเกอร์สีเล็กๆ ไว้ข้างเลนส์กล้องเพื่อเป็นจุดโฟกัสสายตา",
+        "ฝึกสบตาที่เลนส์กล้องต่อเนื่องอย่างน้อย 3-4 ประโยคในจังหวะที่พูดประเด็นสำคัญ",
+        "ยกคอมพิวเตอร์ให้อยู่ในระดับสายตาเพื่อหลีกเลี่ยงการก้มหน้ามองต่ำ"
+      ]
+    },
+    {
+      "dimension": "facial_expression",
+      "priority": "low",
+      "band_th": "ปานกลาง",
+      "issue_en": "Your expression remains quite serious and tense, especially in the opening seconds before you start speaking.",
+      "issue_th": "สีหน้าดูค่อนข้างจริงจังและตึงเครียด โดยเฉพาะในช่วงไม่กี่วินาทีแรกก่อนเริ่มพูด",
+      "suggestion_en": "Start with a warm, friendly smile upon greeting to project approachable confidence from the very first second.",
+      "suggestion_th": "เริ่มต้นด้วยรอยยิ้มที่อบอุ่นและเป็นมิตรตั้งแต่คำทักทายแรก เพื่อสร้างความประทับใจที่เข้าถึงง่ายและมั่นใจ",
+      "action_steps_en": [
+        "Smile consciously for two seconds before uttering your first word.",
+        "Practice delivering your opening line in front of a mirror to ensure your face appears relaxed.",
+        "Nod gently while concluding key thoughts to reinforce warmth and confidence."
+      ],
+      "action_steps_th": [
+        "ฝึกยิ้มอย่างตั้งใจ 2 วินาทีก่อนที่จะเริ่มเปล่งเสียงพูดคำแรก",
+        "ซ้อมพูดประโยคเปิดตัวหน้ากระจกเพื่อตรวจสอบว่ากล้ามเนื้อใบหน้าผ่อนคลาย",
+        "พยักหน้าเล็กน้อยเมื่อพูดจบประเด็นเพื่อสื่อถึงความมั่นใจและเป็นกันเอง"
+      ]
+    }
+  ],
+  "improved_answer": {
+    "original_snippet": "Hi, I'm Harshit Shah. I am currently studying CSE AIML.",
+    "rewritten_en": "Hi, I'm Harshit Shah, a final-year Computer Science Engineering student specializing in AI and Machine Learning. As Chairperson of the ACM student chapter, I've led a 220-member team executing technical initiatives, while complementing my leadership with hands-on internship experience in process analysis at JSW Steel and technical operations at Slikc. I thrive at the intersection of technology and cross-functional leadership, and I am excited to bring this problem-solving mindset to this role.",
+    "rewritten_th": "สวัสดีครับ ผม Harshit Shah นักศึกษาชั้นปีสุดท้ายสาขาวิศวกรรมวิทยาการคอมพิวเตอร์ เอก AI และ Machine Learning ครับ ในบทบาทประธานชมรม ACM ผมได้นำทีมงานกว่า 220 คนในการขับเคลื่อนกิจกรรมด้านเทคโนโลยี ควบคู่ไปกับประสบการณ์ฝึกงานจริงด้านการวิเคราะห์กระบวนการที่ JSW Steel และงานเทคนิคที่ Slikc ผมมีความเชี่ยวชาญทั้งด้านเทคโนโลยีและการบริหารทีม และพร้อมนำทักษะการแก้ปัญหานี้มาสร้างประโยชน์ให้กับองค์กรของคุณครับ",
+    "why_better_en": "This revision eliminates vague filler statements and replaces them with an organized elevator pitch. It integrates your degree, leadership scope (220 members), and relevant industry internships directly into a compelling narrative.",
+    "why_better_th": "บทตอบใหม่นี้ตัดคำเกริ่นที่คลุมเครือออกทั้งหมด และแทนที่ด้วยการนำเสนอแบบ Elevator Pitch ที่กระชับ โดยร้อยเรียงทั้งวุฒิการศึกษา บทบาทความเป็นผู้นำทีม 220 คน และประสบการณ์ฝึกงานจริงเข้าด้วยกันอย่างน่าประทับใจ"
+  },
+  "seven_day_plan_en": [
+    "Day 1: Write down your revised 60-second pitch following the Present-Past-Future model and memorize the key bullet points.",
+    "Day 2: Adjust your workstation by elevating the camera to eye level and positioning lighting in front of you.",
+    "Day 3: Practice your pitch with hands resting on the desk, recording yourself to eradicate the chin-resting habit.",
+    "Day 4: Focus strictly on eye contact by delivering the pitch while looking at a sticker marker beside your camera lens.",
+    "Day 5: Practice vocal clarity and pacing in English, replacing fillers and regional language slips with deliberate pauses.",
+    "Day 6: Conduct a simulated mock interview with a peer or mentor to test spontaneous delivery without touching your face.",
+    "Day 7: Record a final benchmark video, review your posture and energy, and lock in your confident presentation style."
+  ],
+  "seven_day_plan_th": [
+    "วันที่ 1: เขียนบทแนะนำตัว 60 วินาทีตามโครงสร้าง ปัจจุบัน-อดีต-อนาคต และจดจำหัวข้อหลักให้แม่นยำ",
+    "วันที่ 2: ปรับมุมกล้องให้อยู่ระดับสายตาและจัดแสงสว่างด้านหน้าให้ชัดเจน",
+    "วันที่ 3: ซ้อมพูดโดยวางมือพักไว้บนโต๊ะ พร้อมอัดวิดีโอเช็กเพื่อหยุดพฤติกรรมเอามือเท้าคางหรือบังปาก",
+    "วันที่ 4: ฝึกการสบตากับเลนส์กล้องอย่างต่อเนื่องโดยใช้สติกเกอร์เป็นจุดนำสายตา",
+    "วันที่ 5: ฝึกจังหวะการพูดภาษาอังกฤษให้ชัดถ้อยชัดคำ โดยใช้การหยุดนิ่งสั้นๆ แทนการพูดคำฟุ่มเฟือยหรือสลับภาษา",
+    "วันที่ 6: ซ้อมสัมภาษณ์เสมือนจริงกับเพื่อนหรือรุ่นพี่เพื่อทดสอบการตอบอย่างลื่นไหลโดยไม่จับใบหน้า",
+    "วันที่ 7: อัดคลิปวิดีโอตัวอย่างรอบสุดท้าย ตรวจเช็กบุคลิกภาพและความมั่นใจเพื่อเตรียมพร้อมใช้งานจริง"
+  ],
+  "key": "vid_0042",
+  "model": "gemini-3.8-flash (zero-shot)"
+}

@@ -13,7 +13,7 @@ import facial_expression
 from utils import get_video_aspect
 
 
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
 LANDMARKS_DIR = PROJECT_ROOT / "output" / "landmarks"
 FEATURES_OUT = PROJECT_ROOT / "output" / "features"
 

@@ -1,6 +1,6 @@
 {
   "key": "vid_0021",
-  "aspect_used": 1.3333,
+  "aspect_used": 1.7778,
   "total_frames": 171,
   "detection_stats": {
     "face": 171,
@@ -16,14 +16,14 @@
     "valid_frames": 324
   },
   "head_pose": {
-    "mean_yaw": -1.64,
-    "mean_pitch": -45.45,
-    "mean_roll": -2.9,
-    "yaw_std": 1.12,
-    "pitch_std": 0.67,
-    "roll_std": 1.26,
-    "yaw_range": 36.19,
-    "pitch_range": 70.06,
+    "mean_yaw": -2.7,
+    "mean_pitch": -49.6,
+    "mean_roll": -2.28,
+    "yaw_std": 0.71,
+    "pitch_std": 0.6,
+    "roll_std": 0.78,
+    "yaw_range": 8.17,
+    "pitch_range": 83.52,
     "valid_frames": 171,
     "rejected_outliers": 0
   },

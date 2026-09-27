@@ -1,0 +1,119 @@
+{
+  "overall_summary_en": "You present solid relevant experiences such as leading a 220-member ACM student chapter and completing technical internships, demonstrating strong leadership potential. However, your delivery is held back by keeping your hand resting against your chin and mouth, frequent head tilting away from the camera, and an informal, repetitive answer structure.",
+  "overall_summary_th": "คุณมีข้อมูลประสบการณ์ที่น่าสนใจ เช่น การเป็นประธานชมรม ACM ที่ดูแลสมาชิกกว่า 220 คนและการฝึกงานด้านเทคนิค ซึ่งสะท้อนศักยภาพความเป็นผู้นำได้ดี อย่างไรก็ตาม บุคลิกภาพการนำเสนอยังต้องปรับปรุงจากการเอามือเท้าคางและจับบริเวณปากตลอดการพูด การเอียงศีรษะหลบสายตาบ่อยครั้ง รวมถึงโครงสร้างคำตอบที่ยังขาดความเป็นมืออาชีพ",
+  "strengths_en": [
+    "Mentions impressive and concrete leadership scale, such as managing a 220-member ACM chapter.",
+    "Highlights diverse practical experiences including multiple technical internships and process analysis.",
+    "Speaks with clear English pronunciation and maintains a steady speaking cadence."
+  ],
+  "strengths_th": [
+    "มีการยกตัวอย่างผลงานความเป็นผู้นำที่จับต้องได้ชัดเจน เช่น การบริหารทีมในชมรม ACM กว่า 220 คน",
+    "ระบุประสบการณ์จริงที่หลากหลาย ทั้งการฝึกงานและบทบาทนักวิเคราะห์กระบวนการ",
+    "ออกเสียงภาษาอังกฤษได้ชัดเจนและมีจังหวะความเร็วในการพูดที่สม่ำเสมอ"
+  ],
+  "improvements": [
+    {
+      "dimension": "hand_gesture",
+      "priority": "high",
+      "band_th": "ควรปรับมาก",
+      "issue_en": "You frequently kept your hand resting on your chin, jaw, and touching your lips, which conveys nervousness and distracts the interviewer.",
+      "issue_th": "คุณวางมือไว้ใต้คาง จับกราม และสัมผัสริมฝีปากบ่อยครั้งตลอดการตอบคำถาม ทำให้ดูประหม่าและลดทอนความน่าเชื่อถือ",
+      "suggestion_en": "Keep your hands resting comfortably on the desk or lap, bringing them up only to make purposeful open-palm gestures.",
+      "suggestion_th": "วางมือลงบนโต๊ะหรือตักอย่างผ่อนคลาย และยกมือขึ้นมาขยับประกอบการอธิบายด้วยท่าทางเปิดฝ่ามืออย่างเป็นธรรมชาติเท่านั้น",
+      "action_steps_en": [
+        "Place both hands flat on the table or resting in your lap before starting your answer.",
+        "Practice speaking for 60 seconds with an intentional rule not to touch any part of your face.",
+        "Use open hand gestures at chest level only when emphasizing key points like team sizes."
+      ],
+      "action_steps_th": [
+        "วางมือทั้งสองข้างราบบนโต๊ะหรือบนตักก่อนเริ่มตอบคำถามทุกครั้ง",
+        "ฝึกตอบคำถาม 60 วินาทีโดยตั้งกฎห้ามยกมือขึ้นมาสัมผัสใบหน้าเด็ดขาด",
+        "ใช้การผายมือระดับอกเพื่อเน้นย้ำประเด็นสำคัญ เช่น เมื่อพูดถึงขนาดทีมหรือความสำเร็จ"
+      ]
+    },
+    {
+      "dimension": "head_pose",
+      "priority": "medium",
+      "band_th": "ควรปรับ",
+      "issue_en": "Your head tilted upwards and sideways repeatedly while thinking, showing noticeable physical restlessness.",
+      "issue_th": "คุณเอียงศีรษะเงยขึ้นและหันไปด้านข้างซ้ำๆ ขณะกำลังนึกคิด ทำให้ท่าทางดูอยู่ไม่นิ่ง",
+      "suggestion_en": "Anchor your posture upright and keep your head centered toward the webcam while formulating your thoughts.",
+      "suggestion_th": "จัดท่านั่งตัวตรงให้มั่นคง และรักษาตำแหน่งศีรษะให้อยู่ตรงกลางมุ่งหน้าเข้าหากล้องขณะคิดคำตอบ",
+      "action_steps_en": [
+        "Align your webcam to eye level so you do not naturally look up or down.",
+        "Practice taking a 1-second pause to think before speaking instead of tilting your head away.",
+        "Record a practice video and check that your head remains within the center third of the frame."
+      ],
+      "action_steps_th": [
+        "ปรับระดับกล้องเว็บแคมให้อยู่ในระดับสายตาพอดีเพื่อป้องกันการแหงนหรือก้มหน้า",
+        "ฝึกหยุดคิด 1 วินาทีแบบนิ่งๆ ก่อนตอบ แทนการหันศีรษะไปมา",
+        "บันทึกวิดีโอฝึกซ้อมและตรวจสอบว่าศีรษะอยู่ตรงกลางเฟรมตลอดเวลา"
+      ]
+    },
+    {
+      "dimension": "answer_quality",
+      "priority": "medium",
+      "band_th": "ปานกลาง",
+      "issue_en": "Your response relied heavily on repetitive transitional phrases ('Apart from that...') and vague claims before getting to specifics.",
+      "issue_th": "การเรียบเรียงคำตอบใช้คำเชื่อมซ้ำๆ เช่น 'Apart from that...' และเริ่มต้นด้วยการอ้างทักษะทั่วไปก่อนเข้าเรื่องจริง",
+      "suggestion_en": "Adopt the Present-Past-Future framework to create a logical, cohesive narrative from your education to your achievements.",
+      "suggestion_th": "ใช้โครงสร้าง Present-Past-Future เพื่อร้อยเรียงเรื่องราวตั้งแต่การศึกษา ความสำเร็จที่ผ่านมา ไปจนถึงเป้าหมายข้างหน้าอย่างเป็นระบบ",
+      "action_steps_en": [
+        "Structure your introduction into three distinct sections: Current studies, Key past leadership/internships, and Future goals.",
+        "Eliminate filler transition phrases like 'Apart from that' and replace them with intentional connectors like 'In addition' or 'Building on that'.",
+        "Quantify your project outcomes alongside team sizes to demonstrate measurable business impact."
+      ],
+      "action_steps_th": [
+        "แบ่งเนื้อหาเป็น 3 ช่วงชัดเจน: การศึกษาปัจจุบัน, บทบาทผู้นำ/การฝึกงานที่ผ่านมา, และเป้าหมายในอนาคต",
+        "ตัดคำเชื่อมซ้ำซาก เช่น 'Apart from that' แล้วแทนที่ด้วยคำเชื่อมที่เป็นมืออาชีพ เช่น 'Furthermore' หรือ 'Building on that'",
+        "ระบุผลลัพธ์เชิงตัวเลขของงานนอกเหนือจากจำนวนคนในทีม เพื่อแสดงคุณค่าทางธุรกิจที่ชัดเจน"
+      ]
+    },
+    {
+      "dimension": "facial_expression",
+      "priority": "low",
+      "band_th": "ควรปรับ",
+      "issue_en": "Your facial expression remained relatively serious and flat throughout, missing an opportunity to show enthusiasm.",
+      "issue_th": "สีหน้าค่อนข้างเรียบเฉยและจริงจังตลอดเวลา ทำให้ขาดพลังความกระตือรือร้นและเป็นมิตร",
+      "suggestion_en": "Open your introduction with a genuine, warm smile and vary your expression to reflect enthusiasm for your experiences.",
+      "suggestion_th": "เริ่มต้นแนะนำตัวด้วยรอยยิ้มที่เป็นมิตร และแสดงสีหน้าที่สะท้อนความภูมิใจและกระตือรือร้นกับประสบการณ์ของตนเอง",
+      "action_steps_en": [
+        "Smile deliberately during the opening greeting ('Hi, I am Harshit Shah').",
+        "Practice delivering your leadership accomplishments in front of a mirror with a positive, energized facial expression.",
+        "Check that your brow is relaxed rather than furrowed when thinking under pressure."
+      ],
+      "action_steps_th": [
+        "ตั้งใจยิ้มอย่างเป็นธรรมชาติในประโยคทักทายแรก",
+        "ฝึกเล่าความสำเร็จหน้ากระจกโดยปรับสีหน้าให้ดูมีความสุขและมั่นใจ",
+        "ผ่อนคลายคิ้วและกล้ามเนื้อใบหน้าไม่ให้ดูเกร็งหรือเครียดเวลาคิดคำตอบ"
+      ]
+    }
+  ],
+  "improved_answer": {
+    "original_snippet": "Hi, I'm Harshit Shah. I am starting CSEA. I consider myself to have a lot of different skills and qualities that might be useful.",
+    "rewritten_en": "Hi, I'm Harshit Shah, a Computer Science Engineering student specializing in AI and Machine Learning. As the chairperson of ACM on campus, I lead an active organization of over 220 members, which has honed my leadership, technical management, and collaborative problem-solving skills. Combining this with practical internship experience in process analysis, I bring both engineering rigor and proactive teamwork to every initiative.",
+    "rewritten_th": "สวัสดีครับ ผม Harshit Shah กำลังศึกษาสาขาวิศวกรรมคอมพิวเตอร์และปัญญาประดิษฐ์ (AI/ML) ในฐานะประธานชมรม ACM ในมหาวิทยาลัย ผมได้บริหารทีมงานกว่า 220 คน ซึ่งช่วยพัฒนาทักษะความเป็นผู้นำ การจัดการเชิงเทคนิค และการทำงานร่วมกับผู้อื่นอย่างมีประสิทธิภาพ เมื่อผสานกับประสบการณ์ฝึกงานด้านการวิเคราะห์กระบวนการ ผมจึงพร้อมที่จะนำทักษะทางวิศวกรรมและความคิดริเริ่มสร้างสรรค์มาร่วมสร้างคุณค่าให้กับทีมครับ",
+    "why_better_en": "The rewritten version immediately anchors your technical identity and highlights your most impressive leadership credential upfront, avoiding vague statements like 'having skills that might be useful' and eliminating informal filler transitions.",
+    "why_better_th": "บทตอบใหม่ระบุความเชี่ยวชาญทางเทคนิคอย่างตรงประเด็น นำเสนอจุดเด่นด้านการเป็นผู้นำชมรมขนาดใหญ่ตั้งแต่ต้น แทนที่การพูดกว้างๆ ว่า 'มีทักษะหลายอย่างที่อาจมีประโยชน์' ทำให้ผู้สัมภาษณ์เห็นคุณค่าทันที"
+  },
+  "seven_day_plan_en": [
+    "Day 1: Video record yourself delivering a 1-minute intro with hands placed flat on the desk to break the chin-touching habit.",
+    "Day 2: Adjust your camera setup to exact eye level and practice maintaining gaze within the camera frame without looking up.",
+    "Day 3: Rewrite your answer using the Present-Past-Future structure (Degree -> ACM leadership -> Internships -> Target role).",
+    "Day 4: Practice delivering the revised script with intentional smiles at the opening greeting and closing statement.",
+    "Day 5: Practice pausing silently for 1 second instead of tilting your head sideways when recalling information.",
+    "Day 6: Conduct a full mock response incorporating 2 purposeful hand gestures to emphasize your 220-member team accomplishment.",
+    "Day 7: Record a final benchmark attempt and compare posture, head stability, and eye contact against this baseline video."
+  ],
+  "seven_day_plan_th": [
+    "วันที่ 1: อัดวิดีโอแนะนำตัว 1 นาทีโดยวางมือราบบนโต๊ะเพื่อเลิกพฤติกรรมจับคางและจับใบหน้า",
+    "วันที่ 2: ปรับตำแหน่งกล้องเว็บแคมให้อยู่ระดับสายตาพอดี และฝึกสบตากับเลนส์กล้องโดยไม่เงยหน้าหลบสายตา",
+    "วันที่ 3: เรียบเรียงสคริปต์คำตอบใหม่ตามโครงสร้าง Present-Past-Future (สาขาวิชา -> ผลงาน ACM -> ประสบการณ์ฝึกงาน -> เป้าหมาย)",
+    "วันที่ 4: ซ้อมพูดสคริปต์ใหม่โดยเน้นยิ้มเปิดบทสนทนาและปิดท้ายด้วยพลังงานเชิงบวก",
+    "วันที่ 5: ฝึกการหยุดคิด 1 วินาทีอย่างนิ่งๆ แทนการหันหรือเอียงศีรษะไปมาเวลานึกคำพูด",
+    "วันที่ 6: ซ้อมสัมภาษณ์เสมือนจริง โดยใช้ท่าทางมือเปิดผายประกอบการเน้นย้ำตัวเลขผลงาน 220 คนอย่างมั่นใจ",
+    "วันที่ 7: อัดคลิปประเมินผลรอบสุดท้าย เปรียบเทียบความนิ่งของศีรษะ การสบตา และการวางมือกับคลิปตั้งต้น"
+  ],
+  "key": "vid_0042",
+  "model": "gemini-3.8-flash (hybrid)"
+}

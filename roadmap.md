@@ -115,18 +115,18 @@
 
 ### 7.1 Approach 1 — Rule-based (พร้อม)
 - [x] รันได้ครบ pipeline
-- [ ] ย้ายเข้า `approaches/approach_1_rule/`
+- [x] ย้ายเข้า `approaches/approach_1_rule/`
 
 ### 7.2 Approach 2 — MLLM Zero-shot
-- [ ] `approaches/approach_2_mllm/run.py`
-- [ ] Upload video → Gemini → parse feedback
-- [ ] ไม่ใช้ evidence log
+- [x] `approaches/approach_2_mllm_zero_shot/run.py`
+- [x] Upload video → Gemini → parse feedback
+- [x] ไม่ใช้ evidence log
 
 ### 7.3 Approach 3 — Hybrid
-- [ ] `approaches/approach_3_hybrid/build_evidence.py`
-- [ ] `approaches/approach_3_hybrid/interpretation/mllm_client.py`
-- [ ] `approaches/approach_3_hybrid/interpretation/prompt_builder.py`
-- [ ] `approaches/approach_3_hybrid/interpretation/feedback_generator.py`
+- [x] `approaches/approach_3_hybrid/build_evidence.py`
+- [x] `approaches/approach_3_hybrid/interpretation/mllm_client.py`
+- [x] `approaches/approach_3_hybrid/interpretation/prompt_builder.py`
+- [x] `approaches/approach_3_hybrid/interpretation/feedback_generator.py`
 
 ---
 
