@@ -1,0 +1,1035 @@
+{
+    "language": "en",
+    "segments": [
+        {
+            "start": 2.794,
+            "end": 3.795,
+            "text": " Hi, I'm Harshit Shah.",
+            "words": [
+                {
+                    "word": "Hi,",
+                    "start": 2.794,
+                    "end": 2.894,
+                    "score": 0.567
+                },
+                {
+                    "word": "I'm",
+                    "start": 2.914,
+                    "end": 3.074,
+                    "score": 0.511
+                },
+                {
+                    "word": "Harshit",
+                    "start": 3.134,
+                    "end": 3.474,
+                    "score": 0.458
+                },
+                {
+                    "word": "Shah.",
+                    "start": 3.514,
+                    "end": 3.795,
+                    "score": 0.605
+                }
+            ],
+            "avg_logprob": -0.1896347658652248
+        },
+        {
+            "start": 4.535,
+            "end": 6.696,
+            "text": "I am starting CSEA.",
+            "words": [
+                {
+                    "word": "I",
+                    "start": 4.535,
+                    "end": 4.595,
+                    "score": 0.998
+                },
+                {
+                    "word": "am",
+                    "start": 4.695,
+                    "end": 4.795,
+                    "score": 0.96
+                },
+                {
+                    "word": "starting",
+                    "start": 5.535,
+                    "end": 5.815,
+                    "score": 0.913
+                },
+                {
+                    "word": "CSEA.",
+                    "start": 5.835,
+                    "end": 6.696,
+                    "score": 0.358
+                }
+            ],
+            "avg_logprob": -0.1896347658652248
+        },
+        {
+            "start": 7.856,
+            "end": 14.059,
+            "text": "I consider myself to have a lot of different skills and qualities that might be useful.",
+            "words": [
+                {
+                    "word": "I",
+                    "start": 7.856,
+                    "end": 7.916,
+                    "score": 0.972
+                },
+                {
+                    "word": "consider",
+                    "start": 7.956,
+                    "end": 8.437,
+                    "score": 0.784
+                },
+                {
+                    "word": "myself",
+                    "start": 8.497,
+                    "end": 8.877,
+                    "score": 0.927
+                },
+                {
+                    "word": "to",
+                    "start": 8.957,
+                    "end": 9.097,
+                    "score": 0.886
+                },
+                {
+                    "word": "have",
+                    "start": 9.337,
+                    "end": 9.757,
+                    "score": 0.965
+                },
+                {
+                    "word": "a",
+                    "start": 10.538,
+                    "end": 10.598,
+                    "score": 0.837
+                },
+                {
+                    "word": "lot",
+                    "start": 10.698,
+                    "end": 10.958,
+                    "score": 0.706
+                },
+                {
+                    "word": "of",
+                    "start": 11.038,
+                    "end": 11.258,
+                    "score": 0.843
+                },
+                {
+                    "word": "different",
+                    "start": 11.378,
+                    "end": 11.838,
+                    "score": 0.9
+                },
+                {
+                    "word": "skills",
+                    "start": 12.118,
+                    "end": 12.359,
+                    "score": 0.882
+                },
+                {
+                    "word": "and",
+                    "start": 12.399,
+                    "end": 12.479,
+                    "score": 0.784
+                },
+                {
+                    "word": "qualities",
+                    "start": 12.499,
+                    "end": 12.859,
+                    "score": 0.631
+                },
+                {
+                    "word": "that",
+                    "start": 12.879,
+                    "end": 13.019,
+                    "score": 0.768
+                },
+                {
+                    "word": "might",
+                    "start": 13.099,
+                    "end": 13.439,
+                    "score": 0.452
+                },
+                {
+                    "word": "be",
+                    "start": 13.539,
+                    "end": 13.659,
+                    "score": 0.744
+                },
+                {
+                    "word": "useful.",
+                    "start": 13.739,
+                    "end": 14.059,
+                    "score": 0.981
+                }
+            ],
+            "avg_logprob": -0.1896347658652248
+        },
+        {
+            "start": 15.02,
+            "end": 17.861,
+            "text": "One of them being that I'm an extremely good team player.",
+            "words": [
+                {
+                    "word": "One",
+                    "start": 15.02,
+                    "end": 15.12,
+                    "score": 0.638
+                },
+                {
+                    "word": "of",
+                    "start": 15.14,
+                    "end": 15.18,
+                    "score": 0.901
+                },
+                {
+                    "word": "them",
+                    "start": 15.22,
+                    "end": 15.34,
+                    "score": 0.747
+                },
+                {
+                    "word": "being",
+                    "start": 15.38,
+                    "end": 15.58,
+                    "score": 0.839
+                },
+                {
+                    "word": "that",
+                    "start": 15.62,
+                    "end": 16.0,
+                    "score": 0.403
+                },
+                {
+                    "word": "I'm",
+                    "start": 16.34,
+                    "end": 16.48,
+                    "score": 0.718
+                },
+                {
+                    "word": "an",
+                    "start": 16.601,
+                    "end": 16.841,
+                    "score": 0.776
+                },
+                {
+                    "word": "extremely",
+                    "start": 16.921,
+                    "end": 17.261,
+                    "score": 0.896
+                },
+                {
+                    "word": "good",
+                    "start": 17.301,
+                    "end": 17.401,
+                    "score": 0.31
+                },
+                {
+                    "word": "team",
+                    "start": 17.421,
+                    "end": 17.581,
+                    "score": 0.614
+                },
+                {
+                    "word": "player.",
+                    "start": 17.601,
+                    "end": 17.861,
+                    "score": 0.521
+                }
+            ],
+            "avg_logprob": -0.1896347658652248
+        },
+        {
+            "start": 19.622,
+            "end": 21.163,
+            "text": "I have a lot of different management skills.",
+            "words": [
+                {
+                    "word": "I",
+                    "start": 19.622,
+                    "end": 19.682,
+                    "score": 0.971
+                },
+                {
+                    "word": "have",
+                    "start": 19.722,
+                    "end": 19.882,
+                    "score": 0.799
+                },
+                {
+                    "word": "a",
+                    "start": 19.902,
+                    "end": 19.922,
+                    "score": 0.857
+                },
+                {
+                    "word": "lot",
+                    "start": 19.962,
+                    "end": 20.082,
+                    "score": 0.588
+                },
+                {
+                    "word": "of",
+                    "start": 20.122,
+                    "end": 20.182,
+                    "score": 0.588
+                },
+                {
+                    "word": "different",
+                    "start": 20.202,
+                    "end": 20.442,
+                    "score": 0.285
+                },
+                {
+                    "word": "management",
+                    "start": 20.462,
+                    "end": 20.822,
+                    "score": 0.486
+                },
+                {
+                    "word": "skills.",
+                    "start": 20.842,
+                    "end": 21.163,
+                    "score": 0.741
+                }
+            ],
+            "avg_logprob": -0.1896347658652248
+        },
+        {
+            "start": 21.283,
+            "end": 23.624,
+            "text": "I love stepping up and taking the initiative to things.",
+            "words": [
+                {
+                    "word": "I",
+                    "start": 21.283,
+                    "end": 21.343,
+                    "score": 0.696
+                },
+                {
+                    "word": "love",
+                    "start": 21.443,
+                    "end": 21.683,
+                    "score": 0.918
+                },
+                {
+                    "word": "stepping",
+                    "start": 21.803,
+                    "end": 22.123,
+                    "score": 0.926
+                },
+                {
+                    "word": "up",
+                    "start": 22.163,
+                    "end": 22.243,
+                    "score": 0.95
+                },
+                {
+                    "word": "and",
+                    "start": 22.283,
+                    "end": 22.343,
+                    "score": 0.401
+                },
+                {
+                    "word": "taking",
+                    "start": 22.363,
+                    "end": 22.643,
+                    "score": 0.686
+                },
+                {
+                    "word": "the",
+                    "start": 22.663,
+                    "end": 22.743,
+                    "score": 0.345
+                },
+                {
+                    "word": "initiative",
+                    "start": 22.763,
+                    "end": 23.204,
+                    "score": 0.322
+                },
+                {
+                    "word": "to",
+                    "start": 23.224,
+                    "end": 23.344,
+                    "score": 0.838
+                },
+                {
+                    "word": "things.",
+                    "start": 23.384,
+                    "end": 23.624,
+                    "score": 0.982
+                }
+            ],
+            "avg_logprob": -0.1896347658652248
+        },
+        {
+            "start": 24.863,
+            "end": 34.365,
+            "text": " That is basically ingrained in my personality, where if I know that something needs to happen, I just feel like it needs to be me that makes it happen with the help of my entire team.",
+            "words": [
+                {
+                    "word": "That",
+                    "start": 24.863,
+                    "end": 25.023,
+                    "score": 0.749
+                },
+                {
+                    "word": "is",
+                    "start": 25.103,
+                    "end": 25.203,
+                    "score": 0.79
+                },
+                {
+                    "word": "basically",
+                    "start": 25.223,
+                    "end": 25.643,
+                    "score": 0.541
+                },
+                {
+                    "word": "ingrained",
+                    "start": 25.663,
+                    "end": 26.103,
+                    "score": 0.704
+                },
+                {
+                    "word": "in",
+                    "start": 26.163,
+                    "end": 26.223,
+                    "score": 0.501
+                },
+                {
+                    "word": "my",
+                    "start": 26.243,
+                    "end": 26.363,
+                    "score": 0.549
+                },
+                {
+                    "word": "personality,",
+                    "start": 26.383,
+                    "end": 26.963,
+                    "score": 0.714
+                },
+                {
+                    "word": "where",
+                    "start": 26.983,
+                    "end": 27.364,
+                    "score": 0.588
+                },
+                {
+                    "word": "if",
+                    "start": 27.484,
+                    "end": 27.584,
+                    "score": 0.579
+                },
+                {
+                    "word": "I",
+                    "start": 28.264,
+                    "end": 28.344,
+                    "score": 0.629
+                },
+                {
+                    "word": "know",
+                    "start": 28.404,
+                    "end": 28.564,
+                    "score": 0.851
+                },
+                {
+                    "word": "that",
+                    "start": 28.604,
+                    "end": 28.724,
+                    "score": 0.909
+                },
+                {
+                    "word": "something",
+                    "start": 28.744,
+                    "end": 28.984,
+                    "score": 0.912
+                },
+                {
+                    "word": "needs",
+                    "start": 29.024,
+                    "end": 29.224,
+                    "score": 0.797
+                },
+                {
+                    "word": "to",
+                    "start": 29.244,
+                    "end": 29.344,
+                    "score": 0.924
+                },
+                {
+                    "word": "happen,",
+                    "start": 29.364,
+                    "end": 29.724,
+                    "score": 0.911
+                },
+                {
+                    "word": "I",
+                    "start": 30.744,
+                    "end": 30.804,
+                    "score": 0.931
+                },
+                {
+                    "word": "just",
+                    "start": 30.824,
+                    "end": 30.964,
+                    "score": 0.817
+                },
+                {
+                    "word": "feel",
+                    "start": 31.004,
+                    "end": 31.084,
+                    "score": 0.344
+                },
+                {
+                    "word": "like",
+                    "start": 31.104,
+                    "end": 31.184,
+                    "score": 0.227
+                },
+                {
+                    "word": "it",
+                    "start": 31.204,
+                    "end": 31.284,
+                    "score": 0.847
+                },
+                {
+                    "word": "needs",
+                    "start": 31.324,
+                    "end": 31.504,
+                    "score": 0.88
+                },
+                {
+                    "word": "to",
+                    "start": 31.524,
+                    "end": 31.604,
+                    "score": 0.955
+                },
+                {
+                    "word": "be",
+                    "start": 31.624,
+                    "end": 31.744,
+                    "score": 0.907
+                },
+                {
+                    "word": "me",
+                    "start": 31.784,
+                    "end": 31.944,
+                    "score": 0.83
+                },
+                {
+                    "word": "that",
+                    "start": 31.964,
+                    "end": 32.084,
+                    "score": 0.908
+                },
+                {
+                    "word": "makes",
+                    "start": 32.124,
+                    "end": 32.265,
+                    "score": 0.855
+                },
+                {
+                    "word": "it",
+                    "start": 32.325,
+                    "end": 32.405,
+                    "score": 0.422
+                },
+                {
+                    "word": "happen",
+                    "start": 32.425,
+                    "end": 32.745,
+                    "score": 0.897
+                },
+                {
+                    "word": "with",
+                    "start": 33.105,
+                    "end": 33.265,
+                    "score": 0.785
+                },
+                {
+                    "word": "the",
+                    "start": 33.285,
+                    "end": 33.365,
+                    "score": 0.825
+                },
+                {
+                    "word": "help",
+                    "start": 33.385,
+                    "end": 33.565,
+                    "score": 0.906
+                },
+                {
+                    "word": "of",
+                    "start": 33.605,
+                    "end": 33.665,
+                    "score": 0.782
+                },
+                {
+                    "word": "my",
+                    "start": 33.725,
+                    "end": 33.845,
+                    "score": 0.857
+                },
+                {
+                    "word": "entire",
+                    "start": 33.885,
+                    "end": 34.165,
+                    "score": 0.834
+                },
+                {
+                    "word": "team.",
+                    "start": 34.185,
+                    "end": 34.365,
+                    "score": 0.554
+                }
+            ],
+            "avg_logprob": -0.26901076163086934
+        },
+        {
+            "start": 35.265,
+            "end": 45.527,
+            "text": "Apart from that, a very good example of that is that I'm the chairperson of ACM, which is the largest technical coalition club on campus.",
+            "words": [
+                {
+                    "word": "Apart",
+                    "start": 35.265,
+                    "end": 35.465,
+                    "score": 0.805
+                },
+                {
+                    "word": "from",
+                    "start": 35.485,
+                    "end": 35.605,
+                    "score": 0.803
+                },
+                {
+                    "word": "that,",
+                    "start": 35.645,
+                    "end": 35.925,
+                    "score": 0.892
+                },
+                {
+                    "word": "a",
+                    "start": 37.906,
+                    "end": 37.986,
+                    "score": 0.627
+                },
+                {
+                    "word": "very",
+                    "start": 38.046,
+                    "end": 38.226,
+                    "score": 0.758
+                },
+                {
+                    "word": "good",
+                    "start": 38.246,
+                    "end": 38.386,
+                    "score": 0.913
+                },
+                {
+                    "word": "example",
+                    "start": 38.406,
+                    "end": 38.766,
+                    "score": 0.915
+                },
+                {
+                    "word": "of",
+                    "start": 38.786,
+                    "end": 38.846,
+                    "score": 0.742
+                },
+                {
+                    "word": "that",
+                    "start": 38.886,
+                    "end": 39.086,
+                    "score": 0.896
+                },
+                {
+                    "word": "is",
+                    "start": 39.166,
+                    "end": 39.246,
+                    "score": 0.756
+                },
+                {
+                    "word": "that",
+                    "start": 39.286,
+                    "end": 39.526,
+                    "score": 0.819
+                },
+                {
+                    "word": "I'm",
+                    "start": 39.946,
+                    "end": 40.526,
+                    "score": 0.538
+                },
+                {
+                    "word": "the",
+                    "start": 40.546,
+                    "end": 40.626,
+                    "score": 0.772
+                },
+                {
+                    "word": "chairperson",
+                    "start": 40.646,
+                    "end": 41.006,
+                    "score": 0.44
+                },
+                {
+                    "word": "of",
+                    "start": 41.026,
+                    "end": 41.086,
+                    "score": 0.398
+                },
+                {
+                    "word": "ACM,",
+                    "start": 41.126,
+                    "end": 41.506,
+                    "score": 0.907
+                },
+                {
+                    "word": "which",
+                    "start": 42.267,
+                    "end": 42.427,
+                    "score": 0.881
+                },
+                {
+                    "word": "is",
+                    "start": 42.507,
+                    "end": 42.607,
+                    "score": 0.619
+                },
+                {
+                    "word": "the",
+                    "start": 42.627,
+                    "end": 42.807,
+                    "score": 0.732
+                },
+                {
+                    "word": "largest",
+                    "start": 42.847,
+                    "end": 43.127,
+                    "score": 0.932
+                },
+                {
+                    "word": "technical",
+                    "start": 43.167,
+                    "end": 43.607,
+                    "score": 0.59
+                },
+                {
+                    "word": "coalition",
+                    "start": 43.627,
+                    "end": 44.007,
+                    "score": 0.585
+                },
+                {
+                    "word": "club",
+                    "start": 44.047,
+                    "end": 45.027,
+                    "score": 0.745
+                },
+                {
+                    "word": "on",
+                    "start": 45.047,
+                    "end": 45.147,
+                    "score": 0.68
+                },
+                {
+                    "word": "campus.",
+                    "start": 45.167,
+                    "end": 45.527,
+                    "score": 0.946
+                }
+            ],
+            "avg_logprob": -0.26901076163086934
+        },
+        {
+            "start": 46.627,
+            "end": 49.088,
+            "text": "And I had over 220 members in my team itself.",
+            "words": [
+                {
+                    "word": "And",
+                    "start": 46.627,
+                    "end": 46.727,
+                    "score": 0.811
+                },
+                {
+                    "word": "I",
+                    "start": 46.787,
+                    "end": 46.868,
+                    "score": 0.709
+                },
+                {
+                    "word": "had",
+                    "start": 46.888,
+                    "end": 47.088,
+                    "score": 0.669
+                },
+                {
+                    "word": "over",
+                    "start": 47.148,
+                    "end": 47.648,
+                    "score": 0.8
+                },
+                {
+                    "word": "220",
+                    "start": 47.668,
+                    "end": 48.008,
+                    "score": 0.699
+                },
+                {
+                    "word": "members",
+                    "start": 48.128,
+                    "end": 48.368,
+                    "score": 0.957
+                },
+                {
+                    "word": "in",
+                    "start": 48.408,
+                    "end": 48.468,
+                    "score": 0.709
+                },
+                {
+                    "word": "my",
+                    "start": 48.488,
+                    "end": 48.568,
+                    "score": 0.55
+                },
+                {
+                    "word": "team",
+                    "start": 48.608,
+                    "end": 48.768,
+                    "score": 0.528
+                },
+                {
+                    "word": "itself.",
+                    "start": 48.808,
+                    "end": 49.088,
+                    "score": 0.846
+                }
+            ],
+            "avg_logprob": -0.26901076163086934
+        },
+        {
+            "start": 49.808,
+            "end": 53.849,
+            "text": "Apart from that, I've had a couple of internships, one as a process, and I would suggest to stay.",
+            "words": [
+                {
+                    "word": "Apart",
+                    "start": 49.808,
+                    "end": 50.028,
+                    "score": 0.886
+                },
+                {
+                    "word": "from",
+                    "start": 50.068,
+                    "end": 50.208,
+                    "score": 0.862
+                },
+                {
+                    "word": "that,",
+                    "start": 50.248,
+                    "end": 50.508,
+                    "score": 0.919
+                },
+                {
+                    "word": "I've",
+                    "start": 50.728,
+                    "end": 50.908,
+                    "score": 0.552
+                },
+                {
+                    "word": "had",
+                    "start": 50.928,
+                    "end": 51.048,
+                    "score": 0.842
+                },
+                {
+                    "word": "a",
+                    "start": 51.068,
+                    "end": 51.088,
+                    "score": 0.942
+                },
+                {
+                    "word": "couple",
+                    "start": 51.128,
+                    "end": 51.308,
+                    "score": 0.357
+                },
+                {
+                    "word": "of",
+                    "start": 51.328,
+                    "end": 51.388,
+                    "score": 0.298
+                },
+                {
+                    "word": "internships,",
+                    "start": 51.428,
+                    "end": 51.949,
+                    "score": 0.53
+                },
+                {
+                    "word": "one",
+                    "start": 52.069,
+                    "end": 52.169,
+                    "score": 0.949
+                },
+                {
+                    "word": "as",
+                    "start": 52.209,
+                    "end": 52.289,
+                    "score": 0.562
+                },
+                {
+                    "word": "a",
+                    "start": 52.329,
+                    "end": 52.369,
+                    "score": 0.62
+                },
+                {
+                    "word": "process,",
+                    "start": 52.389,
+                    "end": 52.709,
+                    "score": 0.72
+                },
+                {
+                    "word": "and",
+                    "start": 52.749,
+                    "end": 52.849,
+                    "score": 0.658
+                },
+                {
+                    "word": "I",
+                    "start": 52.889,
+                    "end": 52.949,
+                    "score": 0.303
+                },
+                {
+                    "word": "would",
+                    "start": 52.969,
+                    "end": 53.069,
+                    "score": 0.019
+                },
+                {
+                    "word": "suggest",
+                    "start": 53.089,
+                    "end": 53.489,
+                    "score": 0.392
+                },
+                {
+                    "word": "to",
+                    "start": 53.509,
+                    "end": 53.609,
+                    "score": 0.464
+                },
+                {
+                    "word": "stay.",
+                    "start": 53.629,
+                    "end": 53.849,
+                    "score": 0.662
+                }
+            ],
+            "avg_logprob": -0.26901076163086934
+        },
+        {
+            "start": 54.519,
+            "end": 60.424,
+            "text": " another one as an intern with slick where my direct contribution is ultra mobile",
+            "words": [
+                {
+                    "word": "another",
+                    "start": 54.519,
+                    "end": 54.76,
+                    "score": 0.916
+                },
+                {
+                    "word": "one",
+                    "start": 54.801,
+                    "end": 54.941,
+                    "score": 0.438
+                },
+                {
+                    "word": "as",
+                    "start": 55.082,
+                    "end": 55.463,
+                    "score": 0.796
+                },
+                {
+                    "word": "an",
+                    "start": 55.484,
+                    "end": 55.524,
+                    "score": 0.188
+                },
+                {
+                    "word": "intern",
+                    "start": 55.765,
+                    "end": 56.187,
+                    "score": 0.733
+                },
+                {
+                    "word": "with",
+                    "start": 56.207,
+                    "end": 56.407,
+                    "score": 0.741
+                },
+                {
+                    "word": "slick",
+                    "start": 56.428,
+                    "end": 56.769,
+                    "score": 0.851
+                },
+                {
+                    "word": "where",
+                    "start": 56.869,
+                    "end": 57.211,
+                    "score": 0.678
+                },
+                {
+                    "word": "my",
+                    "start": 58.436,
+                    "end": 58.657,
+                    "score": 0.995
+                },
+                {
+                    "word": "direct",
+                    "start": 58.697,
+                    "end": 58.918,
+                    "score": 0.724
+                },
+                {
+                    "word": "contribution",
+                    "start": 58.958,
+                    "end": 59.621,
+                    "score": 0.934
+                },
+                {
+                    "word": "is",
+                    "start": 59.701,
+                    "end": 59.802,
+                    "score": 0.637
+                },
+                {
+                    "word": "ultra",
+                    "start": 59.842,
+                    "end": 60.183,
+                    "score": 0.668
+                },
+                {
+                    "word": "mobile",
+                    "start": 60.224,
+                    "end": 60.424,
+                    "score": 0.452
+                }
+            ],
+            "avg_logprob": -0.6471714655558268
+        }
+    ]
+}

@@ -1,0 +1,128 @@
+[
+    {
+        "event": "eye_contact",
+        "start": 0.0,
+        "end": 0.6,
+        "duration": 0.6
+    },
+    {
+        "event": "looking_away",
+        "start": 0.6,
+        "end": 0.8,
+        "duration": 0.2
+    },
+    {
+        "event": "eye_contact",
+        "start": 0.8,
+        "end": 1.8,
+        "duration": 1.0
+    },
+    {
+        "event": "looking_away",
+        "start": 1.8,
+        "end": 2.0,
+        "duration": 0.2
+    },
+    {
+        "event": "eye_contact",
+        "start": 2.0,
+        "end": 3.4,
+        "duration": 1.4
+    },
+    {
+        "event": "looking_away",
+        "start": 3.4,
+        "end": 3.6,
+        "duration": 0.2
+    },
+    {
+        "event": "eye_contact",
+        "start": 3.6,
+        "end": 5.6,
+        "duration": 2.0
+    },
+    {
+        "event": "looking_away",
+        "start": 5.6,
+        "end": 5.8,
+        "duration": 0.2
+    },
+    {
+        "event": "eye_contact",
+        "start": 5.8,
+        "end": 7.6,
+        "duration": 1.8
+    },
+    {
+        "event": "looking_away",
+        "start": 7.6,
+        "end": 7.8,
+        "duration": 0.2
+    },
+    {
+        "event": "eye_contact",
+        "start": 7.8,
+        "end": 10.8,
+        "duration": 3.0
+    },
+    {
+        "event": "looking_away",
+        "start": 10.8,
+        "end": 11.0,
+        "duration": 0.2
+    },
+    {
+        "event": "eye_contact",
+        "start": 11.0,
+        "end": 14.0,
+        "duration": 3.0
+    },
+    {
+        "event": "looking_away",
+        "start": 14.0,
+        "end": 14.2,
+        "duration": 0.2
+    },
+    {
+        "event": "eye_contact",
+        "start": 14.2,
+        "end": 16.4,
+        "duration": 2.2
+    },
+    {
+        "event": "looking_away",
+        "start": 16.4,
+        "end": 16.6,
+        "duration": 0.2
+    },
+    {
+        "event": "eye_contact",
+        "start": 16.6,
+        "end": 20.6,
+        "duration": 4.0
+    },
+    {
+        "event": "looking_away",
+        "start": 20.6,
+        "end": 20.8,
+        "duration": 0.2
+    },
+    {
+        "event": "eye_contact",
+        "start": 20.8,
+        "end": 31.8,
+        "duration": 11.0
+    },
+    {
+        "event": "looking_away",
+        "start": 31.8,
+        "end": 32.0,
+        "duration": 0.2
+    },
+    {
+        "event": "eye_contact",
+        "start": 32.0,
+        "end": 34.0,
+        "duration": 2.0
+    }
+]

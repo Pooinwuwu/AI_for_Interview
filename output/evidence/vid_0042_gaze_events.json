@@ -1,0 +1,380 @@
+[
+    {
+        "event": "eye_contact",
+        "start": 0.0,
+        "end": 4.0,
+        "duration": 4.0
+    },
+    {
+        "event": "looking_away",
+        "start": 4.0,
+        "end": 4.6,
+        "duration": 0.6
+    },
+    {
+        "event": "eye_contact",
+        "start": 4.6,
+        "end": 5.8,
+        "duration": 1.2
+    },
+    {
+        "event": "looking_away",
+        "start": 5.8,
+        "end": 6.0,
+        "duration": 0.2
+    },
+    {
+        "event": "eye_contact",
+        "start": 6.0,
+        "end": 7.0,
+        "duration": 1.0
+    },
+    {
+        "event": "looking_away",
+        "start": 7.0,
+        "end": 7.2,
+        "duration": 0.2
+    },
+    {
+        "event": "eye_contact",
+        "start": 7.2,
+        "end": 7.4,
+        "duration": 0.2
+    },
+    {
+        "event": "looking_away",
+        "start": 7.4,
+        "end": 7.8,
+        "duration": 0.4
+    },
+    {
+        "event": "eye_contact",
+        "start": 7.8,
+        "end": 10.2,
+        "duration": 2.4
+    },
+    {
+        "event": "looking_away",
+        "start": 10.2,
+        "end": 10.8,
+        "duration": 0.6
+    },
+    {
+        "event": "eye_contact",
+        "start": 10.8,
+        "end": 11.0,
+        "duration": 0.2
+    },
+    {
+        "event": "looking_away",
+        "start": 11.0,
+        "end": 11.4,
+        "duration": 0.4
+    },
+    {
+        "event": "eye_contact",
+        "start": 11.4,
+        "end": 11.6,
+        "duration": 0.2
+    },
+    {
+        "event": "looking_away",
+        "start": 11.6,
+        "end": 12.0,
+        "duration": 0.4
+    },
+    {
+        "event": "eye_contact",
+        "start": 12.0,
+        "end": 14.6,
+        "duration": 2.6
+    },
+    {
+        "event": "looking_away",
+        "start": 14.6,
+        "end": 15.0,
+        "duration": 0.4
+    },
+    {
+        "event": "eye_contact",
+        "start": 15.0,
+        "end": 20.0,
+        "duration": 5.0
+    },
+    {
+        "event": "looking_away",
+        "start": 20.0,
+        "end": 20.4,
+        "duration": 0.4
+    },
+    {
+        "event": "eye_contact",
+        "start": 20.4,
+        "end": 21.8,
+        "duration": 1.4
+    },
+    {
+        "event": "looking_away",
+        "start": 21.8,
+        "end": 22.4,
+        "duration": 0.6
+    },
+    {
+        "event": "eye_contact",
+        "start": 22.4,
+        "end": 25.8,
+        "duration": 3.4
+    },
+    {
+        "event": "looking_away",
+        "start": 25.8,
+        "end": 26.0,
+        "duration": 0.2
+    },
+    {
+        "event": "eye_contact",
+        "start": 26.0,
+        "end": 26.6,
+        "duration": 0.6
+    },
+    {
+        "event": "looking_away",
+        "start": 26.6,
+        "end": 27.0,
+        "duration": 0.4
+    },
+    {
+        "event": "eye_contact",
+        "start": 27.0,
+        "end": 28.4,
+        "duration": 1.4
+    },
+    {
+        "event": "looking_away",
+        "start": 28.4,
+        "end": 29.6,
+        "duration": 1.2
+    },
+    {
+        "event": "eye_contact",
+        "start": 29.6,
+        "end": 31.4,
+        "duration": 1.8
+    },
+    {
+        "event": "looking_away",
+        "start": 31.4,
+        "end": 31.6,
+        "duration": 0.2
+    },
+    {
+        "event": "eye_contact",
+        "start": 31.6,
+        "end": 33.2,
+        "duration": 1.6
+    },
+    {
+        "event": "looking_away",
+        "start": 33.2,
+        "end": 33.6,
+        "duration": 0.4
+    },
+    {
+        "event": "eye_contact",
+        "start": 33.6,
+        "end": 34.4,
+        "duration": 0.8
+    },
+    {
+        "event": "looking_away",
+        "start": 34.4,
+        "end": 34.6,
+        "duration": 0.2
+    },
+    {
+        "event": "eye_contact",
+        "start": 34.6,
+        "end": 36.2,
+        "duration": 1.6
+    },
+    {
+        "event": "looking_away",
+        "start": 36.2,
+        "end": 36.6,
+        "duration": 0.4
+    },
+    {
+        "event": "eye_contact",
+        "start": 36.6,
+        "end": 38.4,
+        "duration": 1.8
+    },
+    {
+        "event": "looking_away",
+        "start": 38.4,
+        "end": 38.6,
+        "duration": 0.2
+    },
+    {
+        "event": "eye_contact",
+        "start": 38.6,
+        "end": 39.6,
+        "duration": 1.0
+    },
+    {
+        "event": "looking_away",
+        "start": 39.6,
+        "end": 39.8,
+        "duration": 0.2
+    },
+    {
+        "event": "eye_contact",
+        "start": 39.8,
+        "end": 40.0,
+        "duration": 0.2
+    },
+    {
+        "event": "looking_away",
+        "start": 40.0,
+        "end": 43.0,
+        "duration": 3.0
+    },
+    {
+        "event": "eye_contact",
+        "start": 43.0,
+        "end": 43.8,
+        "duration": 0.8
+    },
+    {
+        "event": "looking_away",
+        "start": 43.8,
+        "end": 44.0,
+        "duration": 0.2
+    },
+    {
+        "event": "eye_contact",
+        "start": 44.0,
+        "end": 44.6,
+        "duration": 0.6
+    },
+    {
+        "event": "looking_away",
+        "start": 44.6,
+        "end": 45.0,
+        "duration": 0.4
+    },
+    {
+        "event": "eye_contact",
+        "start": 45.0,
+        "end": 47.4,
+        "duration": 2.4
+    },
+    {
+        "event": "looking_away",
+        "start": 47.4,
+        "end": 47.8,
+        "duration": 0.4
+    },
+    {
+        "event": "eye_contact",
+        "start": 47.8,
+        "end": 48.2,
+        "duration": 0.4
+    },
+    {
+        "event": "looking_away",
+        "start": 48.2,
+        "end": 48.4,
+        "duration": 0.2
+    },
+    {
+        "event": "eye_contact",
+        "start": 48.4,
+        "end": 49.0,
+        "duration": 0.6
+    },
+    {
+        "event": "looking_away",
+        "start": 49.0,
+        "end": 49.2,
+        "duration": 0.2
+    },
+    {
+        "event": "eye_contact",
+        "start": 49.2,
+        "end": 50.0,
+        "duration": 0.8
+    },
+    {
+        "event": "looking_away",
+        "start": 50.0,
+        "end": 51.4,
+        "duration": 1.4
+    },
+    {
+        "event": "eye_contact",
+        "start": 51.4,
+        "end": 53.8,
+        "duration": 2.4
+    },
+    {
+        "event": "looking_away",
+        "start": 53.8,
+        "end": 55.2,
+        "duration": 1.4
+    },
+    {
+        "event": "eye_contact",
+        "start": 55.2,
+        "end": 56.6,
+        "duration": 1.4
+    },
+    {
+        "event": "looking_away",
+        "start": 56.6,
+        "end": 56.8,
+        "duration": 0.2
+    },
+    {
+        "event": "eye_contact",
+        "start": 56.8,
+        "end": 57.0,
+        "duration": 0.2
+    },
+    {
+        "event": "looking_away",
+        "start": 57.0,
+        "end": 57.2,
+        "duration": 0.2
+    },
+    {
+        "event": "eye_contact",
+        "start": 57.2,
+        "end": 59.4,
+        "duration": 2.2
+    },
+    {
+        "event": "looking_away",
+        "start": 59.4,
+        "end": 59.6,
+        "duration": 0.2
+    },
+    {
+        "event": "eye_contact",
+        "start": 59.6,
+        "end": 60.0,
+        "duration": 0.4
+    },
+    {
+        "event": "looking_away",
+        "start": 60.0,
+        "end": 60.2,
+        "duration": 0.2
+    },
+    {
+        "event": "eye_contact",
+        "start": 60.2,
+        "end": 60.4,
+        "duration": 0.2
+    }
+]

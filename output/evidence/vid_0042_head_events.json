@@ -1,0 +1,242 @@
+[
+    {
+        "event": "turned_up",
+        "start": 0.0,
+        "end": 0.8,
+        "duration": 0.8
+    },
+    {
+        "event": "turned_left",
+        "start": 0.8,
+        "end": 2.6,
+        "duration": 1.8
+    },
+    {
+        "event": "turned_up",
+        "start": 2.6,
+        "end": 3.8,
+        "duration": 1.2
+    },
+    {
+        "event": "turned_right",
+        "start": 3.8,
+        "end": 5.2,
+        "duration": 1.4
+    },
+    {
+        "event": "turned_up",
+        "start": 5.2,
+        "end": 6.2,
+        "duration": 1.0
+    },
+    {
+        "event": "turned_left",
+        "start": 6.2,
+        "end": 8.6,
+        "duration": 2.4
+    },
+    {
+        "event": "turned_up",
+        "start": 8.6,
+        "end": 10.8,
+        "duration": 2.2
+    },
+    {
+        "event": "turned_left",
+        "start": 10.8,
+        "end": 11.2,
+        "duration": 0.4
+    },
+    {
+        "event": "turned_up",
+        "start": 11.2,
+        "end": 11.6,
+        "duration": 0.4
+    },
+    {
+        "event": "turned_left",
+        "start": 11.6,
+        "end": 13.2,
+        "duration": 1.6
+    },
+    {
+        "event": "turned_right",
+        "start": 13.2,
+        "end": 15.6,
+        "duration": 2.4
+    },
+    {
+        "event": "turned_left",
+        "start": 15.6,
+        "end": 19.6,
+        "duration": 4.0
+    },
+    {
+        "event": "turned_up",
+        "start": 19.6,
+        "end": 22.0,
+        "duration": 2.4
+    },
+    {
+        "event": "turned_right",
+        "start": 22.0,
+        "end": 22.4,
+        "duration": 0.4
+    },
+    {
+        "event": "turned_up",
+        "start": 22.4,
+        "end": 23.2,
+        "duration": 0.8
+    },
+    {
+        "event": "turned_left",
+        "start": 23.2,
+        "end": 24.8,
+        "duration": 1.6
+    },
+    {
+        "event": "turned_up",
+        "start": 24.8,
+        "end": 26.4,
+        "duration": 1.6
+    },
+    {
+        "event": "turned_left",
+        "start": 26.4,
+        "end": 28.8,
+        "duration": 2.4
+    },
+    {
+        "event": "turned_right",
+        "start": 28.8,
+        "end": 29.6,
+        "duration": 0.8
+    },
+    {
+        "event": "turned_up",
+        "start": 29.6,
+        "end": 32.2,
+        "duration": 2.6
+    },
+    {
+        "event": "turned_left",
+        "start": 32.2,
+        "end": 33.4,
+        "duration": 1.2
+    },
+    {
+        "event": "turned_up",
+        "start": 33.4,
+        "end": 34.6,
+        "duration": 1.2
+    },
+    {
+        "event": "turned_left",
+        "start": 34.6,
+        "end": 37.0,
+        "duration": 2.4
+    },
+    {
+        "event": "turned_up",
+        "start": 37.0,
+        "end": 38.0,
+        "duration": 1.0
+    },
+    {
+        "event": "turned_left",
+        "start": 38.0,
+        "end": 39.8,
+        "duration": 1.8
+    },
+    {
+        "event": "turned_down",
+        "start": 39.8,
+        "end": 40.4,
+        "duration": 0.6
+    },
+    {
+        "event": "turned_up",
+        "start": 40.4,
+        "end": 44.0,
+        "duration": 3.6
+    },
+    {
+        "event": "turned_left",
+        "start": 44.0,
+        "end": 45.4,
+        "duration": 1.4
+    },
+    {
+        "event": "turned_up",
+        "start": 45.4,
+        "end": 46.6,
+        "duration": 1.2
+    },
+    {
+        "event": "turned_right",
+        "start": 46.6,
+        "end": 47.8,
+        "duration": 1.2
+    },
+    {
+        "event": "turned_left",
+        "start": 47.8,
+        "end": 50.2,
+        "duration": 2.4
+    },
+    {
+        "event": "turned_up",
+        "start": 50.2,
+        "end": 51.4,
+        "duration": 1.2
+    },
+    {
+        "event": "turned_left",
+        "start": 51.4,
+        "end": 52.2,
+        "duration": 0.8
+    },
+    {
+        "event": "turned_up",
+        "start": 52.2,
+        "end": 53.2,
+        "duration": 1.0
+    },
+    {
+        "event": "turned_left",
+        "start": 53.2,
+        "end": 56.4,
+        "duration": 3.2
+    },
+    {
+        "event": "turned_down",
+        "start": 56.4,
+        "end": 57.2,
+        "duration": 0.8
+    },
+    {
+        "event": "turned_left",
+        "start": 57.2,
+        "end": 58.0,
+        "duration": 0.8
+    },
+    {
+        "event": "turned_up",
+        "start": 58.0,
+        "end": 59.0,
+        "duration": 1.0
+    },
+    {
+        "event": "turned_left",
+        "start": 59.0,
+        "end": 60.0,
+        "duration": 1.0
+    },
+    {
+        "event": "turned_up",
+        "start": 60.0,
+        "end": 60.4,
+        "duration": 0.4
+    }
+]
