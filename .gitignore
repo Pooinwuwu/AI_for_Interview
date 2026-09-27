@@ -1,3 +1,4 @@
 .env
 .venv/
 ai_for_interview/
+input/
