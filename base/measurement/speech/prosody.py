@@ -79,13 +79,39 @@ def extract_prosody(audio_path: Path) -> dict:
         # 4. Pause / Speaking Rate estimation
         # We can estimate pauses by looking at intensity drops below a threshold.
         # Let's say threshold is mean_intensity - 15 dB or a fixed threshold like 50 dB
+        pauses = []
         if mean_intensity > 0:
             threshold = max(50.0, mean_intensity - 15)
             # Find continuous segments of silence
-            is_silence = intensity_values < threshold
-            silence_ratio = np.mean(is_silence)
+            is_silence = (intensity_values < threshold).flatten()
+            silence_ratio = float(np.mean(is_silence))
+            
+            # Extract pause intervals
+            times = intensity.xs()
+            padded = np.concatenate(([False], is_silence, [False]))
+            diff = np.diff(padded.astype(int))
+            starts = np.where(diff == 1)[0]
+            ends = np.where(diff == -1)[0]
+            
+            for s_idx, e_idx in zip(starts, ends):
+                if s_idx < len(times):
+                    p_start = times[s_idx]
+                    p_end = times[min(e_idx, len(times)-1)]
+                    p_duration = p_end - p_start
+                    # Consider silence > 0.5s as a distinct pause event
+                    if p_duration >= 0.5:
+                        pauses.append({
+                            "start": round(float(p_start), 2),
+                            "end": round(float(p_end), 2),
+                            "duration": round(float(p_duration), 2)
+                        })
         else:
             silence_ratio = 1.0
+            pauses.append({
+                "start": 0.0,
+                "end": round(float(snd.duration), 2),
+                "duration": round(float(snd.duration), 2)
+            })
 
         return {
             "pitch_mean_hz": float(mean_pitch),
@@ -94,6 +120,7 @@ def extract_prosody(audio_path: Path) -> dict:
             "jitter_local": float(jitter) if not np.isnan(jitter) else 0.0,
             "hnr_mean_db": float(mean_hnr),
             "silence_ratio": float(silence_ratio),
+            "pauses": pauses,
         }
     except Exception as e:
         logging.error(f"Error extracting prosody from {audio_path.name}: {e}")

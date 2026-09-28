@@ -1,6 +1,6 @@
 {
     "key": "vid_0042",
-    "total_events": 280,
+    "total_events": 292,
     "evidence": [
         {
             "category": "visual",
@@ -81,6 +81,14 @@
             "end": 3.795,
             "duration": 0.28,
             "value": "Shah."
+        },
+        {
+            "category": "speech",
+            "type": "pause",
+            "start": 3.75,
+            "end": 4.48,
+            "duration": 0.73,
+            "value": "silence"
         },
         {
             "category": "visual",
@@ -187,6 +195,14 @@
             "value": "turned_left"
         },
         {
+            "category": "speech",
+            "type": "pause",
+            "start": 6.68,
+            "end": 7.84,
+            "duration": 1.17,
+            "value": "silence"
+        },
+        {
             "category": "visual",
             "type": "gaze",
             "start": 7.0,
@@ -273,6 +289,14 @@
             "end": 9.757,
             "duration": 0.42,
             "value": "have"
+        },
+        {
+            "category": "speech",
+            "type": "pause",
+            "start": 9.76,
+            "end": 10.45,
+            "duration": 0.7,
+            "value": "silence"
         },
         {
             "category": "visual",
@@ -443,6 +467,14 @@
             "value": "useful."
         },
         {
+            "category": "speech",
+            "type": "pause",
+            "start": 14.04,
+            "end": 14.97,
+            "duration": 0.93,
+            "value": "silence"
+        },
+        {
             "category": "visual",
             "type": "gaze",
             "start": 14.6,
@@ -569,6 +601,14 @@
             "end": 18.2,
             "duration": 0.4,
             "value": "hands_still"
+        },
+        {
+            "category": "speech",
+            "type": "pause",
+            "start": 17.81,
+            "end": 19.52,
+            "duration": 1.7,
+            "value": "silence"
         },
         {
             "category": "visual",
@@ -819,6 +859,14 @@
             "value": "things."
         },
         {
+            "category": "speech",
+            "type": "pause",
+            "start": 23.73,
+            "end": 24.84,
+            "duration": 1.11,
+            "value": "silence"
+        },
+        {
             "category": "visual",
             "type": "head",
             "start": 24.8,
@@ -945,6 +993,14 @@
             "end": 27.584,
             "duration": 0.1,
             "value": "if"
+        },
+        {
+            "category": "speech",
+            "type": "pause",
+            "start": 27.52,
+            "end": 28.23,
+            "duration": 0.71,
+            "value": "silence"
         },
         {
             "category": "speech",
@@ -1241,6 +1297,14 @@
             "end": 34.365,
             "duration": 0.18,
             "value": "team."
+        },
+        {
+            "category": "speech",
+            "type": "pause",
+            "start": 34.28,
+            "end": 35.22,
+            "duration": 0.94,
+            "value": "silence"
         },
         {
             "category": "visual",
@@ -1619,6 +1683,14 @@
             "value": "turned_up"
         },
         {
+            "category": "speech",
+            "type": "pause",
+            "start": 45.6,
+            "end": 46.15,
+            "duration": 0.55,
+            "value": "silence"
+        },
+        {
             "category": "visual",
             "type": "head",
             "start": 46.6,
@@ -1777,6 +1849,14 @@
             "end": 49.088,
             "duration": 0.28,
             "value": "itself."
+        },
+        {
+            "category": "speech",
+            "type": "pause",
+            "start": 49.0,
+            "end": 49.77,
+            "duration": 0.78,
+            "value": "silence"
         },
         {
             "category": "visual",
@@ -2003,6 +2083,14 @@
             "value": "stay."
         },
         {
+            "category": "speech",
+            "type": "pause",
+            "start": 53.8,
+            "end": 54.46,
+            "duration": 0.66,
+            "value": "silence"
+        },
+        {
             "category": "visual",
             "type": "gaze",
             "start": 53.8,
@@ -2121,6 +2209,14 @@
             "end": 57.2,
             "duration": 0.2,
             "value": "looking_away"
+        },
+        {
+            "category": "speech",
+            "type": "pause",
+            "start": 57.18,
+            "end": 58.17,
+            "duration": 0.99,
+            "value": "silence"
         },
         {
             "category": "visual",

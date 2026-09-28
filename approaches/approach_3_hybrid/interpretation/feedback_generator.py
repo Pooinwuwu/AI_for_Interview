@@ -55,7 +55,7 @@ def main():
             feedback = client.generate_feedback(video_file, prompt, FEEDBACK_SCHEMA)
             
             feedback["key"] = key
-            feedback["model"] = "gemini-3.8-flash (hybrid)"
+            feedback["model"] = "gemini-2.5-flash (hybrid)"
             
             out_path = OUTPUT_DIR / f"{key}_feedback.json"
             with open(out_path, "w", encoding="utf-8") as f:

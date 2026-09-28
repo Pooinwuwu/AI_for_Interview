@@ -28,7 +28,7 @@ class HybridGeminiClient:
         for attempt in range(retries):
             try:
                 response = self.client.models.generate_content(
-                    model="gemini-3.8-flash",
+                    model="gemini-2.5-flash",
                     contents=[video_file, prompt],
                     config=types.GenerateContentConfig(
                         response_mime_type="application/json",

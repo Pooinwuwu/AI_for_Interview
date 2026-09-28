@@ -1,6 +1,6 @@
 {
     "key": "vid_0021",
-    "total_events": 100,
+    "total_events": 110,
     "evidence": [
         {
             "category": "visual",
@@ -25,6 +25,14 @@
             "end": 0.6,
             "duration": 0.6,
             "value": "turned_up"
+        },
+        {
+            "category": "speech",
+            "type": "pause",
+            "start": 0.03,
+            "end": 1.65,
+            "duration": 1.62,
+            "value": "silence"
         },
         {
             "category": "visual",
@@ -203,6 +211,14 @@
             "value": "AIML"
         },
         {
+            "category": "speech",
+            "type": "pause",
+            "start": 7.04,
+            "end": 7.82,
+            "duration": 0.78,
+            "value": "silence"
+        },
+        {
             "category": "visual",
             "type": "gaze",
             "start": 7.6,
@@ -275,6 +291,14 @@
             "value": "Manipul"
         },
         {
+            "category": "speech",
+            "type": "pause",
+            "start": 10.36,
+            "end": 11.47,
+            "duration": 1.11,
+            "value": "silence"
+        },
+        {
             "category": "visual",
             "type": "head",
             "start": 10.4,
@@ -339,6 +363,14 @@
             "value": "I"
         },
         {
+            "category": "speech",
+            "type": "pause",
+            "start": 12.94,
+            "end": 14.1,
+            "duration": 1.15,
+            "value": "silence"
+        },
+        {
             "category": "visual",
             "type": "gaze",
             "start": 14.0,
@@ -401,6 +433,14 @@
             "end": 16.6,
             "duration": 0.2,
             "value": "looking_away"
+        },
+        {
+            "category": "speech",
+            "type": "pause",
+            "start": 16.43,
+            "end": 16.94,
+            "duration": 0.5,
+            "value": "silence"
         },
         {
             "category": "visual",
@@ -516,6 +556,14 @@
         },
         {
             "category": "speech",
+            "type": "pause",
+            "start": 21.54,
+            "end": 22.33,
+            "duration": 0.79,
+            "value": "silence"
+        },
+        {
+            "category": "speech",
             "type": "word",
             "start": 22.33,
             "end": 22.67,
@@ -569,6 +617,14 @@
             "end": 24.431,
             "duration": 0.24,
             "value": "course."
+        },
+        {
+            "category": "speech",
+            "type": "pause",
+            "start": 24.42,
+            "end": 25.13,
+            "duration": 0.71,
+            "value": "silence"
         },
         {
             "category": "speech",
@@ -700,6 +756,14 @@
         },
         {
             "category": "speech",
+            "type": "pause",
+            "start": 28.42,
+            "end": 29.33,
+            "duration": 0.9,
+            "value": "silence"
+        },
+        {
+            "category": "speech",
             "type": "transcript",
             "start": 29.373,
             "end": 31.233,
@@ -779,6 +843,14 @@
             "value": "science."
         },
         {
+            "category": "speech",
+            "type": "pause",
+            "start": 31.3,
+            "end": 32.54,
+            "duration": 1.24,
+            "value": "silence"
+        },
+        {
             "category": "visual",
             "type": "gaze",
             "start": 31.8,
@@ -793,6 +865,14 @@
             "end": 34.0,
             "duration": 2.0,
             "value": "eye_contact"
+        },
+        {
+            "category": "speech",
+            "type": "pause",
+            "start": 32.85,
+            "end": 34.14,
+            "duration": 1.29,
+            "value": "silence"
         },
         {
             "category": "visual",
