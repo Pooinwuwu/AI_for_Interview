@@ -32,6 +32,11 @@ INPUT_DIR       = ROOT / "input"
 VIDEOS_DIR      = INPUT_DIR / "videos"
 METADATA_DIR    = INPUT_DIR / "metadata"
 METADATA_FILE   = METADATA_DIR / "metadata.json"
+QUESTIONS_DIR   = INPUT_DIR / "questions"
+GROUND_TRUTH_DIR = INPUT_DIR / "ground_truth"
+
+# AVI-Personality (main dataset) — videos + labels, see base/dataset/avi.py
+AVI_DIR         = INPUT_DIR / "AVI-Personality"
 
 
 # ============================================================
@@ -74,6 +79,7 @@ APPROACH_3_DIR   = APPROACHES_DIR / "approach_3_hybrid"
 # ============================================================
 
 VALIDATION_DIR   = ROOT / "validation"
+REPORT_DIR       = ROOT / "report"
 
 
 # ============================================================

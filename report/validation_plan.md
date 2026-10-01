@@ -2,22 +2,24 @@
 
 This document outlines the concrete steps to execute Phase 8: Validation. The goal is to rigorously compare our 3 AI approaches against human baseline scores.
 
-## 1. Human Ratings (Phase 8.1)
-To prove the AI works, we need a "Ground Truth". 
+## 1. Ground Truth: AVI-Personality (updated 2026-10-01)
+We no longer need to collect our own ratings for score validation. AVI-Personality
+provides recruiter ratings (1-5 BARS) for every participant:
 
-### The Setup
-*   **Raters:** Recruit 3 human raters who have experience interviewing candidates (e.g., HR professionals, senior managers).
-*   **Dataset:** Select a benchmark set of videos (e.g., 20-30 videos) that cover a wide range of performance (good, average, and poor).
-*   **Scoring Rubric:** We will ask raters to grade candidates on a **1 to 5 scale** for each of the 5 dimensions. This is much easier for humans than guessing a 0-100 score, and it maps perfectly to our AI bands:
-    *   **5 (Excellent):** 85-100 - Flawless, professional, highly engaging.
-    *   **4 (Good):** 70-84 - Strong, minor slip-ups but generally confident.
-    *   **3 (Fair):** 55-69 - Average, passable but lacks polish.
-    *   **2 (Needs Work):** 40-54 - Noticeable issues, distracting behaviors.
-    *   **1 (Priority/Poor):** 0-39 - Severe issues, highly detrimental to the interview.
+*   **Primary target:** `mean_rating_hirea` — overall interview performance / hireability.
+*   **Secondary:** Integrity, Collegiality, Social versatility, Development orientation.
+*   **Not used:** HEXACO personality, cognitive ability (we measure observable behaviour only).
+*   **Unit of analysis:** the participant. Recruiters rated after watching all six answers,
+    so clip scores are averaged per participant before comparison.
+*   **Splits:** official subject-level split. Tune on a dev subset from `val`;
+    report once on an eval subset from `test` (stratified by hireability, default 50 people).
 
-### Resolution Protocol
-*   If raters generally agree (high reliability), we average their scores.
-*   If raters strongly disagree on certain clips, we will use **Pairwise Comparison (Bradley-Terry model)**: instead of asking "what score is this?", we ask "Is Video A better than Video B?".
+Scripts: `base/dataset/build_subset.py` (select + copy clips), `validation/evaluate_avi.py` (metrics).
+
+### Where our own raters are still needed
+*   **Hallucination check (RQ1):** do the timestamped claims in feedback match the video?
+    2 raters, blind to which approach wrote the feedback.
+*   **Feedback quality:** usefulness/specificity of coaching text (AVI has no labels for this).
 
 ---
 
@@ -46,6 +48,8 @@ Ultimately, we will generate a comparison matrix to put in the final research pa
 | **Feedback Quality**| Generic | Highly Nuanced | Nuanced + Grounded |
 
 ### Next Immediate Action Items:
-1. [ ] Finalize the human scoring rubric sheet (e.g., Google Form / Excel).
-2. [ ] Identify and prepare the benchmark test set of videos.
-3. [ ] Create a Python script to calculate ICC and QWK.
+1. [ ] Build dev (val) and eval (test) subsets with `build_subset.py`.
+2. [ ] Add a `ratings` field to the feedback schema so Approach 2 & 3 can be scored.
+3. [ ] Run `evaluate_avi.py`; report Spearman + 95% CI as the primary result.
+4. [ ] QWK is secondary: hireability clusters around 3, so rounded bands carry little information.
+5. [ ] Write the hallucination-check script and rubric for the 2 blind raters.

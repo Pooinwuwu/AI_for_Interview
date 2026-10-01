@@ -1,15 +1,10 @@
-
----
-
-## 📄 ไฟล์ที่ 3: `ROADMAP.md`
-
-```markdown
 # Roadmap — Phase by Phase
 
 > แผนงานทั้งหมด + progress tracking
 
 **Overall Progress:** ~40% complete  
-**Last Updated:** 2026-09-26
+**Last Updated:** 2026-10-01  
+**Main dataset:** AVI-Personality (646 participants, 3,876 clips, recruiter-rated ground truth) — see Phase 0
 
 ---
 
@@ -17,6 +12,7 @@
 
 | Phase | Status | Progress | ETA |
 |---|---|---|---|
+| 0. Switch to AVI-Personality | ⏳ | 60% | 2-3 days |
 | 1. Preprocessing | ✅ Done | 100% | — |
 | 2. Features | ✅ Done | 100% | — |
 | 3. Scoring | ✅ Done | 100% | — |
@@ -27,6 +23,36 @@
 | 8. Validation | ⏳ | 0% | 2-3 weeks |
 | 9. Ethics + Framing | ⏳ | 0% | — |
 | 10. Paper Writing | ⏳ | 0% | 2 weeks |
+
+---
+
+## ⏳ Phase 0: Main dataset = AVI-Personality
+
+Why: AVI ships recruiter ratings for every participant, so system-vs-human
+correlation no longer depends on recruiting our own raters. The official
+subject-level split (train 452 / val 64 / test 130) already prevents
+participant leakage (replaces GroupKFold by `user_no` in work plan v3).
+
+Ground truth we use (1-5, one value per participant, rated after all 6 answers):
+- **Primary:** `mean_rating_hirea` (overall interview performance / hireability)
+- Secondary: Integrity, Collegiality, Social versatility, Development orientation
+- **Not used:** HEXACO personality and cognitive ability — we measure observable
+  behaviour, we do not predict personality
+
+Done:
+- [x] `base/dataset/avi.py` — labels, splits, clip keys, question text
+- [x] `input/questions/avi_questions.json` — exact text of q1-q6
+- [x] `base/dataset/build_subset.py` — stratified subset → `input/videos/` + metadata
+- [x] `validation/evaluate_avi.py` — per-participant aggregation, Spearman + bootstrap CI, QWK, bias check
+- [x] `base/_paths.py` — `AVI_DIR`, `QUESTIONS_DIR`, `GROUND_TRUTH_DIR`, `REPORT_DIR`
+- [x] `.gitignore` — `output/` untracked (participant data must never be pushed)
+
+To do:
+- [ ] Build dev subset: `python base/dataset/build_subset.py --split val --n 30 --name dev`
+- [ ] Build eval subset: `python base/dataset/build_subset.py --split test --n 50 --name eval --exclude-manifest input/ground_truth/avi_dev_subset.csv`
+- [ ] Decide questions: generic only (q1, q2 — default) vs all six (6x cost; matches what recruiters saw)
+- [ ] Rule: tune bands / weights on **dev (val)** only; report final numbers on **eval (test)** once
+- [ ] Check that `user_agreement.pdf` is signed and allows our use (academic, no redistribution)
 
 ---
 
@@ -128,26 +154,39 @@
 - [x] `approaches/approach_3_hybrid/interpretation/prompt_builder.py`
 - [x] `approaches/approach_3_hybrid/interpretation/feedback_generator.py`
 
+### 7.4 Adapt all approaches to AVI (blocking for Phase 8)
+- [ ] Replace hard-coded "Tell me about yourself" in all 3 prompts with `question_for_key(key)` (AVI q1-q6)
+- [ ] Add required `ratings` field to `FEEDBACK_SCHEMA` (band per dimension + `overall`) so A2/A3 can be scored against ground truth
+- [ ] Same Gemini model + temperature for all approaches; no silent fallback (drop and rerun a clip instead); log model per output
+- [ ] `extract_frames.py`: 5 fps → 30 fps default, compare 10 fps on a subset (work plan v3 §2.2)
+- [ ] `interviewer_present: false` for AVI (one-way interview) — diarization not needed
+
 ---
 
-## ⏳ Phase 8: Validation (2-3 weeks — เริ่มวางแผนเลย)
+## ⏳ Phase 8: Validation (AVI ground truth)
 
-### 8.1 Human Ratings
-- [ ] หา 3 raters ที่มีประสบการณ์สัมภาษณ์
-- [ ] ให้คะแนนคลิปชุดเดียวกัน (absolute rating)
-- [ ] ถ้าไม่นิ่ง → pairwise comparison + Bradley-Terry
+### 8.1 Agreement with recruiters (RQ: does the score track human judgement?)
+- [ ] Run A1/A2/A3 on eval subset
+- [ ] `python validation/evaluate_avi.py --manifest input/ground_truth/avi_eval_subset.csv`
+- [ ] Primary: Spearman (overall vs hireability) + 95% bootstrap CI
+- [ ] QWK as secondary only — hireability is mostly 2.5-3.5, so rounded bands collapse to "3"
+- [ ] Exploratory: each dimension vs each competency
 
-### 8.2 Metrics
-- [ ] Inter-rater reliability (ICC)
-- [ ] Spearman correlation (system vs human)
-- [ ] Quadratic Weighted Kappa (QWK)
-- [ ] Stability (rerun consistency)
-- [ ] Robustness (ลด fps/resolution)
+### 8.2 Hallucination check (RQ1)
+- [ ] Extract timestamped claims from A2/A3 feedback
+- [ ] Match against `*_evidence.json` within a fixed tolerance window
+- [ ] Human check on a sample (2 people, blind to approach) — this is where our own raters are still needed
 
-### 8.3 Comparison Report
-- [ ] ตารางเทียบ 3 approaches
-- [ ] วิเคราะห์ผล
-- [ ] เขียน Discussion
+### 8.3 Stability & robustness
+- [ ] Rerun A2/A3 ≥3 times on the same clips → SD / ICC across runs
+- [ ] Degrade video (fps / resolution) → change in A1/A3 scores
+
+### 8.4 Fairness
+- [ ] `report/avi_eval_bias.csv`: system vs human correlation with accent strength, English proficiency, gender
+
+### 8.5 Comparison report
+- [ ] Table: 3 approaches × (Spearman, QWK, hallucination rate, stability, cost/time)
+- [ ] Replace LLM-as-judge in `compare_approaches.py` (unblinded, Gemini judging Gemini, cannot see video) or report it only as a secondary signal
 
 ---
 
@@ -158,6 +197,8 @@
 - [ ] Limitation: bias ต่อ autism, social anxiety, culture
 - [ ] แสดงผลเป็นระดับ (ไม่ใช่ 87.3)
 - [ ] อ้างอิง EU AI Act
+- [ ] AVI user agreement: academic use only, no video redistribution, no re-identification
+- [ ] Never commit `output/` or AVI files; purge old media (`output/frames`, `output/audio` of vid_0021/vid_0042) from git history and GitHub
 
 ---
 

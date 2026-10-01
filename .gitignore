@@ -2,3 +2,10 @@
 .venv/
 ai_for_interview/
 input/
+# --- Participant data: never commit (PDPA + AVI-Personality user agreement) ---
+# Everything in output/ is derived from interview videos (audio, face frames,
+# landmarks, transcripts, feedback quoting what people said).
+output/
+input/videos_archive/
+# per-participant table joins AVI ids with demographics
+report/avi_eval_participants.csv
