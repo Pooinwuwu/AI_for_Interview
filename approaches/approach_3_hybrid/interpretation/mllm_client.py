@@ -2,15 +2,22 @@
 approaches/approach_3_hybrid/interpretation/mllm_client.py
 """
 import os
+import sys
 import time
 import json
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
+from base.llm_common import MODEL_NAME, TEMPERATURE, gen_config, call_with_retry
 from google import genai
 from google.genai import types
 
 class HybridGeminiClient:
-    def __init__(self, api_key: str):
+    def __init__(self, api_key: str, model_name: str = MODEL_NAME,
+                 temperature: float = TEMPERATURE):
         self.client = genai.Client(api_key=api_key)
+        self.model_name = model_name
+        self.temperature = temperature
         
     def upload_video(self, video_path: Path):
         print("       Uploading video to Gemini...")
@@ -23,29 +30,13 @@ class HybridGeminiClient:
             raise RuntimeError("Video processing failed.")
         return video_file
         
-    def generate_feedback(self, video_file, prompt: str, schema: dict, retries: int = 5):
-        backoff = [10, 20, 40, 60, 90]
-        for attempt in range(retries):
-            try:
-                response = self.client.models.generate_content(
-                    model="gemini-2.5-flash",
-                    contents=[video_file, prompt],
-                    config=types.GenerateContentConfig(
-                        response_mime_type="application/json",
-                        response_schema=schema,
-                        temperature=0.2,
-                    )
-                )
-                return json.loads(response.text)
-            except Exception as e:
-                err_str = str(e)
-                if attempt < retries - 1:
-                    wait = backoff[attempt] if attempt < len(backoff) else 60
-                    print(f"       [RETRY] API error: {err_str[:80]} - waiting {wait}s...")
-                    time.sleep(wait)
-                else:
-                    raise RuntimeError(f"Failed after {retries} retries: {e}")
-        
+    def generate_feedback(self, video_file, prompt: str, schema: dict):
+        return call_with_retry(lambda: json.loads(self.client.models.generate_content(
+            model=self.model_name,
+            contents=[video_file, prompt],
+            config=gen_config(schema, self.temperature),
+        ).text))
+
     def delete_video(self, video_file):
         print("       Cleaning up video from server...")
         self.client.files.delete(name=video_file.name)

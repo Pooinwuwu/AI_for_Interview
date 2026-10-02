@@ -155,11 +155,13 @@ To do:
 - [x] `approaches/approach_3_hybrid/interpretation/feedback_generator.py`
 
 ### 7.4 Adapt all approaches to AVI (blocking for Phase 8)
-- [ ] Replace hard-coded "Tell me about yourself" in all 3 prompts with `question_for_key(key)` (AVI q1-q6)
-- [ ] Add required `ratings` field to `FEEDBACK_SCHEMA` (band per dimension + `overall`) so A2/A3 can be scored against ground truth
-- [ ] Same Gemini model + temperature for all approaches; no silent fallback (drop and rerun a clip instead); log model per output
-- [ ] `extract_frames.py`: 5 fps → 30 fps default, compare 10 fps on a subset (work plan v3 §2.2)
-- [ ] `interviewer_present: false` for AVI (one-way interview) — diarization not needed
+- [x] Replace hard-coded "Tell me about yourself" in all 3 prompts with the AVI question + question-specific focus (`base/llm_common.py`)
+- [x] Add required `ratings` field to `FEEDBACK_SCHEMA` (band per dimension + `overall`); A1 stores its measured bands
+- [x] Same Gemini model + temperature (0.2) for all approaches via `base/llm_common.py` / `GEMINI_MODEL` in .env; model, temperature, prompt_version saved in every output; skip existing outputs unless `--force`
+- [x] `extract_frames.py`: 5 fps → 30 fps default (`--fps 10` for the comparison, still to run)
+- [x] `interviewer_present: false` for AVI (one-way interview) — diarization not needed
+- [x] A1 speech features read the WhisperX transcript (one transcript for A1 and the evidence log)
+- [ ] Re-tune pause / filler bands on dev — WhisperX finds ~1.5-2x more pauses than the old Whisper run
 
 ---
 

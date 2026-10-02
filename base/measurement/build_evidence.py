@@ -19,6 +19,14 @@ from base._paths import EVIDENCE_DIR
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 
+# Suffixes written by the individual evidence extractors.
+# key = file stem minus one of these, so any video name works
+# (vid_0021, 5484821efdf99b07b28f2300_q1_generic, ...).
+EVIDENCE_SUFFIXES = (
+    "_transcript", "_prosody",
+    "_gaze_events", "_head_events", "_hand_events", "_face_events",
+)
+
 def get_video_keys():
     # Discover keys from any existing evidence file
     keys = set()
@@ -26,14 +34,12 @@ def get_video_keys():
         # Ignore the aggregated evidence logs themselves
         if f.name.endswith("_evidence.json"):
             continue
-            
-        # Extract the key (e.g., 'vid_0021' from 'vid_0021_transcript.json')
-        parts = f.stem.split('_')
-        if len(parts) >= 2 and parts[0] == "vid":
-            key = f"{parts[0]}_{parts[1]}"
-            keys.add(key)
-            
-    return sorted(list(keys))
+        for suffix in EVIDENCE_SUFFIXES:
+            if f.stem.endswith(suffix):
+                keys.add(f.stem[: -len(suffix)])
+                break
+
+    return sorted(keys)
 
 def load_json(filepath):
     if not filepath.exists():

@@ -22,39 +22,26 @@ OUTPUT_DIR = PROJECT_ROOT / "output" / "feedback_mllm"
 
 # Import schema from approach 1
 sys.path.insert(0, str(PROJECT_ROOT / "approaches" / "approach_1_rule" / "llm"))
-from prompt_builder import FEEDBACK_SCHEMA
+from prompt_builder import FEEDBACK_SCHEMA, OUTPUT_RULES
 
-PROMPT = """You are an expert interview coach analyzing a candidate's response to a "Tell me about yourself" question in a job interview.
+sys.path.insert(0, str(PROJECT_ROOT))
+from base.llm_common import (MODEL_NAME, RATINGS_INSTRUCTIONS, question_block,
+                             run_info, parse_run_args, should_skip,
+                             gen_config, call_with_retry, BusyGuard)
 
-CONTEXT
--------
-• Question: "Tell me about yourself" (opening question)
-• Language: English
+def build_prompt(key: str) -> str:
+    return f"""You are an interview coach. Watch the video and give feedback on this one answer.
 
-YOUR TASK
----------
-Watch the video and evaluate the candidate across 5 dimensions:
-1. Eye Contact
-2. Head Movement
-3. Hand Gestures
-4. Facial Expression
-5. Answer Quality (Spoken content)
+{question_block(key)}
 
-Evaluate each dimension as a QUALITATIVE BAND:
-  - ดีมาก (excellent)
-  - ดี (good)
-  - ปานกลาง (fair)
-  - ควรปรับ (needs work)
-  - ควรปรับมาก (priority)
+Judge eye contact, head movement, hand gestures, facial expression, and speech delivery
+from what you see and hear.
 
-Provide structured, actionable feedback following the required JSON schema exactly.
+{OUTPUT_RULES}
 
-CRITICAL INSTRUCTIONS:
-• Provide the primary content in English, and provide precise Thai translations in the fields ending in `_th`.
-• DO NOT invent numeric scores. Use qualitative bands only.
-• Be specific to what you see and hear in the video.
-• Transcribe the first 1-2 sentences for the 'improved_answer' section and provide a better version.
+{RATINGS_INSTRUCTIONS}
 """
+
 
 def process_video(client, video_path: Path):
     key = video_path.stem
@@ -62,45 +49,48 @@ def process_video(client, video_path: Path):
     
     print("       Uploading video to Gemini...")
     video_file = client.files.upload(file=str(video_path))
-    
-    # Wait for processing
-    while video_file.state.name == "PROCESSING":
-        print("       Processing video on server...")
-        time.sleep(3)
-        video_file = client.files.get(name=video_file.name)
-        
-    if video_file.state.name == "FAILED":
-        raise RuntimeError("Video processing failed on server.")
-        
-    print("       Generating feedback (Zero-shot MLLM)...")
-    # Using 2.5-flash as default, can be modified
-    response = client.models.generate_content(
-        model="gemini-3.8-flash",
-        contents=[video_file, PROMPT],
-        config=types.GenerateContentConfig(
-            response_mime_type="application/json",
-            response_schema=FEEDBACK_SCHEMA,
-            temperature=0.2,
-        )
-    )
-    
+    try:
+        # Wait for processing
+        while video_file.state.name == "PROCESSING":
+            print("       Processing video on server...")
+            time.sleep(3)
+            video_file = client.files.get(name=video_file.name)
+
+        if video_file.state.name == "FAILED":
+            raise RuntimeError("Video processing failed on server.")
+
+        print(f"       Generating feedback (Zero-shot MLLM, {MODEL_NAME})...")
+        prompt = build_prompt(key)
+        response = call_with_retry(lambda: client.models.generate_content(
+            model=MODEL_NAME,
+            contents=[video_file, prompt],
+            config=gen_config(FEEDBACK_SCHEMA),
+        ))
+    finally:
+        # always remove the upload, also when generation fails
+        print("       Cleaning up video from server...")
+        try:
+            client.files.delete(name=video_file.name)
+        except Exception as e:
+            print(f"       [WARN] could not delete upload: {e}")
+
     feedback = json.loads(response.text)
     feedback["key"] = key
-    feedback["model"] = "gemini-3.8-flash (zero-shot)"
+    feedback.update(run_info())
+    feedback["approach"] = "mllm"
     
     # Save output
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     out_path = OUTPUT_DIR / f"{key}_feedback.json"
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(feedback, f, ensure_ascii=False, indent=2)
-        
-    print("       Cleaning up video from server...")
-    client.files.delete(name=video_file.name)
+
     
     print(f"       -> {out_path.relative_to(PROJECT_ROOT)}")
     return feedback
 
 def main():
+    args = parse_run_args("Approach 2 — zero-shot MLLM feedback from video")
     print("=" * 60)
     print("  APPROACH 2: MLLM ZERO-SHOT")
     print("=" * 60)
@@ -115,6 +105,8 @@ def main():
         sys.exit(1)
         
     video_files = sorted(list(VIDEOS_DIR.glob("*.mp4")) + list(VIDEOS_DIR.glob("*.mov")))
+    if args.only:
+        video_files = [v for v in video_files if v.stem in set(args.only)]
     if not video_files:
         print(f"[ERROR] No videos found in {VIDEOS_DIR}")
         sys.exit(1)
@@ -125,12 +117,18 @@ def main():
     client = genai.Client(api_key=api_key)
     
     success = 0
+    guard = BusyGuard()
     for vf in video_files:
+        if should_skip(OUTPUT_DIR / f"{vf.stem}_feedback.json", args.force):
+            continue
         try:
             process_video(client, vf)
             success += 1
+            guard.ok()
         except Exception as e:
             print(f"       [FAIL] {e}")
+            if guard.failed(e):
+                break
             
     print("=" * 60)
     print(f"  Done: {success}/{len(video_files)} succeeded.")

@@ -32,7 +32,9 @@ if sys.platform == "win32":
 # CONFIG
 # ============================================================
 
-TARGET_FPS = 5
+# 30 fps = default for head pose / posture / nod / fidget / gaze stability
+# (work plan v3 §2.2). Override with:  python extract_frames.py --fps 10
+TARGET_FPS = 30
 RESIZE_WIDTH = 640
 IMAGE_EXT = "jpg"
 JPEG_QUALITY = 90
@@ -92,6 +94,10 @@ def extract_frames(video_path: Path, out_dir: Path, target_fps: int) -> int:
     step = max(1, int(round(src_fps / target_fps)))
     out_dir.mkdir(parents=True, exist_ok=True)
 
+    # remove frames from an earlier run (e.g. at another fps) so they don't mix
+    for old in out_dir.glob(f"*.{IMAGE_EXT}"):
+        old.unlink()
+
     saved = 0
     frame_idx = 0
 
@@ -110,6 +116,11 @@ def extract_frames(video_path: Path, out_dir: Path, target_fps: int) -> int:
         frame_idx += 1
 
     cap.release()
+
+    # record what was extracted (detect_face_hand.py only reads *.jpg)
+    with open(out_dir / "_extraction.json", "w", encoding="utf-8") as f:
+        json.dump({"target_fps": target_fps, "source_fps": src_fps, "step": step,
+                   "effective_fps": round(src_fps / step, 3), "frames": saved}, f, indent=2)
     return saved
 
 
@@ -118,6 +129,13 @@ def extract_frames(video_path: Path, out_dir: Path, target_fps: int) -> int:
 # ============================================================
 
 def main():
+    import argparse
+    global TARGET_FPS
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--fps", type=int, default=TARGET_FPS,
+                    help=f"frames per second to keep (default {TARGET_FPS})")
+    TARGET_FPS = ap.parse_args().fps
+
     print("=" * 60)
     print("  EXTRACT FRAMES  (pipeline)")
     print("=" * 60)

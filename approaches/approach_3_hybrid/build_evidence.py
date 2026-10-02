@@ -1,38 +1,33 @@
 """
 approaches/approach_3_hybrid/build_evidence.py
 
-Formats the unified JSON evidence log into a readable text format for the MLLM prompt.
+Formats the unified JSON evidence log into compact text for the MLLM prompt.
+
+Single-word events (speech:word) are left out: the same words are already in
+the transcript sentences, and they were about half of every log. The full log
+(with words) stays in output/evidence/{key}_evidence.json for the
+hallucination check.
 """
 import json
 from pathlib import Path
 
+SKIP_TYPES = {"word"}
+
+
 def format_evidence_text(evidence_json_path: Path) -> str:
     if not evidence_json_path.exists():
         return "No evidence log available."
-        
+
     with open(evidence_json_path, 'r', encoding='utf-8') as f:
         data = json.load(f)
-        
-    events = data.get("evidence", [])
+
+    events = [e for e in data.get("evidence", []) if e.get("type") not in SKIP_TYPES]
     if not events:
         return "No evidence events recorded."
-        
+
     lines = []
-    lines.append("TIMELINE OF EVENTS (Seconds):")
-    lines.append("-" * 40)
-    
     for ev in events:
-        start = ev.get("start", 0)
-        end = ev.get("end", 0)
-        cat = ev.get("category", "")
-        etype = ev.get("type", "")
-        val = ev.get("value", "")
-        
-        # Truncate very long values to save context window (e.g. transcript text)
-        val_str = str(val).replace('\n', ' ')
-        if len(val_str) > 100:
-            val_str = val_str[:97] + "..."
-            
-        lines.append(f"[{start:05.2f} - {end:05.2f}] [{cat}:{etype}] {val_str}")
-        
+        start, end = ev.get("start", 0), ev.get("end", 0)
+        val = str(ev.get("value", "")).replace("\n", " ").strip()
+        lines.append(f"[{start:.1f}-{end:.1f}] {ev.get('category', '')}:{ev.get('type', '')} {val}")
     return "\n".join(lines)

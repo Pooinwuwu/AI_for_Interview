@@ -13,7 +13,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[3]
 def main():
     script = Path(__file__).parent / "feedback_generator.py"
     result = subprocess.run(
-        [sys.executable, str(script)],
+        [sys.executable, str(script), *sys.argv[1:]],  # forward --force / --only
         cwd=str(PROJECT_ROOT),
     )
     sys.exit(result.returncode)

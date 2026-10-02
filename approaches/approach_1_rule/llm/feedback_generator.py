@@ -8,9 +8,12 @@ import json
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
 
 from llm_client import GeminiClient
 from prompt_builder import build_prompt, FEEDBACK_SCHEMA
+from base.llm_common import (MODEL_NAME, BANDS_TH, BANDS_EN, DIMENSIONS,
+                             run_info, parse_run_args, should_skip, BusyGuard)
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
@@ -24,9 +27,19 @@ def _load_json(p: Path) -> dict:
         return json.load(f)
 
 
+def rule_ratings(scores: dict) -> dict:
+    """Bands measured by the rule system (source of truth for Approach 1)."""
+    en_to_th = dict(zip(BANDS_EN, BANDS_TH))
+    def th(band):
+        return band.get("label_th") or en_to_th.get(band.get("label_en"), "")
+    dims = scores.get("dimensions", {})
+    out = {d: th(dims.get(d, {}).get("band", {})) for d in DIMENSIONS}
+    out["overall"] = th(scores.get("fusion", {}).get("overall_band", {}))
+    return out
+
+
 def generate_feedback(key: str,
-                      client: GeminiClient,
-                      model_name: str) -> dict:
+                      client: GeminiClient) -> dict:
     """สร้าง feedback สำหรับ 1 ตัวอย่าง"""
 
     scores_path = SCORES_DIR / f"{key}.json"
@@ -49,21 +62,26 @@ def generate_feedback(key: str,
 
     feedback = client.generate_json(prompt, FEEDBACK_SCHEMA)
 
+    # ratings = measured bands, never the LLM's copy of them
+    llm_ratings = feedback.get("ratings")
+    feedback["ratings"] = rule_ratings(scores)
+    if llm_ratings and llm_ratings != feedback["ratings"]:
+        feedback["ratings_llm_mismatch"] = llm_ratings
+
     # ใส่ metadata
     feedback["key"] = key
-    feedback["model"] = model_name
+    feedback.update(run_info())
+    feedback["approach"] = "rule"
     feedback["overall_score"] = scores.get("fusion", {}).get("overall_score", 0)
 
     return feedback
 
 
 def main():
+    args = parse_run_args("Approach 1 — LLM feedback from rule-based scores")
     print("=" * 60)
     print("  LLM FEEDBACK GENERATOR  (Gemini)")
     print("=" * 60)
-
-    # เลือกโมเดลจาก config — ถ้าไม่มีจะใช้ default
-    MODEL_NAME = "gemini-3.6-flash"
 
     if not SCORES_DIR.exists():
         print(f"[ERROR] ไม่พบ: {SCORES_DIR}")
@@ -71,6 +89,8 @@ def main():
         sys.exit(1)
 
     score_files = sorted(SCORES_DIR.glob("*.json"))
+    if args.only:
+        score_files = [f for f in score_files if f.stem in set(args.only)]
     if not score_files:
         print(f"[ERROR] ไม่มีไฟล์ใน {SCORES_DIR}")
         sys.exit(1)
@@ -83,21 +103,24 @@ def main():
     print(f"[INFO] พบ {len(score_files)} ตัวอย่าง\n")
 
     try:
-        client = GeminiClient(model_name=MODEL_NAME)
+        client = GeminiClient()
     except Exception as e:
         print(f"[ERROR] {e}")
         sys.exit(1)
 
     success, failed = 0, 0
+    guard = BusyGuard()
 
     for sf in score_files:
         key = sf.stem
+        out_path = FEEDBACK_DIR / f"{key}_feedback.json"
+        if should_skip(out_path, args.force):
+            continue
         print(f"[RUN ] {key}")
 
         try:
-            feedback = generate_feedback(key, client, MODEL_NAME)
+            feedback = generate_feedback(key, client)
 
-            out_path = FEEDBACK_DIR / f"{key}_feedback.json"
             with open(out_path, "w", encoding="utf-8") as f:
                 json.dump(feedback, f, ensure_ascii=False, indent=2)
 
@@ -107,10 +130,13 @@ def main():
             print(f"       strengths={n_str}  improvements={n_imp}")
             print(f"       -> {out_path.relative_to(PROJECT_ROOT)}\n")
             success += 1
+            guard.ok()
 
         except Exception as e:
             print(f"       [FAIL] {e}\n")
             failed += 1
+            if guard.failed(e):
+                break
 
     print("=" * 60)
     print(f"  เสร็จสิ้น: สำเร็จ {success}  |  ล้มเหลว {failed}")

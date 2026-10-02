@@ -1,0 +1,3 @@
+approach,attribute,n,stat,system,human
+rule,accent_strength,5,spearman,0.35909242322980395,-0.5263157894736843
+rule,english_proficiency,5,spearman,,

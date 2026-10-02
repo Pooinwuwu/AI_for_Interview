@@ -3,7 +3,7 @@
 import json
 from pathlib import Path
 
-_PROJECT_ROOT = Path(__file__).resolve().parent.parent
+_PROJECT_ROOT = Path(__file__).resolve().parents[3]  # features -> approach_1_rule -> approaches -> root
 _METADATA_FILE = _PROJECT_ROOT / "input" / "metadata" / "metadata.json"
 
 

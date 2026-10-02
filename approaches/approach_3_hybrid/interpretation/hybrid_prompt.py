@@ -1,51 +1,34 @@
 """
-approaches/approach_3_hybrid/interpretation/prompt_builder.py
+approaches/approach_3_hybrid/interpretation/hybrid_prompt.py
+
+Prompt for Approach 3: video + Tier-1 evidence log.
+Question context, rules and rating scale are shared with Approaches 1 & 2
+(base/llm_common.py, approach_1_rule/llm/prompt_builder.py), so the three
+approaches differ only in their inputs.
 """
 import sys
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(PROJECT_ROOT / "approaches" / "approach_1_rule" / "llm"))
-from prompt_builder import FEEDBACK_SCHEMA
+sys.path.insert(0, str(PROJECT_ROOT))
+from prompt_builder import FEEDBACK_SCHEMA, OUTPUT_RULES  # noqa: F401  (schema re-exported)
+from base.llm_common import RATINGS_INSTRUCTIONS, question_block
 
-def build_hybrid_prompt(evidence_text: str) -> str:
-    prompt = f"""You are an expert interview coach analyzing a candidate's response to a "Tell me about yourself" question.
 
-CONTEXT
--------
-• Question: "Tell me about yourself" (opening question)
-• Language: English
+def build_hybrid_prompt(evidence_text: str, key: str) -> str:
+    return f"""You are an interview coach. Watch the video and give feedback on this one answer.
 
-YOUR TASK
----------
-Watch the video AND review the detailed SYSTEM EVIDENCE LOG below. 
-The log provides precise timestamps for speech, gaze, head movements, hand gestures, and facial expressions as extracted by computer vision and audio analysis tools.
+{question_block(key)}
 
-Evaluate the candidate across 5 dimensions:
-1. Eye Contact
-2. Head Movement
-3. Hand Gestures
-4. Facial Expression
-5. Answer Quality (Spoken content)
+Judge eye contact, head movement, hand gestures, facial expression, and speech delivery.
+Ground your observations in the EVIDENCE LOG (measured by computer vision / audio tools).
+When you mention a specific moment, cite its time from the log (e.g. "at 12.4s").
 
-Use the evidence log to GROUND your visual observations (e.g., if the log says the candidate looked away frequently or had low hand presence, reflect that in your qualitative feedback).
-
-SYSTEM EVIDENCE LOG
--------------------
+EVIDENCE LOG [start - end seconds]
 {evidence_text}
--------------------
 
-Evaluate each dimension as a QUALITATIVE BAND:
-  - ดีมาก (excellent)
-  - ดี (good)
-  - ปานกลาง (fair)
-  - ควรปรับ (needs work)
-  - ควรปรับมาก (priority)
+{OUTPUT_RULES}
 
-Provide structured, actionable feedback following the required JSON schema.
-• Provide the primary content in English, and precise Thai translations in fields ending in `_th`.
-• DO NOT invent numeric scores. Use qualitative bands only.
-• Combine what you see in the video with the hard data from the evidence log to give highly specific feedback.
-• Transcribe the first 1-2 sentences for the 'improved_answer' section and provide a better version.
+{RATINGS_INSTRUCTIONS}
 """
-    return prompt
