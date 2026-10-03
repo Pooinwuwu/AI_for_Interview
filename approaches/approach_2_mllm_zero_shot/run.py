@@ -36,6 +36,7 @@ def build_prompt(key: str) -> str:
 
 Judge eye contact, head movement, hand gestures, facial expression, and speech delivery
 from what you see and hear.
+When you mention a specific moment, cite its time in seconds from the start of the video (e.g. "at 12.4s").
 
 {OUTPUT_RULES}
 

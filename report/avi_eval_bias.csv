@@ -1,3 +1,4 @@
 approach,attribute,n,stat,system,human
-rule,accent_strength,5,spearman,0.35909242322980395,-0.5263157894736843
-rule,english_proficiency,5,spearman,,
+rule,accent_strength,30,spearman,0.207916667969974,-0.2239388081891129
+rule,english_proficiency,30,spearman,0.21952315352145707,0.024098905785499065
+rule,gender,28,SMD male-female,-0.1455615451335083,-0.2531603057299002

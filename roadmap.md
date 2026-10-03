@@ -174,10 +174,19 @@ To do:
 - [ ] QWK as secondary only — hireability is mostly 2.5-3.5, so rounded bands collapse to "3"
 - [ ] Exploratory: each dimension vs each competency
 
+### 8.1b Dev result (2026-10-02) + learned score (RQ2)
+- [x] Approach 1 hand-set bands vs hireability on dev (n=30): ρ = -0.17 [95% CI -0.55, 0.22] -> no agreement
+- [x] Raw features do carry signal (answer length ρ≈+0.3, smile ratio +0.37, pause count +0.44; exploratory, n=30)
+- [x] `run_pipeline.py` — whole Tier-1 + scoring in one command, frees frame images after landmarks
+- [x] `validation/train_score_model.py` — ridge on train, choose on dev, `--final` once on test; length baseline; RQ2 = 'all' vs 'audio_text'
+- [ ] Process train1 (40 people) + train2 (40 people) — 2 nights, ~4 h each
+- [ ] Run train_score_model.py on dev; then eval subset (test) + `--final` once
+
 ### 8.2 Hallucination check (RQ1)
-- [ ] Extract timestamped claims from A2/A3 feedback
-- [ ] Match against `*_evidence.json` within a fixed tolerance window
-- [ ] Human check on a sample (2 people, blind to approach) — this is where our own raters are still needed
+- [x] Extract timestamped claims from A2/A3 feedback (`validation/hallucination_check.py`)
+- [x] Match against `*_evidence.json` within ±1 s → supported / contradicted / unsupported / out_of_range; paired A2 vs A3 difference with bootstrap CI
+- [x] Blind audit sample export + `--score-audit` (rater kappa, auto-vs-human agreement)
+- [ ] Run on real A2/A3 outputs; 2 raters fill `report/hallucination_audit_sample.csv`
 
 ### 8.3 Stability & robustness
 - [ ] Rerun A2/A3 ≥3 times on the same clips → SD / ICC across runs
