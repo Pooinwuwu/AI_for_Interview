@@ -9,3 +9,5 @@ output/
 input/videos_archive/
 # per-participant table joins AVI ids with demographics
 report/avi_eval_participants.csv
+# Approach 1b model: contains AVI participant ids (fit_participants.json)
+models/approach_1b/

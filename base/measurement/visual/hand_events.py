@@ -15,17 +15,21 @@ ROOT = Path(__file__).resolve().parent.parent.parent.parent
 sys.path.insert(0, str(ROOT))
 
 from base._paths import LANDMARKS_DIR, EVIDENCE_DIR, ensure_dirs
+from base.measurement.visual.geometry import video_aspect
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 
-SPEED_THRESH = 0.5  # Normalized distance per second to be considered "gesturing"
+SPEED_THRESH = 0.5  # frame heights per second to be considered "gesturing"
 
-def _hand_center(hand_landmarks):
-    xs = [p["x"] for p in hand_landmarks]
+def _hand_center(hand_landmarks, aspect=1.0):
+    xs = [p["x"] * aspect for p in hand_landmarks]
     ys = [p["y"] for p in hand_landmarks]
     return sum(xs)/len(xs), sum(ys)/len(ys)
 
-def extract_hand_events(landmarks_data):
+def extract_hand_events(landmarks_data, aspect=None):
+    """v2: movement measured in frame heights (x scaled by aspect, geometry.py)."""
+    if aspect is None:
+        aspect = video_aspect(landmarks_data.get("key", ""))
     events = []
     current_state = None
     start_time = 0.0
@@ -44,7 +48,7 @@ def extract_hand_events(landmarks_data):
             state_name = "hands_hidden"
             prev_cx, prev_cy, prev_t = None, None, None
         else:
-            cxs = [_hand_center(h["landmarks"]) for h in hands]
+            cxs = [_hand_center(h["landmarks"], aspect) for h in hands]
             cx = sum([c[0] for c in cxs]) / len(cxs)
             cy = sum([c[1] for c in cxs]) / len(cxs)
             
@@ -120,7 +124,8 @@ def main():
         with open(lm_file, 'r', encoding='utf-8') as f:
             data = json.load(f)
             
-        events = extract_hand_events(data)
+        data.setdefault("key", key)
+        events = extract_hand_events(data, video_aspect(key))
         
         with open(out_file, 'w', encoding='utf-8') as f:
             json.dump(events, f, indent=4, ensure_ascii=False)

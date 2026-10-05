@@ -1,6 +1,14 @@
-"""features/facial_expression.py — smile, brow, eye openness"""
+"""features/facial_expression.py — smile, brow, eye openness
 
-from utils import dist_2d, lm, mean, std, valid_face_frames
+v2 (2026-10-04): x scaled by the aspect ratio before any distance (see geometry.py)."""
+
+import sys
+from pathlib import Path
+
+from utils import dist_2d, mean, std, valid_face_frames
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
+from base.measurement.visual.geometry import P
 
 # MediaPipe Face Mesh indices
 MOUTH_L = 61
@@ -31,7 +39,11 @@ SMILE_MOUTH_W_RATIO = 0.45    # mouth_w / face_w
 SMILE_MAR_MIN       = 0.05
 
 
-def extract(landmarks_data):
+def extract(landmarks_data, aspect=1.0):
+    """aspect = video width / height; distances are measured in undistorted units (v2)."""
+    def lm(face, idx):
+        return P(face, idx, aspect)
+
     mars = []       # mouth aspect ratio
     mouth_w_ratio = []   # mouth_w / face_w
     brow_h = []

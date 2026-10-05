@@ -1,0 +1,11 @@
+a,b,question,n,delta_rho,ci_low,ci_high,verdict
+all,audio_text,RQ2: visual adds over audio+text?,30,-0.017389404735476677,-0.35671685145279075,0.31960800872667144,not shown (CI includes 0)
+audio_text,length,M2 audio+text beats answer length?,30,0.0060194093315111274,-0.2498308684732152,0.2743718129698774,not shown (CI includes 0)
+audio_text,rule,M2 learned beats hand-set rules?,30,0.2840269440127857,-0.15234370740757994,0.6888523459964179,not shown (CI includes 0)
+text_emb,length,M3 text embedding beats length?,30,-0.02586116601686278,-0.40493421326048223,0.3628655491728553,not shown (CI includes 0)
+text_emb+audio_text,audio_text,M4: embedding adds over M2?,30,-0.033441162952839776,-0.35034696482792993,0.2861690206341474,not shown (CI includes 0)
+text_emb+audio_text,text_emb,M4: M2 features add over embedding?,30,-0.0015605876044658684,-0.09544171364828204,0.10139433567337451,not shown (CI includes 0)
+text_emb+all,text_emb+audio_text,RQ2 (M4): visual adds?,30,0.04458821727045309,-0.021029443561781883,0.1328695299450498,not shown (CI includes 0)
+llm_zero_shot,length,M5 local LLM beats length?,30,0.05068638105254608,-0.34629966126343287,0.49313174399468057,not shown (CI includes 0)
+text_emb,llm_zero_shot,M3 trained embedding beats zero-shot LLM?,30,-0.07654754706940886,-0.6012129802751798,0.4105477846989723,not shown (CI includes 0)
+llm+audio_text,audio_text,M5 rating adds over M2?,30,0.039683513370703194,-0.08158925337984227,0.16718936047810146,not shown (CI includes 0)

@@ -1,65 +1,38 @@
-"""features/gaze.py — eye contact ratio, gaze stability"""
+"""features/gaze.py — eye contact ratio, gaze stability
 
-from utils import dist_2d, lm, mean, std, valid_face_frames
+v2 (2026-10-04): uses the SAME per-frame gaze states as the evidence log
+(base/measurement/visual/gaze_events.py), so Approach A's eye-contact score and the
+evidence log can no longer disagree. v1 had its own iris-only rule and silently
+skipped frames whose eyes looked "closed" because of an aspect-ratio error, which
+gave 90-100% eye contact on every pilot clip.
+"""
 
-# MediaPipe Face Mesh indices (478-point model with refine_landmarks=True)
-EYES = {
-    "right": {"outer": 33,  "inner": 133, "top": 159, "bottom": 145, "iris": 468},
-    "left":  {"outer": 263, "inner": 362, "top": 386, "bottom": 374, "iris": 473},
-}
+import statistics as st
+import sys
+from pathlib import Path
 
-# thresholds
-EYE_OPEN_MIN       = 0.15        # eye aspect ratio ต่ำกว่านี้ = ปิดตา
-X_CENTER_RANGE     = (0.35, 0.65)  # iris อยู่กลางแนวนอน
-Y_CENTER_RANGE     = (0.30, 0.70)  # iris อยู่กลางแนวตั้ง
-
-
-def _frame_iris_position(face, cfg):
-    """คืน {x, y, ear} หรือ None ถ้าตาปิด/คำนวณไม่ได้"""
-    top, bottom = lm(face, cfg["top"]), lm(face, cfg["bottom"])
-    left, right = lm(face, cfg["outer"]), lm(face, cfg["inner"])
-
-    eye_w = dist_2d(left, right)
-    eye_h = dist_2d(top, bottom)
-    if eye_w < 1e-6:
-        return None
-
-    ear = eye_h / eye_w
-    if ear < EYE_OPEN_MIN:      # ตาปิด → ไม่นับ
-        return None
-
-    iris = lm(face, cfg["iris"])
-    x_norm = (iris["x"] - left["x"]) / (right["x"] - left["x"] + 1e-6)
-    y_norm = (iris["y"] - top["y"])  / (bottom["y"] - top["y"] + 1e-6)
-    return {"x": x_norm, "y": y_norm, "ear": ear}
+sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
+from base.measurement.visual.gaze_events import frame_measures, frame_states
+from base.measurement.visual.geometry import video_aspect
 
 
-def extract(landmarks_data):
-    x_vals, y_vals = [], []
-    contact = 0
-    valid = 0
-
-    for _, face in valid_face_frames(landmarks_data, min_points=478):
-        for cfg in EYES.values():
-            pos = _frame_iris_position(face, cfg)
-            if pos is None:
-                continue
-            x_vals.append(pos["x"])
-            y_vals.append(pos["y"])
-            valid += 1
-
-            if (X_CENTER_RANGE[0] < pos["x"] < X_CENTER_RANGE[1]
-                    and Y_CENTER_RANGE[0] < pos["y"] < Y_CENTER_RANGE[1]):
-                contact += 1
-
+def extract(landmarks_data, aspect=None):
+    if aspect is None:
+        aspect = video_aspect(landmarks_data.get("key", ""))
+    states = [s for _, s in frame_states(landmarks_data, aspect)]
+    contact = states.count("eye_contact")
+    away = states.count("looking_away")
+    valid = contact + away
     if valid == 0:
         return {"valid_frames": 0}
-
+    m = [(h, v) for _, e, h, v in frame_measures(landmarks_data, aspect) if e is not None]
+    hs, vs = [h for h, _ in m], [v for _, v in m]
     return {
-        "eye_contact_ratio":   round(contact / valid, 4),
-        "gaze_stability_x":    round(std(x_vals), 4),   # ยิ่งน้อย ยิ่งนิ่ง
-        "gaze_stability_y":    round(std(y_vals), 4),
-        "mean_iris_x":         round(mean(x_vals), 4),
-        "mean_iris_y":         round(mean(y_vals), 4),
-        "valid_frames":        valid,
+        "eye_contact_ratio": round(contact / valid, 4),
+        "gaze_stability_x":  round(st.pstdev(hs), 4) if len(hs) > 1 else 0.0,  # lower = steadier
+        "gaze_stability_y":  round(st.pstdev(vs), 4) if len(vs) > 1 else 0.0,
+        "mean_iris_x":       round(st.mean(hs), 4) if hs else 0.0,   # head yaw + iris (v2 units)
+        "mean_iris_y":       round(st.mean(vs), 4) if vs else 0.0,   # head pitch proxy
+        "no_face_ratio":     round(states.count("no_face") / max(1, len(states)), 4),
+        "valid_frames":      valid,
     }

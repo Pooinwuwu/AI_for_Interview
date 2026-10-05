@@ -10,6 +10,9 @@ How it works
      rule    output/scores/<key>.json            fusion.overall_score (0-100) + 5 dimension scores
      mllm    output/feedback_mllm/<key>_feedback.json    "ratings" field (bands)
      hybrid  output/feedback_hybrid/<key>_feedback.json  "ratings" field (bands)
+     learned output/scores_1b/<key>.json         Approach 1b predicted rating (overall only)
+                                                 participants the 1b model was trained on are
+                                                 dropped automatically (no leakage)
    Only AVI clip keys (<participant>_q<n>_<type>) are used; old vid_xxxx files are ignored.
 2. Average clip scores per participant (labels are per participant).
 3. Join with ground truth and compute, per approach x measure x target:
@@ -32,6 +35,7 @@ Usage
     python validation/evaluate_avi.py                       # test split, all approaches
     python validation/evaluate_avi.py --manifest input/ground_truth/avi_eval_subset.csv
     python validation/evaluate_avi.py --split val --questions 1 2
+    python validation/evaluate_avi.py --split val --approaches rule learned
 """
 
 import argparse
@@ -41,7 +45,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from base._paths import OUTPUT_DIR, SCORES_DIR, REPORT_DIR
+from base._paths import ROOT as ROOT_DIR, OUTPUT_DIR, SCORES_DIR, REPORT_DIR
 from base.dataset.avi import load_labels, parse_key, TARGETS, PRIMARY_TARGET
 
 import numpy as np
@@ -163,6 +167,30 @@ def load_llm_clips(approach: str) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
+def load_learned_clips() -> pd.DataFrame:
+    """Approach 1b: learned overall score. Drops participants the model was trained on."""
+    folder = OUTPUT_DIR / "scores_1b"
+    fit_ids_file = ROOT_DIR / "models" / "approach_1b" / "fit_participants.json"
+    fit_ids = set(json.loads(fit_ids_file.read_text(encoding="utf-8"))) if fit_ids_file.exists() else set()
+    rows, leaked = [], set()
+    for f in folder.glob("*.json") if folder.exists() else []:
+        avi = parse_key(f.stem)
+        if avi is None:
+            continue
+        if avi["participant_id"] in fit_ids:
+            leaked.add(avi["participant_id"])
+            continue
+        o = json.loads(f.read_text(encoding="utf-8")).get("overall", {})
+        if o.get("predicted_rating") is None:
+            continue
+        row = {"key": f.stem, **avi, "approach": "learned", "overall": o["predicted_rating"]}
+        row.update({dim: np.nan for dim in DIMENSIONS})      # 1b learns the overall score only
+        rows.append(row)
+    if leaked:
+        print(f"[INFO] learned: skipped {len(leaked)} participant(s) the 1b model was trained on")
+    return pd.DataFrame(rows)
+
+
 # ============================================================
 # EVALUATE
 # ============================================================
@@ -187,7 +215,7 @@ def evaluate(per_pid: pd.DataFrame, n_boot: int) -> pd.DataFrame:
                     lo, hi = bootstrap_spearman(d[measure], d[target], n_boot)
                     row.update(spearman=res.statistic, ci_low=lo, ci_high=hi, p=res.pvalue)
                     if measure == "overall":
-                        # rule scores are 0-100; LLM scores are already 1-5 band means
+                        # rule scores are 0-100; LLM band means and 1b predictions are on 1-5
                         sys_band = (d[measure].map(score_to_band) if approach == "rule"
                                     else d[measure].round().clip(1, 5).astype(int))
                         row["qwk"] = cohen_kappa_score(d[target].map(target_to_band), sys_band,
@@ -233,13 +261,16 @@ def main():
                     help="only evaluate participants listed in this subset CSV")
     ap.add_argument("--questions", type=int, nargs="+", default=None,
                     help="only aggregate these question numbers (default: all found)")
-    ap.add_argument("--approaches", nargs="+", default=["rule", "mllm", "hybrid"])
+    ap.add_argument("--approaches", nargs="+", default=["rule", "learned", "mllm", "hybrid"],
+                    choices=["rule", "learned", "mllm", "hybrid"])
     ap.add_argument("--bootstrap", type=int, default=2000)
     args = ap.parse_args()
 
     frames = []
     if "rule" in args.approaches:
         frames.append(load_rule_clips())
+    if "learned" in args.approaches:
+        frames.append(load_learned_clips())
     for a in ("mllm", "hybrid"):
         if a in args.approaches:
             frames.append(load_llm_clips(a))

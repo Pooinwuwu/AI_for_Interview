@@ -140,9 +140,14 @@ def main():
         return
         
     logging.info(f"Found {len(audio_files)} audio files.")
-    
+    force = "--force" in sys.argv
+    skipped = 0
+
     for audio_path in audio_files:
         key = audio_path.stem
+        if (EVIDENCE_DIR / f"{key}_prosody.json").exists() and not force:
+            skipped += 1          # already done (use --force to recompute)
+            continue
         logging.info(f"Processing: {key}")
         
         features = extract_prosody(audio_path)
@@ -151,6 +156,8 @@ def main():
             with open(out_file, 'w', encoding='utf-8') as f:
                 json.dump(features, f, indent=4, ensure_ascii=False)
             logging.info(f"  -> Saved {out_file.name}")
-            
+    if skipped:
+        logging.info(f"Skipped {skipped} file(s) that already had prosody (--force to redo)")
+
 if __name__ == "__main__":
     main()

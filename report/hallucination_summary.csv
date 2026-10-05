@@ -1,0 +1,4 @@
+﻿approach,clips,claims,claims_per_clip,verifiable,supported,contradicted,unsupported,out_of_range,unverifiable,hallucination_rate
+hybrid,5,9,1.8,9,9,0,0,0,0,0.0
+mllm,5,8,1.6,8,6,0,2,0,0,0.25
+rule,6,0,0.0,0,0,0,0,0,0,

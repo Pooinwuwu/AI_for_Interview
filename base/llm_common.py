@@ -222,6 +222,16 @@ def question_context(key: str) -> dict:
     which trait the question targets — the coach gives feedback on observable
     answer quality and delivery, not on personality.
     """
+    import re
+    own = re.match(r"^own_\d+_q([1-6])$", key)      # researcher's own clips, e.g. own_03_q1
+    if own:
+        from base.dataset.avi import load_questions
+        qno = f"q{own.group(1)}"
+        q = load_questions()[qno]
+        return {"text": q["text"], "type": q["type"],
+                "setting": "One-way video interview, recorded alone on a phone, one take, 1-2 min. "
+                           "Eye contact = looking at the camera.",
+                "focus": FOCUS.get(qno) or FOCUS["past_behaviour"]}
     q = question_for_key(key)
     if q is None:   # non-AVI video (e.g. old vid_0021)
         return {"text": "Tell me about yourself", "type": "opening",
@@ -259,6 +269,11 @@ def parse_run_args(description: str):
                     help="regenerate feedback even if the output file already exists")
     ap.add_argument("--only", nargs="+", default=None,
                     help="only these clip keys")
+    ap.add_argument("--tag", default="",
+                    help="repeat run name (e.g. r2): writes to <output folder>_<tag>, "
+                         "so repeated runs can be compared for stability")
+    ap.add_argument("--allow-avi", action="store_true",
+                    help="also send AVI clips to Gemini - only with the AVI authors' approval")
     return ap.parse_args()
 
 

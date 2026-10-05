@@ -29,8 +29,12 @@ Excluded on purpose
   - mean pitch (mostly encodes gender -> would score people by gender)
 
 Usage
-  python validation/train_score_model.py                 # train on train, evaluate on dev
-  python validation/train_score_model.py --final         # train on train+dev, evaluate on test ONCE
+  python validation/train_score_model.py                 # visual track (subset), train -> dev
+  python validation/train_score_model.py --data full --text-emb minilm --learning-curve
+                                                         # audio/text track, all AVI people
+  python validation/train_score_model.py --final         # train+dev -> test, ONCE per track
+Models needing a modality (e.g. visual) only use participants where it was measured;
+paired comparisons use the participants both models scored.
 
 Outputs (report/)
   score_model_<dev|test>.csv        Spearman + 95% CI per model
@@ -45,8 +49,9 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from base._paths import OUTPUT_DIR, GROUND_TRUTH_DIR, REPORT_DIR, SCORES_DIR
-from base.dataset.avi import load_labels, parse_key, TARGETS
+from base._paths import GROUND_TRUTH_DIR, REPORT_DIR
+from base.dataset.avi import load_labels, TARGETS
+from base.learned_features import clip_features, feature_groups, participant_table
 
 import numpy as np
 import pandas as pd
@@ -63,71 +68,12 @@ if sys.platform == "win32":
     except Exception:
         pass
 
-FEATURES_DIR = OUTPUT_DIR / "features"
-EVIDENCE_DIR = OUTPUT_DIR / "evidence"
-
-LENGTH = ["sp.duration_sec", "sp.word_count", "sp.speaking_sec"]
-
-EXCLUDE_SUBSTR = ("valid_frames", "total_frames", "detection_stats", "rejected_outliers",
-                  "hand_frames", "aspect_used", "segment_count")
-EXCLUDE_EXACT = {"pr.pitch_mean_hz"}          # gender proxy
-
 ALPHAS = np.logspace(-2, 4, 25)
 
 
 # ============================================================
-# FEATURES
+# FEATURES  (shared with Approach 1b: base/learned_features.py)
 # ============================================================
-
-def _flat(d, prefix=""):
-    out = {}
-    for k, v in d.items():
-        if isinstance(v, dict):
-            out.update(_flat(v, f"{prefix}{k}."))
-        elif isinstance(v, (int, float)) and not isinstance(v, bool):
-            out[f"{prefix}{k}"] = float(v)
-    return out
-
-
-def clip_features(questions=None) -> pd.DataFrame:
-    rows = []
-    for f in FEATURES_DIR.glob("*.json"):
-        if f.stem.endswith("_speech"):
-            continue
-        avi = parse_key(f.stem)
-        if avi is None or (questions and avi["question_no"] not in questions):
-            continue
-        row = {"key": f.stem, "participant_id": avi["participant_id"]}
-        row.update({f"vis.{k}": v for k, v in _flat(json.loads(f.read_text(encoding="utf-8"))).items()})
-        sp = FEATURES_DIR / f"{f.stem}_speech.json"
-        if sp.exists():
-            feats = json.loads(sp.read_text(encoding="utf-8")).get("features", {})
-            row.update({f"sp.{k}": float(v) for k, v in feats.items()
-                        if isinstance(v, (int, float)) and not isinstance(v, bool)})
-        pr = EVIDENCE_DIR / f"{f.stem}_prosody.json"
-        if pr.exists():
-            row.update({f"pr.{k}": v for k, v in _flat(json.loads(pr.read_text(encoding="utf-8"))).items()})
-        sc = SCORES_DIR / f"{f.stem}.json"
-        if sc.exists():
-            row["rule.overall"] = json.loads(sc.read_text(encoding="utf-8")).get(
-                "fusion", {}).get("overall_score", np.nan)
-        rows.append(row)
-    return pd.DataFrame(rows)
-
-
-def feature_groups(columns):
-    usable = [c for c in columns
-              if c.split(".")[0] in ("vis", "sp", "pr")
-              and not any(s in c for s in EXCLUDE_SUBSTR) and c not in EXCLUDE_EXACT]
-    audio_text = [c for c in usable if c.startswith(("sp.", "pr."))]
-    visual = [c for c in usable if c.startswith("vis.")]
-    return {
-        "length": [c for c in LENGTH if c in usable],
-        "audio_text": audio_text,
-        "visual": visual,
-        "all": audio_text + visual,
-    }
-
 
 def manifest_ids(pattern: str):
     ids = set()
@@ -140,9 +86,12 @@ def manifest_ids(pattern: str):
 # MODEL + METRICS
 # ============================================================
 
-def make_model():
+ALPHAS_EMB = np.logspace(-1, 6, 29)   # embeddings: hundreds of dims -> allow stronger shrinkage
+
+
+def make_model(alphas=ALPHAS):
     return make_pipeline(SimpleImputer(strategy="median"), StandardScaler(),
-                         RidgeCV(alphas=ALPHAS))
+                         RidgeCV(alphas=alphas))
 
 
 def spearman_ci(x, y, n_boot=2000, seed=0):
@@ -158,111 +107,208 @@ def spearman_ci(x, y, n_boot=2000, seed=0):
     return rho, lo, hi
 
 
-def paired_diff_ci(pred_a, pred_b, y, n_boot=2000, seed=0):
-    """Bootstrap CI of rho(a, y) - rho(b, y) on the same participants."""
-    pa, pb, y = map(np.asarray, (pred_a, pred_b, y))
+def paired_diff_ci(pred_a: pd.Series, pred_b: pd.Series, y: pd.Series, n_boot=2000, seed=0):
+    """Bootstrap CI of rho(a, y) - rho(b, y) on the participants both models scored."""
+    common = pred_a.index.intersection(pred_b.index).intersection(y.index)
+    pa, pb, yy = pred_a[common].to_numpy(), pred_b[common].to_numpy(), y[common].to_numpy()
     rng = np.random.default_rng(seed)
     d = []
     for _ in range(n_boot):
-        i = rng.integers(0, len(y), len(y))
-        if np.unique(y[i]).size > 1:
-            d.append(spearmanr(pa[i], y[i]).statistic - spearmanr(pb[i], y[i]).statistic)
-    obs = spearmanr(pa, y).statistic - spearmanr(pb, y).statistic
+        i = rng.integers(0, len(yy), len(yy))
+        if np.unique(yy[i]).size > 1:
+            d.append(spearmanr(pa[i], yy[i]).statistic - spearmanr(pb[i], yy[i]).statistic)
+    obs = spearmanr(pa, yy).statistic - spearmanr(pb, yy).statistic
     lo, hi = np.percentile(d, [2.5, 97.5])
-    return obs, lo, hi
+    return obs, lo, hi, len(common)
+
+
+# which column proves that a modality was measured for a participant
+PRESENT = {"vis": "vis.gaze.eye_contact_ratio", "sp": "sp.word_count",
+           "pr": "pr.silence_ratio", "txt": "txt.0", "llm": "llm.rating"}
+
+
+def has_modalities(df: pd.DataFrame, cols) -> pd.Series:
+    """Rows where every modality used by `cols` was actually measured (no imputing a
+    whole missing modality: speech-only participants have no visual features)."""
+    ok = pd.Series(True, index=df.index)
+    for prefix in {c.split(".")[0] for c in cols}:
+        col = PRESENT.get(prefix)
+        if col in df:
+            ok &= df[col].notna()
+    return ok
 
 
 # ============================================================
 # MAIN
 # ============================================================
 
+COMPARISONS = (
+    ("all", "audio_text", "RQ2: visual adds over audio+text?"),
+    ("audio_text", "length", "M2 audio+text beats answer length?"),
+    ("audio_text", "rule", "M2 learned beats hand-set rules?"),
+    ("text_emb", "length", "M3 text embedding beats length?"),
+    ("text_emb+audio_text", "audio_text", "M4: embedding adds over M2?"),
+    ("text_emb+audio_text", "text_emb", "M4: M2 features add over embedding?"),
+    ("text_emb+all", "text_emb+audio_text", "RQ2 (M4): visual adds?"),
+    ("llm_zero_shot", "length", "M5 local LLM beats length?"),
+    ("text_emb", "llm_zero_shot", "M3 trained embedding beats zero-shot LLM?"),
+    ("llm+audio_text", "audio_text", "M5 rating adds over M2?"),
+)
+
+LC_SIZES = [25, 50, 100, 200, 300]
+LC_GROUPS = ["length", "audio_text", "text_emb", "text_emb+audio_text"]
+
+
+def split_ids(args, labels):
+    if args.data == "full":       # AVI official subject-level split, every processed participant
+        by = labels.groupby("split").participant_id.apply(set)
+        return by.get("train", set()), by.get("val", set()), by.get("test", set())
+    return manifest_ids(args.train), manifest_ids(args.dev), manifest_ids(args.test)
+
+
+def fit_eval(name, cols, fit, ev, target):
+    fit = fit[has_modalities(fit, cols)]
+    ev = ev[has_modalities(ev, cols)]
+    m = make_model(ALPHAS_EMB if name.startswith("text_emb") else ALPHAS)
+    y_fit = fit[target].to_numpy()
+    cv_pred = cross_val_predict(m, fit[cols], y_fit, cv=KFold(5, shuffle=True, random_state=0))
+    m.fit(fit[cols], y_fit)
+    return m, pd.Series(m.predict(ev[cols]), index=ev.index), spearmanr(cv_pred, y_fit).statistic, len(fit)
+
+
+def learning_curve(groups, fit, ev, target, repeats=5):
+    rows = []
+    for name in [g for g in LC_GROUPS if g in groups and groups[g]]:
+        cols = groups[name]
+        pool = fit[has_modalities(fit, cols)]
+        evm = ev[has_modalities(ev, cols)]
+        sizes = sorted({n for n in LC_SIZES if n < len(pool)} | {len(pool)})
+        for n in sizes:
+            for r in range(repeats if n < len(pool) else 1):
+                sub = pool.sample(n, random_state=r)
+                m = make_model(ALPHAS_EMB if name.startswith("text_emb") else ALPHAS)
+                m.fit(sub[cols], sub[target])
+                rows.append({"model": name, "n_train": n, "repeat": r,
+                             "spearman": spearmanr(m.predict(evm[cols]), evm[target]).statistic})
+    return pd.DataFrame(rows)
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--target", default="hireability", choices=list(TARGETS))
-    ap.add_argument("--questions", type=int, nargs="+", default=None)
-    ap.add_argument("--train", default="avi_train*_subset.csv", help="manifest glob for training")
+    ap.add_argument("--questions", type=int, nargs="+", default=[1, 2])
+    ap.add_argument("--data", choices=["subset", "full"], default="subset",
+                    help="subset = manifests (visual track); full = every processed AVI participant "
+                         "by the official split (audio/text track, run_speech_pipeline.py)")
+    ap.add_argument("--train", default="avi_train*_subset.csv", help="manifest glob (subset)")
     ap.add_argument("--dev", default="avi_dev_subset.csv")
     ap.add_argument("--test", default="avi_eval_subset.csv")
+    ap.add_argument("--text-emb", default=None,
+                    help="add M3/M4 groups from output/embeddings/text_<name>.npz (e.g. minilm)")
+    ap.add_argument("--llm", default=None,
+                    help="add M5 (local LLM zero-shot ratings, e.g. qwen2.5:3b)")
+    ap.add_argument("--learning-curve", action="store_true",
+                    help="also fit on growing random subsets of the training people")
     ap.add_argument("--final", action="store_true",
-                    help="train on train+dev and evaluate on the test manifest (do this ONCE)")
+                    help="train on train+dev and evaluate on test (do this ONCE)")
     args = ap.parse_args()
 
-    clips = clip_features(args.questions)
+    clips = clip_features(args.questions, args.text_emb, args.llm)
     if clips.empty:
         sys.exit("[ERROR] no AVI feature files in output/features/")
-    per = clips.drop(columns=["key"]).groupby("participant_id").mean(numeric_only=True)
-    per["n_clips"] = clips.groupby("participant_id").size()
-    labels = load_labels().set_index("participant_id")[[args.target]]
+    per = participant_table(clips)
+    labels_all = load_labels()
+    labels = labels_all.set_index("participant_id")[[args.target]]
     data = per.join(labels, how="inner").dropna(subset=[args.target])
 
-    train_ids, dev_ids, test_ids = (manifest_ids(args.train), manifest_ids(args.dev),
-                                    manifest_ids(args.test))
+    train_ids, dev_ids, test_ids = split_ids(args, labels_all)
     if args.final:
         fit_ids, eval_ids, eval_name = train_ids | dev_ids, test_ids, "test"
     else:
         fit_ids, eval_ids, eval_name = train_ids, dev_ids, "dev"
+    if eval_ids & fit_ids:
+        sys.exit("[ERROR] evaluation participants overlap with training participants")
     fit = data[data.index.isin(fit_ids)]
     ev = data[data.index.isin(eval_ids)]
 
-    print("=" * 70)
-    print(f"  Score model — target={args.target}   fit n={len(fit)}   {eval_name} n={len(ev)}")
-    print("=" * 70)
+    print("=" * 78)
+    print(f"  Score model — data={args.data}  target={args.target}  fit n={len(fit)}  "
+          f"{eval_name} n={len(ev)}")
+    print("=" * 78)
     if len(fit) < 20 or len(ev) < 10:
         sys.exit(f"[ERROR] need >= 20 training and >= 10 {eval_name} participants with features "
                  f"(have {len(fit)} / {len(ev)}). Process more clips first.")
-    if eval_ids & fit_ids:
-        sys.exit("[ERROR] evaluation participants overlap with training participants")
 
     groups = feature_groups(data.columns)
-    y_fit, y_ev = fit[args.target].to_numpy(), ev[args.target].to_numpy()
-    cv = KFold(5, shuffle=True, random_state=0)
+    y_ev = ev[args.target]
 
     rows, preds, coef = [], {}, None
     if "rule.overall" in ev:
-        r, lo, hi = spearman_ci(ev["rule.overall"].fillna(ev["rule.overall"].median()), y_ev)
-        preds["rule"] = ev["rule.overall"].fillna(ev["rule.overall"].median()).to_numpy()
-        rows.append({"model": "rule", "features": 0, "cv_spearman_fit": np.nan,
-                     "spearman": r, "ci_low": lo, "ci_high": hi})
+        e = ev[ev["rule.overall"].notna()]
+        if len(e) >= 10:
+            preds["rule"] = e["rule.overall"]
+            r, lo, hi = spearman_ci(e["rule.overall"], e[args.target])
+            rows.append({"model": "rule", "features": 0, "n_fit": 0, "n_eval": len(e),
+                         "cv_spearman_fit": np.nan, "spearman": r, "ci_low": lo, "ci_high": hi})
+    if "llm.rating" in ev:                      # M5 zero-shot: the rating itself, no training
+        e = ev[ev["llm.rating"].notna()]
+        if len(e) >= 10:
+            preds["llm_zero_shot"] = e["llm.rating"]
+            r, lo, hi = spearman_ci(e["llm.rating"], e[args.target])
+            rows.append({"model": "llm_zero_shot", "features": 0, "n_fit": 0, "n_eval": len(e),
+                         "cv_spearman_fit": np.nan, "spearman": r, "ci_low": lo, "ci_high": hi})
     for name, cols in groups.items():
         if not cols:
             continue
-        m = make_model()
-        cv_pred = cross_val_predict(m, fit[cols], y_fit, cv=cv)
-        m.fit(fit[cols], y_fit)
-        p = m.predict(ev[cols])
+        m, p, cv_rho, n_fit = fit_eval(name, cols, fit, ev, args.target)
+        if len(p) < 10:
+            continue
         preds[name] = p
-        r, lo, hi = spearman_ci(p, y_ev)
-        rows.append({"model": name, "features": len(cols),
-                     "cv_spearman_fit": spearmanr(cv_pred, y_fit).statistic,
-                     "spearman": r, "ci_low": lo, "ci_high": hi,
+        r, lo, hi = spearman_ci(p.to_numpy(), y_ev[p.index].to_numpy())
+        rows.append({"model": name, "features": len(cols), "n_fit": n_fit, "n_eval": len(p),
+                     "cv_spearman_fit": cv_rho, "spearman": r, "ci_low": lo, "ci_high": hi,
                      "alpha": m[-1].alpha_})
         if name == "all":
             coef = pd.Series(m[-1].coef_, index=cols).sort_values(key=abs, ascending=False)
 
     res = pd.DataFrame(rows)
     REPORT_DIR.mkdir(parents=True, exist_ok=True)
-    res.to_csv(REPORT_DIR / f"score_model_{eval_name}.csv", index=False)
-    pd.set_option("display.width", 140)
+    suffix = ((f"_{args.data}" if args.data != "subset" else "")
+              + (f"_{args.text_emb}" if args.text_emb else "")
+              + (f"_llm-{args.llm.replace(':', '_')}" if args.llm else ""))
+    res.to_csv(REPORT_DIR / f"score_model_{eval_name}{suffix}.csv", index=False)
+    pd.set_option("display.width", 160)
     print(res.round(3).to_string(index=False))
     print()
 
-    for a, b, label in (("all", "audio_text", "RQ2: visual adds over audio+text?"),
-                        ("audio_text", "length", "audio+text beats answer length alone?"),
-                        ("all", "rule", "learned model beats hand-set bands?")):
+    comp = []
+    for a, b, label in COMPARISONS:
         if a in preds and b in preds:
-            d, lo, hi = paired_diff_ci(preds[a], preds[b], y_ev)
+            d, lo, hi, n = paired_diff_ci(preds[a], preds[b], y_ev)
             verdict = "yes" if lo > 0 else ("no (worse)" if hi < 0 else "not shown (CI includes 0)")
-            print(f"{label:42s} Δρ = {d:+.3f} [95% CI {lo:+.3f}, {hi:+.3f}] -> {verdict}")
+            comp.append({"a": a, "b": b, "question": label, "n": n, "delta_rho": d,
+                         "ci_low": lo, "ci_high": hi, "verdict": verdict})
+            print(f"{label:40s} n={n:3d}  Δρ = {d:+.3f} [95% CI {lo:+.3f}, {hi:+.3f}] -> {verdict}")
+    if comp:
+        pd.DataFrame(comp).to_csv(REPORT_DIR / f"score_model_{eval_name}{suffix}_comparisons.csv",
+                                  index=False)
 
     if coef is not None:
         coef.rename("std_weight").to_csv(REPORT_DIR / "score_model_coefficients.csv")
         print("\nTop features in 'all' model (standardised weights):")
         print(coef.head(10).round(3).to_string())
 
-    print(f"\nSaved: {REPORT_DIR / f'score_model_{eval_name}.csv'}")
+    if args.learning_curve:
+        lc = learning_curve(groups, fit, ev, args.target)
+        lc.to_csv(REPORT_DIR / f"learning_curve_{eval_name}{suffix}.csv", index=False)
+        tab = lc.groupby(["model", "n_train"]).spearman.agg(["mean", "std", "count"]).round(3)
+        print("\nLearning curve (Spearman on", eval_name, "; mean/sd over random training subsets):")
+        print(tab.to_string())
+
+    print(f"\nSaved: {REPORT_DIR / f'score_model_{eval_name}{suffix}.csv'}")
     if not args.final:
-        print("Choose the model on dev. Run --final once at the end to report on test.")
+        print("Dev is for checking only (protocol v2: every method is reported on test).")
 
 
 if __name__ == "__main__":

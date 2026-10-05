@@ -17,6 +17,7 @@ ROOT = Path(__file__).resolve().parent.parent.parent.parent
 sys.path.insert(0, str(ROOT))
 
 from base._paths import LANDMARKS_DIR, EVIDENCE_DIR, ensure_dirs
+from base.measurement.visual.geometry import video_aspect
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 
@@ -77,7 +78,11 @@ def get_head_pose_state(pitch, yaw):
     else:
         return "centered"
 
-def extract_head_events(landmarks_data):
+def extract_head_events(landmarks_data, aspect=None):
+    """aspect = width / height of the video. v1 always used 16:9, which tilted the
+    estimated pitch on 4:3 (AVI) and 9:16 (phone) video -> 'turned_up' for whole clips."""
+    if aspect is None:
+        aspect = video_aspect(landmarks_data.get("key", ""))
     events = []
     current_state = None
     start_time = 0.0
@@ -86,7 +91,7 @@ def extract_head_events(landmarks_data):
     if not frames:
         return []
         
-    cam_matrix = _build_camera_matrix(DEFAULT_ASPECT)
+    cam_matrix = _build_camera_matrix(aspect)
     dist_coeffs = np.zeros((4, 1))
 
     for frame in frames:
@@ -97,7 +102,7 @@ def extract_head_events(landmarks_data):
         
         if face and len(face) >= 468:
             image_pts = np.array(
-                [[face[i]["x"] * DEFAULT_ASPECT, face[i]["y"]] for i in LANDMARK_IDS],
+                [[face[i]["x"] * aspect, face[i]["y"]] for i in LANDMARK_IDS],
                 dtype=np.float64,
             )
             ok, rvec, _ = cv2.solvePnP(
@@ -172,7 +177,8 @@ def main():
         with open(lm_file, 'r', encoding='utf-8') as f:
             data = json.load(f)
             
-        events = extract_head_events(data)
+        data.setdefault("key", key)
+        events = extract_head_events(data, video_aspect(key))
         
         with open(out_file, 'w', encoding='utf-8') as f:
             json.dump(events, f, indent=4, ensure_ascii=False)

@@ -1,0 +1,18 @@
+﻿audit_id,key,time_text,t0,t1,sentence,rater1_true_false,rater2_true_false,notes
+A001,pilot_05,around 20s,20,20,"Frequent gaze aversion occurred when gathering thoughts, such as around 20s-24s and 68s-74s.",TRUE,,read scripts
+A002,pilot_02,between 4.5s-7.6s,4.5,7.6,"Frequent gaze wandering away from the camera, such as between 4.5s-7.6s and 81.6s-84.9s, which can lessen perceived confidence.",TRUE,,read scripts
+A003,pilot_02,(0.0s-115.3s),0,115.3,"The camera position was below eye level throughout the video (0.0s-115.3s), making your head look continuously tilted upward.",FALSE,,I read my scripts haha
+A004,pilot_03,0:06,6,6,"You frequently look down away from the camera lens while speaking, especially between 0:06 and 0:55, which suggests reading notes.",TRUE,,
+A005,pilot_02,0:10,10,10,"Frequent filler pauses (e.g., 'um', 'er', 'you know') slow down the pacing at moments like 00:10 and 00:45.",TRUE,,
+A006,pilot_03,0:55,55,55,"You frequently look down away from the camera lens while speaking, especially between 0:06 and 0:55, which suggests reading notes.",TRUE,,
+A007,pilot_04,from 0.0s to 56.4s,0,56.4,Hands remained off-camera and hidden throughout the entire response from 0.0s to 56.4s.,TRUE,,
+A008,pilot_02,around 01:18,78,78,"Occasional blinking and looking upward while thinking (e.g., around 01:18) briefly breaks connection with the interviewer.",TRUE,,read note again
+A009,pilot_04,from 41.1s to 56.4s,41.1,56.4,Frequent gaze breaks and continuous looking away towards the end from 41.1s to 56.4s.,FALSE,,I gaze camera 
+A010,pilot_02,0:45,45,45,"Frequent filler pauses (e.g., 'um', 'er', 'you know') slow down the pacing at moments like 00:10 and 00:45.",TRUE,,
+A011,pilot_05,at 53.0s,53,53,"Frequent nervous self-touching, such as touching your cheek at 7.0s and scratching your hair at 53.0s, distracts the interviewer.",TRUE,,
+A012,pilot_05,around 53s,53,53,"Hands remained out of frame most of the time, and you touched your hair and face during hesitation (e.g., around 53s).",TRUE,,
+A013,pilot_02,(0.0s-115.3s),0,115.3,Your hands remained completely hidden below the frame for the entire duration (0.0s-115.3s).,TRUE,,
+A014,pilot_05,at 7.0s,7,7,"Frequent nervous self-touching, such as touching your cheek at 7.0s and scratching your hair at 53.0s, distracts the interviewer.",TRUE,,
+A015,pilot_05,at 31.0s,31,31,"Eye contact drifts away to the side when thinking, such as at 31.0s and 142.0s.",TRUE,,read note
+A016,pilot_01,around 22.0s,22,22,"You frequently look away from the camera lens while speaking, especially around 22.0s to 25.7s and 78.1s to 82.7s.",TRUE,,
+A017,pilot_03,around 4.6s,4.6,4.6,You looked away down from the camera continuously from around 4.6s to 75.2s while reading or recalling your text.,TRUE,,

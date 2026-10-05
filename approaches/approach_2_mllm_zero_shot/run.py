@@ -91,7 +91,10 @@ def process_video(client, video_path: Path):
     return feedback
 
 def main():
+    global OUTPUT_DIR
     args = parse_run_args("Approach 2 — zero-shot MLLM feedback from video")
+    if args.tag:
+        OUTPUT_DIR = OUTPUT_DIR.with_name(f"{OUTPUT_DIR.name}_{args.tag}")
     print("=" * 60)
     print("  APPROACH 2: MLLM ZERO-SHOT")
     print("=" * 60)
@@ -108,6 +111,12 @@ def main():
     video_files = sorted(list(VIDEOS_DIR.glob("*.mp4")) + list(VIDEOS_DIR.glob("*.mov")))
     if args.only:
         video_files = [v for v in video_files if v.stem in set(args.only)]
+    from base.dataset.avi import parse_key
+    avi = [v for v in video_files if parse_key(v.stem) is not None]
+    if avi and not args.allow_avi:
+        print(f"[INFO] skipping {len(avi)} AVI clip(s): sending AVI videos to Gemini needs the "
+              f"authors' approval (use --allow-avi once you have it)")
+        video_files = [v for v in video_files if parse_key(v.stem) is None]
     if not video_files:
         print(f"[ERROR] No videos found in {VIDEOS_DIR}")
         sys.exit(1)

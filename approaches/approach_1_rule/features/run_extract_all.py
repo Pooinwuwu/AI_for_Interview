@@ -27,10 +27,10 @@ def extract_one(key, data):
         "aspect_used": round(aspect, 4),
         "total_frames": data.get("total_frames"),
         "detection_stats": data.get("detection_stats", {}),
-        "gaze":              gaze.extract(data),
+        "gaze":              gaze.extract(data, aspect=aspect),
         "head_pose":         head_pose.extract(data, aspect=aspect, verbose=True),
-        "hand_gesture":      hand_gesture.extract(data),
-        "facial_expression": facial_expression.extract(data),
+        "hand_gesture":      hand_gesture.extract(data, aspect=aspect),
+        "facial_expression": facial_expression.extract(data, aspect=aspect),
     }
 
 

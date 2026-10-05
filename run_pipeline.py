@@ -9,6 +9,7 @@ One command instead of 13. Typical use:
 What it does, in order (stops at the first failing step):
     audio -> frames -> landmarks -> prosody -> transcript -> visual events
     -> evidence log -> Approach 1 features -> speech features -> scores
+    -> Approach 1b learned score (only if models/approach_1b/score_model.joblib exists)
 
 Disk space: frame images are only needed to make landmarks. After the landmark
 step, frame folders whose landmarks exist are deleted (they can always be
@@ -58,7 +59,9 @@ STEPS = [
     ("features",    A1 / "features" / "run_extract_all.py"),
     ("speech",      A1 / "features" / "speech_text.py"),
     ("scores",      A1 / "scoring" / "run_scoring.py"),
+    ("score_1b",    Path("approaches/approach_1b_learned/score.py")),
 ]
+A1B_MODEL = ROOT / "models" / "approach_1b" / "score_model.joblib"
 FEEDBACK_STEP = ("feedback", A1 / "llm" / "run_feedback.py")
 
 LOG = OUTPUT_DIR / "pipeline_log.txt"
@@ -118,6 +121,10 @@ def main():
 
     t_all = time.time()
     for name, script in steps:
+        if name == "score_1b" and not A1B_MODEL.exists():
+            log("--> score_1b    skipped (no trained model; "
+                "python approaches/approach_1b_learned/train.py)")
+            continue
         cmd = [sys.executable, str(ROOT / script)]
         if name == "frames" and args.fps:
             cmd += ["--fps", str(args.fps)]

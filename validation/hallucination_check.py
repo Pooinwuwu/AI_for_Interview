@@ -65,7 +65,17 @@ APPROACH_DIRS = {
     "rule":   OUTPUT_DIR / "feedback",
     "mllm":   OUTPUT_DIR / "feedback_mllm",
     "hybrid": OUTPUT_DIR / "feedback_hybrid",
+    # grounded approaches C / D (approaches/approach_grounded/run.py)
+    "grounded":       OUTPUT_DIR / "feedback_grounded",
+    "grounded_video": OUTPUT_DIR / "feedback_grounded_video",
 }
+# "<approach>_draft" = the same files, but the draft written BEFORE the checker
+# (grounded vs grounded_draft = how much the checker removes)
+DRAFT_SUFFIX = "_draft"
+
+# paired comparisons printed when both sides have results
+PAIRS = [("mllm", "hybrid"), ("mllm", "grounded_video"), ("grounded_video", "grounded"),
+         ("grounded_draft", "grounded"), ("grounded_video_draft", "grounded_video")]
 
 FILLERS = {"um", "uh", "er", "ah", "hmm", "erm", "like"}
 
@@ -283,7 +293,8 @@ HALLUCINATED = ("contradicted", "unsupported", "out_of_range")
 def collect(approaches, tol):
     rows, clips = [], []
     for approach in approaches:
-        folder = APPROACH_DIRS[approach]
+        base = approach.removesuffix(DRAFT_SUFFIX)
+        folder = APPROACH_DIRS[base]
         if not folder.exists():
             continue
         for f in sorted(folder.glob("*_feedback.json")):
@@ -293,6 +304,11 @@ def collect(approaches, tol):
                 print(f"[SKIP] {approach}/{key}: no evidence log")
                 continue
             fb = json.loads(f.read_text(encoding="utf-8"))
+            if approach.endswith(DRAFT_SUFFIX):
+                if "draft" not in fb:
+                    continue
+                fb = {**fb["draft"], "model": fb.get("model"),
+                      "prompt_version": fb.get("prompt_version")}
             claims = extract_claims(fb)
             clips.append({"approach": approach, "key": key, "n_claims": len(claims),
                           "model": fb.get("model"), "prompt_version": fb.get("prompt_version")})
@@ -352,7 +368,7 @@ def paired_compare(rates: pd.DataFrame, a: str, b: str, n_boot=2000, seed=0):
 def export_audit(claims: pd.DataFrame, n: int, seed: int):
     """Blind sample for raters: stratified per approach, shuffled, no approach/verdict."""
     if claims.empty:
-        return None
+        return 0, None, None
     v = claims[claims.verdict != "unverifiable"]
     per = max(1, n // max(1, v.approach.nunique()))
     parts = [g.sample(min(len(g), per), random_state=seed) for _, g in v.groupby("approach")]
@@ -363,9 +379,19 @@ def export_audit(claims: pd.DataFrame, n: int, seed: int):
     blind["rater2_true_false"] = ""
     blind["notes"] = ""
     key = sample[["audit_id", "approach", "verdict", "topic", "expected"]]
-    blind.to_csv(REPORT_DIR / "hallucination_audit_sample.csv", index=False, encoding="utf-8-sig")
-    key.to_csv(REPORT_DIR / "hallucination_audit_key.csv", index=False, encoding="utf-8-sig")
-    return len(sample)
+    sample_p = REPORT_DIR / "hallucination_audit_sample.csv"
+    key_p = REPORT_DIR / "hallucination_audit_key.csv"
+    if sample_p.exists():
+        old = pd.read_csv(sample_p, dtype=str).fillna("")
+        filled = [c for c in ("rater1_true_false", "rater2_true_false") if c in old]
+        if any((old[c].str.strip() != "").any() for c in filled):
+            # never overwrite an audit that raters already filled in
+            sample_p = REPORT_DIR / "hallucination_audit_sample_new.csv"
+            key_p = REPORT_DIR / "hallucination_audit_key_new.csv"
+            print("[INFO] existing audit sample is already rated - new sample written to *_new.csv")
+    blind.to_csv(sample_p, index=False, encoding="utf-8-sig")
+    key.to_csv(key_p, index=False, encoding="utf-8-sig")
+    return len(sample), sample_p, key_p
 
 
 def score_audit():
@@ -410,7 +436,10 @@ def score_audit():
 def main():
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--approaches", nargs="+", default=["rule", "mllm", "hybrid"])
+    names = list(APPROACH_DIRS) + [a + DRAFT_SUFFIX for a in ("grounded", "grounded_video")]
+    ap.add_argument("--approaches", nargs="+", choices=names,
+                    default=["rule", "mllm", "hybrid", "grounded", "grounded_draft",
+                             "grounded_video", "grounded_video_draft"])
     ap.add_argument("--tol", type=float, default=TOL, help="seconds of slack (default 1.0)")
     ap.add_argument("--audit-n", type=int, default=40, help="claims in the human audit sample")
     ap.add_argument("--seed", type=int, default=42)
@@ -445,22 +474,24 @@ def main():
         print(mixed.to_string())
         print()
 
-    res = paired_compare(rates, "mllm", "hybrid")
-    if res:
-        print(f"Paired, clips with claims from both (n={res['n_clips']}): "
-              f"rate(mllm) - rate(hybrid) = {res['mean_diff']:+.3f} "
-              f"[95% CI {res['ci_low']:+.3f}, {res['ci_high']:+.3f}]")
-        print("  > 0 means the evidence log reduced hallucination.")
-    else:
-        print("Paired comparison mllm vs hybrid: needs >= 3 clips with timed claims from both.")
+    shown = 0
+    for a, b in PAIRS:
+        res = paired_compare(rates, a, b)
+        if res:
+            shown += 1
+            print(f"Paired, clips with claims from both (n={res['n_clips']}): "
+                  f"rate({a}) - rate({b}) = {res['mean_diff']:+.3f} "
+                  f"[95% CI {res['ci_low']:+.3f}, {res['ci_high']:+.3f}]  (> 0: {b} hallucinates less)")
+    if not shown:
+        print("Paired comparisons need >= 3 clips with timed claims from both approaches.")
     print()
 
-    n = export_audit(claims, args.audit_n, args.seed)
+    n, sample_p, key_p = export_audit(claims, args.audit_n, args.seed)
     print(f"Saved: {REPORT_DIR / 'hallucination_claims.csv'}")
     print(f"       {REPORT_DIR / 'hallucination_summary.csv'}")
     if n:
-        print(f"Audit: {REPORT_DIR / 'hallucination_audit_sample.csv'}  ({n} claims, blind)")
-        print(f"       {REPORT_DIR / 'hallucination_audit_key.csv'}  (keep away from raters)")
+        print(f"Audit: {sample_p}  ({n} claims, blind)")
+        print(f"       {key_p}  (keep away from raters)")
 
 
 if __name__ == "__main__":

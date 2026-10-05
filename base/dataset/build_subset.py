@@ -168,7 +168,7 @@ def main():
                     help="question numbers to include (default: 1 2 = generic)")
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--name", default="eval", help="manifest name -> avi_<name>_subset.csv")
-    ap.add_argument("--exclude-manifest", type=Path, default=None,
+    ap.add_argument("--exclude-manifest", type=Path, nargs="+", default=None,
                     help="CSV manifest whose participants must not be reused")
     ap.add_argument("--archive-others", action="store_true",
                     help="move videos not in this subset to input/videos_archive/")
@@ -177,7 +177,8 @@ def main():
 
     exclude = ()
     if args.exclude_manifest:
-        exclude = pd.read_csv(args.exclude_manifest, dtype=str).participant_id.tolist()
+        exclude = [pid for m in args.exclude_manifest
+                   for pid in pd.read_csv(m, dtype=str).participant_id.tolist()]
 
     chosen = select_participants(args.split, args.n, args.seed, exclude=exclude)
     questions = sorted(set(args.questions))

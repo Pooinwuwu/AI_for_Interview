@@ -15,6 +15,7 @@ ROOT = Path(__file__).resolve().parent.parent.parent.parent
 sys.path.insert(0, str(ROOT))
 
 from base._paths import LANDMARKS_DIR, EVIDENCE_DIR, ensure_dirs
+from base.measurement.visual.geometry import P, video_aspect
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 
@@ -32,7 +33,11 @@ SMILE_MAR_MIN       = 0.05
 def dist_2d(p1, p2):
     return ((p1["x"] - p2["x"])**2 + (p1["y"] - p2["y"])**2)**0.5
 
-def extract_face_events(landmarks_data):
+def extract_face_events(landmarks_data, aspect=None):
+    """v2: mouth shape measured in undistorted units (geometry.py); v1 mixed x / y
+    normalised coordinates, so mouth openness depended on the video's aspect ratio."""
+    if aspect is None:
+        aspect = video_aspect(landmarks_data.get("key", ""))
     events = []
     current_state = None
     start_time = 0.0
@@ -48,12 +53,12 @@ def extract_face_events(landmarks_data):
         is_smiling = False
         
         if face and len(face) >= 468:
-            ml = face[MOUTH_L]
-            mr = face[MOUTH_R]
-            mt = face[MOUTH_TOP]
-            mb = face[MOUTH_BOT]
-            fl = face[FACE_W_L]
-            fr = face[FACE_W_R]
+            ml = P(face, MOUTH_L, aspect)
+            mr = P(face, MOUTH_R, aspect)
+            mt = P(face, MOUTH_TOP, aspect)
+            mb = P(face, MOUTH_BOT, aspect)
+            fl = P(face, FACE_W_L, aspect)
+            fr = P(face, FACE_W_R, aspect)
             
             mw = dist_2d(ml, mr)
             mh = dist_2d(mt, mb)
@@ -126,7 +131,8 @@ def main():
         with open(lm_file, 'r', encoding='utf-8') as f:
             data = json.load(f)
             
-        events = extract_face_events(data)
+        data.setdefault("key", key)
+        events = extract_face_events(data, video_aspect(key))
         
         with open(out_file, 'w', encoding='utf-8') as f:
             json.dump(events, f, indent=4, ensure_ascii=False)

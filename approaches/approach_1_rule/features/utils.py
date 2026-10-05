@@ -42,25 +42,9 @@ def valid_face_frames(landmarks_data, min_points=468):
 
 
 def get_video_aspect(key, default=16/9):
-    """
-    อ่าน resolution จาก metadata.json แล้วคืน aspect ratio (w/h)
-    คืน default ถ้าอ่านไม่ได้
-    """
-    try:
-        if not _METADATA_FILE.exists():
-            return default
-        with open(_METADATA_FILE, "r", encoding="utf-8") as f:
-            meta = json.load(f)
-        info = meta.get(key)
-        if not info:
-            return default
-        res = info.get("resolution")
-        if not res or "x" not in res:
-            return default
-        w, h = res.lower().split("x")
-        w, h = int(w.strip()), int(h.strip())
-        if h == 0:
-            return default
-        return w / h
-    except Exception:
-        return default
+    """Aspect ratio (w/h) of the clip. Delegates to base/measurement/visual/geometry.py,
+    which also probes the video file when the clip is not in metadata.json (AVI clips)."""
+    import sys
+    sys.path.insert(0, str(_PROJECT_ROOT))
+    from base.measurement.visual.geometry import video_aspect
+    return video_aspect(key, default)

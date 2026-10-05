@@ -33,24 +33,42 @@ load_dotenv(ROOT / ".env")
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 
-def transcribe_audio(audio_path: Path, device: str = "cpu", compute_type: str = "float32") -> dict:
+_MODELS = {}
+
+
+def _get_model(device, compute_type):
+    if "asr" not in _MODELS:
+        logging.info("Loading WhisperX model (base) once...")
+        from huggingface_hub import snapshot_download
+        model_dir = snapshot_download(repo_id="Systran/faster-whisper-base")
+        _MODELS["asr"] = whisperx.load_model(model_dir, device, compute_type=compute_type)
+    return _MODELS["asr"]
+
+
+def _get_align(language, device):
+    if ("align", language) not in _MODELS:
+        _MODELS[("align", language)] = whisperx.load_align_model(language_code=language, device=device)
+    return _MODELS[("align", language)]
+
+
+def transcribe_audio(audio_path: Path, device: str = "cpu", compute_type: str = "float32",
+                     language: str = "en") -> dict:
     """
     Transcribes audio using WhisperX and aligns it to get word-level timestamps.
     """
     try:
-        # Load model (using "base" for speed, can be upgraded to "small" or "medium")
-        logging.info("Downloading/Loading WhisperX model (base) explicitly...")
-        from huggingface_hub import snapshot_download
-        model_dir = snapshot_download(repo_id="Systran/faster-whisper-base")
-        model = whisperx.load_model(model_dir, device, compute_type=compute_type)
+        # models are loaded ONCE and reused for every clip (loading per clip was the slow part)
+        model = _get_model(device, compute_type)
 
         logging.info(f"Transcribing {audio_path.name}...")
         audio = whisperx.load_audio(str(audio_path))
-        result = model.transcribe(audio, batch_size=4)
+        # language is fixed (default "en"): auto-detection on short / accented clips can pick
+        # another language, and then alignment fails
+        result = model.transcribe(audio, batch_size=4, language=language)
 
         # Align timestamps
         logging.info("Aligning timestamps...")
-        model_a, metadata = whisperx.load_align_model(language_code=result["language"], device=device)
+        model_a, metadata = _get_align(result["language"], device)
         result_aligned = whisperx.align(result["segments"], model_a, metadata, audio, device, return_char_alignments=False)
 
         # Optional Diarization
@@ -98,6 +116,14 @@ def main():
     compute_type = "float16" if device == "cuda" else "float32"
     logging.info(f"Using device: {device}, compute_type: {compute_type}")
     
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--language", default=os.environ.get("TRANSCRIBE_LANGUAGE", "en"),
+                    help="spoken language (default en); 'auto' = let Whisper detect it")
+    args = ap.parse_args()
+    language = None if args.language == "auto" else args.language
+
+    failed = []
     for audio_path in audio_files:
         key = audio_path.stem
         out_file = EVIDENCE_DIR / f"{key}_transcript.json"
@@ -109,11 +135,20 @@ def main():
             
         logging.info(f"Processing: {key}")
         
-        features = transcribe_audio(audio_path, device=device, compute_type=compute_type)
+        features = transcribe_audio(audio_path, device=device, compute_type=compute_type,
+                                    language=language)
+        if not features:
+            failed.append(key)
         if features:
             with open(out_file, 'w', encoding='utf-8') as f:
                 json.dump(features, f, indent=4, ensure_ascii=False)
             logging.info(f"  -> Saved {out_file.name}")
-            
+
+    if failed:
+        logging.error(f"Transcription FAILED for {len(failed)} file(s): {', '.join(failed)} "
+                      f"(see errors above)")
+        sys.exit(1)
+
+
 if __name__ == "__main__":
     main()

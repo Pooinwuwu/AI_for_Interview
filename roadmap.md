@@ -1,30 +1,93 @@
-# Roadmap — Phase by Phase
+# Roadmap — Research plan v2 (seminar)
 
-> แผนงานทั้งหมด + progress tracking
+**Last Updated:** 2026-10-04
+**Pivot:** web app dropped (dataset licences forbid interview apps). The project is now a
+**comparative research study**: which methods score interviews closest to human raters,
+which modalities matter, and whether evidence + a checker make AI feedback more truthful.
 
-**Overall Progress:** ~40% complete  
-**Last Updated:** 2026-10-01  
-**Main dataset:** AVI-Personality (646 participants, 3,876 clips, recruiter-rated ground truth) — see Phase 0
+**Main dataset:** AVI-Personality (local only). RecruitView = evaluation only. Own clips = Gemini feedback study.
 
 ---
 
-## 📊 Summary
+## 🎯 Research questions
 
-| Phase | Status | Progress | ETA |
+| | Question | Data | Metric |
 |---|---|---|---|
-| 0. Switch to AVI-Personality | ⏳ | 60% | 2-3 days |
-| 1. Preprocessing | ✅ Done | 100% | — |
-| 2. Features | ✅ Done | 100% | — |
-| 3. Scoring | ✅ Done | 100% | — |
-| 4. LLM Feedback | ✅ Done | 100% | — |
-| 5. Base Structure | ✅ Done | 100% | — |
-| 6. Layer 1 Complete | ⏳ | 0% | 1-2 weeks |
-| 7. Build A2 + A3 | ⏳ | 30% | 1 week |
-| 8. Validation | ⏳ | 0% | 2-3 weeks |
-| 9. Ethics + Framing | ⏳ | 0% | — |
-| 10. Paper Writing | ⏳ | 0% | 2 weeks |
+| **RQ1** | Which scoring method agrees best with human ratings? | AVI (train/dev/test); RecruitView (cross-dataset test) | Spearman ρ + 95% bootstrap CI, paired Δρ |
+| **RQ2** | Which modality carries the signal: text, audio, visual? | same | ablation (drop one group at a time) |
+| **RQ3** | Do evidence grounding + an automatic checker reduce hallucination in AI feedback? | own clips (10-15) | hallucination rate (auto + human audit), specificity rubric, stability over 3 runs |
+| RQ0 | Are the Tier-1 measurements valid? | own clips (gaze labels), RecruitView dimensions | accuracy / κ, ρ per dimension |
 
 ---
+
+## 🧭 Pipeline
+
+```
+video -> Tier 1 measurement (MediaPipe, WhisperX, Parselmouth; aspect-ratio fixed)
+           |
+           |-- Part 1  score prediction (trained models)      -> RQ1, RQ2
+           |-- Part 2  AI feedback (Gemini B / C / D)         -> RQ3
+           '-- Part 0  measurement validity                   -> RQ0
+```
+
+### Part 1 — score prediction (core of the "train a model" work)
+| ID | Method | Status |
+|---|---|---|
+| M0 | answer length only (baseline) | ✅ `train_score_model.py` group `length` |
+| M1 | hand-set rules (old Approach A) | ✅ `rule` |
+| M2 | Tier-1 features + ridge (Approach 1b) | ✅ `audio_text` / `visual` / `all`, `approaches/approach_1b_learned/` |
+| M3 | pretrained embeddings + small regressor (text first, then audio) | ⏳ |
+| M4 | fusion M2 + M3 | ⏳ optional |
+| M5 | local LLM (Ollama, 3-4B, 4 GB VRAM) scores the transcript zero-shot | ⏳ optional — data never leaves the machine |
+
+Protocol: train on avi_train*, choose on avi_dev, write the decision in `report/model_decision.md`,
+then `--final` ONCE on avi_eval. Cross-dataset: train on AVI, test on RecruitView interview_score (evaluation only).
+
+### Part 2 — AI feedback (own clips only)
+| ID | Method | Status |
+|---|---|---|
+| B | Gemini, video only | ✅ `approach_2_mllm_zero_shot` |
+| C | grounded: evidence log + transcript, cites IDs, checker + 1 revision | ✅ `approach_grounded` |
+| C- | C without checker (= stored draft) | ✅ free |
+| D | C + video | ✅ `--with-video` (optional) |
+
+### Part 0 — measurement validity
+- [x] Aspect-ratio bug fixed; one gaze measure (7.6 below)
+- [ ] Gaze labels on own clips -> `validation/validate_gaze.py`
+- [ ] Tier-1 dimensions vs RecruitView speaking / facial / confidence (evaluation only)
+
+### Core vs optional
+- **Core:** M0-M3 on AVI + ablation; B vs C on own clips; gaze validation
+- **Optional:** M4, M5, D, RecruitView cross-dataset, MIT Interview, filler detection (CrisperWhisper / PodcastFillers)
+
+### Data (model_decision.md, "Data decision v3")
+One equal dataset for every method: train 100 (train1 + train2 + train3) / dev 30 / test 50, q1 + q2, full Tier 1.
+
+### Next steps (in order)
+1. [ ] Batch 1: `build_subset.py --split train --n 20 --name train3 --exclude-manifest <train1> <train2> --archive-others` -> `run_pipeline.py`
+       (also re-measures all old clips after the aspect fix and transcribes the pilots)
+2. [ ] Batch 2: `build_subset.py --split test --n 50 --name eval --archive-others` -> `run_pipeline.py`
+3. [ ] `text_embed.py`; dev: `train_score_model.py --text-emb minilm --learning-curve`
+4. [ ] Record 5-10 more own clips; label gaze (`validate_gaze.py`)
+5. [ ] Part 2: B / C (/ D) on own clips; hallucination check + human audit
+6. [ ] RecruitView evaluation subset (local, no Gemini) — optional
+7. [ ] Final: `train_score_model.py --text-emb minilm --final` ONCE; write up
+
+---
+
+## 📌 Scope & data (decided 2026-10-04): RESEARCH ONLY
+No product deployment; no own dataset collection (only the researcher's own clips). The system is a research prototype.
+| Data | Use | Gemini? |
+|---|---|---|
+| AVI-Personality | main: train/dev/test for Part 1 | no (local LLM only) unless the authors approve |
+| RecruitView | evaluation / comparison only; models trained on it never leave the experiments | ask the authors first |
+| MIT Interview (on request, academic e-mail) | extra test set (optional) | check terms |
+| PodcastFillers / CrisperWhisper | filler-word detection (research licence, optional) | - |
+| Own clips (researcher = participant) | Part 2 feedback study, gaze labels | yes |
+
+---
+
+# 🗄️ Archive — history before the 2026-10-04 pivot
 
 ## ⏳ Phase 0: Main dataset = AVI-Personality
 
@@ -163,6 +226,29 @@ To do:
 - [x] A1 speech features read the WhisperX transcript (one transcript for A1 and the evidence log)
 - [ ] Re-tune pause / filler bands on dev — WhisperX finds ~1.5-2x more pauses than the old Whisper run
 
+### 7.5 Approach 1b — Learned overall score (2026-10-04)
+- [x] `approaches/approach_1b_learned/` — same Tier-1 measurements as A1; overall score from the ridge model fixed in `report/model_decision.md` (audio_text, AVI hireability); dimension bands still from A1
+- [x] `train.py` saves `models/approach_1b/` (model, model card, fit participant ids — gitignored); default fit = train+dev, never the test manifest
+- [x] `score.py` → `output/scores_1b/<key>.json`: percentile 0-100 + Thai band, which feature groups raised/lowered it, "outside training range" warning; no score if speech features are missing
+- [x] `run_pipeline.py` step `score_1b` (skipped if no model); `evaluate_avi.py --approaches learned` drops participants the model was trained on
+- [x] Dev check (fit=train): ρ = 0.27 [-0.10, 0.56], same as train_score_model audio_text → code path verified
+- [ ] Fairness: on dev the 1b score separates gender more than recruiters do (SMD -0.59 vs -0.25, n=28) — check on test, consider dropping voice features if it holds
+- [ ] Later: per-dimension learned models trained on RecruitView dimension scores
+
+### 7.6 Tier-2 redesign: judge / writer / checker (2026-10-04)
+New line-up: A = rules (approach_1_rule), B = MLLM video only (approach_2), C = grounded text-only, D = grounded + video (approach_grounded --with-video). approach_3_hybrid kept for the existing pilot results.
+- [x] `base/grounded_log.py` — citable evidence log: S# summaries, E# visual episodes >= 1 s (flickers merged), P# pauses >= 1 s from WhisperX word gaps, T# transcript lines; fillers marked "not measured"
+- [x] `approaches/approach_grounded/` — judge (A1 dimension bands + 1b overall) -> Gemini writer must cite IDs -> `verify.py` checks every point (unknown ID, wrong behaviour, time not in cited item, contradicted value, filler, quote) -> one revision round -> failing points removed
+- [x] Output keeps `draft` + `verification` so the checker's effect is measured without extra API calls
+- [x] `hallucination_check.py`: approaches grounded / grounded_draft / grounded_video(_draft) + paired comparisons; never overwrites a rated audit sample (writes *_new.csv)
+- [ ] Run C on pilot clips (needs transcripts for pilot_01/03/04/05), then D
+- [x] Tier-1 fix (2026-10-04): ASPECT-RATIO BUG. Landmarks are normalised per axis (x/width, y/height); every distance mixing x and y was distorted. Effects found: eye openness on 720x1280 phone video looked "closed" in ~80% of frames; head_events used 16:9 for every video -> "turned_up" for whole pilot clips; AVI features were computed with 16:9 although AVI is 4:3 (metadata.json lacked AVI keys). Both Approach-3 errors in the RQ1 pilot (pilot_04 gaze, pilot_02 head) trace back to this.
+  - `base/measurement/visual/geometry.py`: real frame size (metadata -> cache -> probe the video file) + undistorted landmark helper; used by all visual events and Approach A features
+  - ONE gaze measure (`gaze_events.frame_states`, used by features/gaze.py too): eyelid level vs the person's own open-eye level (long low lids = looking down / notes), gaze direction = head yaw + iris vs the person's usual direction; blinks ignored
+  - Pilot sanity check after fix: pilot_03 (reading notes) 16% eye contact (was 100% / 9%), pilot_04 (camera) 100% (was 100% / 24%), pilot_05 76%; head on pilot_02/03/04 now "centered" (was "turned_up" all clip)
+- [ ] Rerun visual steps for ALL clips: `python run_pipeline.py --from gaze`, then re-run train_score_model.py on dev (visual / all groups change; audio_text and the 1b decision are not affected) — record in model_decision.md
+- [ ] Validate gaze against human labels: `validation/validate_gaze.py` (pilot clips, 2-s windows)
+
 ---
 
 ## ⏳ Phase 8: Validation (AVI ground truth)
@@ -179,8 +265,9 @@ To do:
 - [x] Raw features do carry signal (answer length ρ≈+0.3, smile ratio +0.37, pause count +0.44; exploratory, n=30)
 - [x] `run_pipeline.py` — whole Tier-1 + scoring in one command, frees frame images after landmarks
 - [x] `validation/train_score_model.py` — ridge on train, choose on dev, `--final` once on test; length baseline; RQ2 = 'all' vs 'audio_text'
-- [ ] Process train1 (40 people) + train2 (40 people) — 2 nights, ~4 h each
-- [ ] Run train_score_model.py on dev; then eval subset (test) + `--final` once
+- [x] Process train1 (40 people) + train2 (40 people)
+- [x] Run train_score_model.py on dev (decision: report/model_decision.md)
+- [ ] Eval subset (test) + `--final` once
 
 ### 8.2 Hallucination check (RQ1)
 - [x] Extract timestamped claims from A2/A3 feedback (`validation/hallucination_check.py`)

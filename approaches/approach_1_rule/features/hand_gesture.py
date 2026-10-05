@@ -3,13 +3,14 @@
 from utils import mean, std
 
 
-def _hand_center(hand_landmarks):
-    xs = [p["x"] for p in hand_landmarks]
+def _hand_center(hand_landmarks, aspect=1.0):
+    xs = [p["x"] * aspect for p in hand_landmarks]
     ys = [p["y"] for p in hand_landmarks]
     return mean(xs), mean(ys)
 
 
-def extract(landmarks_data):
+def extract(landmarks_data, aspect=1.0):
+    """v2: x scaled by aspect, so speeds are in frame heights per second."""
     frames = landmarks_data["frames"]
     total = len(frames)
     presence = 0
@@ -20,7 +21,7 @@ def extract(landmarks_data):
         if not hands:
             continue
         presence += 1
-        cxs = [_hand_center(h["landmarks"]) for h in hands]
+        cxs = [_hand_center(h["landmarks"], aspect) for h in hands]
         cx = mean([c[0] for c in cxs])
         cy = mean([c[1] for c in cxs])
         centers.append((i, cx, cy))
