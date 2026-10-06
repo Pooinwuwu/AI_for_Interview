@@ -131,6 +131,7 @@ def feature_groups(columns):
         groups["text_emb+all"] = text + audio_text + visual
     if "llm.rating" in columns:                 # M5 rating used as one extra feature
         groups["llm+audio_text"] = ["llm.rating"] + audio_text
+        groups["llm+length"] = ["llm.rating"] + groups["length"]
     return groups
 
 

@@ -33,6 +33,10 @@ Usage
   python validation/train_score_model.py --data full --text-emb minilm --learning-curve
                                                          # audio/text track, all AVI people
   python validation/train_score_model.py --final         # train+dev -> test, ONCE per track
+  python validation/train_score_model.py --data full --text-emb minilm bge-small e5-base \
+         --llm qwen2.5:3b --learning-curve --final
+                         # audio/text track: all processed AVI train+val people -> the SAME
+                         # locked 50-person test subset as the visual track
 Models needing a modality (e.g. visual) only use participants where it was measured;
 paired comparisons use the participants both models scored.
 
@@ -153,16 +157,21 @@ COMPARISONS = (
     ("llm_zero_shot", "length", "M5 local LLM beats length?"),
     ("text_emb", "llm_zero_shot", "M3 trained embedding beats zero-shot LLM?"),
     ("llm+audio_text", "audio_text", "M5 rating adds over M2?"),
+    ("llm+length", "length", "M5 rating adds over length?"),
 )
 
 LC_SIZES = [25, 50, 100, 200, 300]
-LC_GROUPS = ["length", "audio_text", "text_emb", "text_emb+audio_text"]
+LC_GROUPS = ["length", "audio_text", "text_emb", "text_emb+audio_text", "llm+length"]
 
 
 def split_ids(args, labels):
     if args.data == "full":       # AVI official subject-level split, every processed participant
         by = labels.groupby("split").participant_id.apply(set)
-        return by.get("train", set()), by.get("val", set()), by.get("test", set())
+        test = by.get("test", set())
+        locked = manifest_ids(args.test) if args.test else set()
+        # the test people stay the locked 50-person subset in every track, so the audio/text
+        # track (more training people) and the visual track are scored on the same people
+        return by.get("train", set()) - test, by.get("val", set()) - test, locked or test
     return manifest_ids(args.train), manifest_ids(args.dev), manifest_ids(args.test)
 
 
@@ -170,6 +179,8 @@ def fit_eval(name, cols, fit, ev, target):
     fit = fit[has_modalities(fit, cols)]
     ev = ev[has_modalities(ev, cols)]
     m = make_model(ALPHAS_EMB if name.startswith("text_emb") else ALPHAS)
+    if len(fit) < 10 or len(ev) < 10:
+        return m, pd.Series(dtype=float), np.nan, len(fit)
     y_fit = fit[target].to_numpy()
     cv_pred = cross_val_predict(m, fit[cols], y_fit, cv=KFold(5, shuffle=True, random_state=0))
     m.fit(fit[cols], y_fit)
@@ -204,8 +215,9 @@ def main():
     ap.add_argument("--train", default="avi_train*_subset.csv", help="manifest glob (subset)")
     ap.add_argument("--dev", default="avi_dev_subset.csv")
     ap.add_argument("--test", default="avi_eval_subset.csv")
-    ap.add_argument("--text-emb", default=None,
-                    help="add M3/M4 groups from output/embeddings/text_<name>.npz (e.g. minilm)")
+    ap.add_argument("--text-emb", nargs="+", default=[],
+                    help="add M3/M4 groups from output/embeddings/text_<name>.npz (e.g. minilm); "
+                         "more names add text_emb[<name>] models")
     ap.add_argument("--llm", default=None,
                     help="add M5 (local LLM zero-shot ratings, e.g. qwen2.5:3b)")
     ap.add_argument("--learning-curve", action="store_true",
@@ -214,7 +226,8 @@ def main():
                     help="train on train+dev and evaluate on test (do this ONCE)")
     args = ap.parse_args()
 
-    clips = clip_features(args.questions, args.text_emb, args.llm)
+    embs = args.text_emb
+    clips = clip_features(args.questions, embs[0] if embs else None, args.llm)
     if clips.empty:
         sys.exit("[ERROR] no AVI feature files in output/features/")
     per = participant_table(clips)
@@ -242,6 +255,16 @@ def main():
 
     groups = feature_groups(data.columns)
     y_ev = ev[args.target]
+    # model name -> (columns, fit table, eval table); extra embeddings get their own tables
+    runs = {name: (cols, fit, ev) for name, cols in groups.items()}
+    for e in embs[1:]:
+        d2 = participant_table(clip_features(args.questions, e, None)).join(labels, how="inner")
+        d2 = d2.dropna(subset=[args.target])
+        g2 = feature_groups(d2.columns)
+        for n in ("text_emb", "text_emb+audio_text", "text_emb+all"):
+            if g2.get(n):
+                runs[n.replace("text_emb", f"text_emb[{e}]")] = (
+                    g2[n], d2[d2.index.isin(fit_ids)], d2[d2.index.isin(eval_ids)])
 
     rows, preds, coef = [], {}, None
     if "rule.overall" in ev:
@@ -258,10 +281,10 @@ def main():
             r, lo, hi = spearman_ci(e["llm.rating"], e[args.target])
             rows.append({"model": "llm_zero_shot", "features": 0, "n_fit": 0, "n_eval": len(e),
                          "cv_spearman_fit": np.nan, "spearman": r, "ci_low": lo, "ci_high": hi})
-    for name, cols in groups.items():
+    for name, (cols, fit_t, ev_t) in runs.items():
         if not cols:
             continue
-        m, p, cv_rho, n_fit = fit_eval(name, cols, fit, ev, args.target)
+        m, p, cv_rho, n_fit = fit_eval(name, cols, fit_t, ev_t, args.target)
         if len(p) < 10:
             continue
         preds[name] = p
@@ -275,7 +298,7 @@ def main():
     res = pd.DataFrame(rows)
     REPORT_DIR.mkdir(parents=True, exist_ok=True)
     suffix = ((f"_{args.data}" if args.data != "subset" else "")
-              + (f"_{args.text_emb}" if args.text_emb else "")
+              + (f"_{'+'.join(embs)}" if embs else "")
               + (f"_llm-{args.llm.replace(':', '_')}" if args.llm else ""))
     res.to_csv(REPORT_DIR / f"score_model_{eval_name}{suffix}.csv", index=False)
     pd.set_option("display.width", 160)
@@ -283,7 +306,8 @@ def main():
     print()
 
     comp = []
-    for a, b, label in COMPARISONS:
+    for a, b, label in COMPARISONS + tuple((f"text_emb[{e}]", "text_emb", f"{e} beats {embs[0]}?")
+                                          for e in embs[1:]):
         if a in preds and b in preds:
             d, lo, hi, n = paired_diff_ci(preds[a], preds[b], y_ev)
             verdict = "yes" if lo > 0 else ("no (worse)" if hi < 0 else "not shown (CI includes 0)")
