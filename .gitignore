@@ -11,3 +11,4 @@ input/videos_archive/
 report/avi_eval_participants.csv
 # Approach 1b model: contains AVI participant ids (fit_participants.json)
 models/approach_1b/
+models/doctor/

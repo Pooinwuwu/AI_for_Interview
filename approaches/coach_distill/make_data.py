@@ -38,6 +38,8 @@ from base._paths import EVIDENCE_DIR, OUTPUT_DIR, REPORT_DIR
 from base.dataset.avi import load_labels, parse_key
 from base.grounded_log import build, to_prompt_text
 from base.llm_common import question_block
+import copy
+
 from prompt import FEEDBACK_SCHEMA, build_revision_prompt
 from verify import check, drop_failed
 
@@ -47,7 +49,26 @@ if sys.platform == "win32":
     except Exception:
         pass
 
-COACH_VERSION = "coach-v1"
+COACH_VERSION = "coach-v2"
+
+
+def _strip_th(node):
+    """Same schema without the *_th fields: Thai text costs many tokens on a local model;
+    the English feedback is translated for the user later (own clips only)."""
+    if isinstance(node, dict):
+        out = {}
+        for k, v in node.items():
+            if k == "properties":
+                out[k] = {pk: _strip_th(pv) for pk, pv in v.items() if not pk.endswith("_th")}
+            elif k == "required":
+                out[k] = [r for r in v if not r.endswith("_th")]
+            else:
+                out[k] = _strip_th(v)
+        return out
+    return node
+
+
+SCHEMAS = {"both": FEEDBACK_SCHEMA, "en": _strip_th(copy.deepcopy(FEEDBACK_SCHEMA))}
 LOCAL_HOSTS = {"localhost", "127.0.0.1", "::1"}
 DATA_ROOT = OUTPUT_DIR / "coach_data"
 
@@ -56,7 +77,7 @@ DATA_ROOT = OUTPUT_DIR / "coach_data"
 # PROMPT  (the same text is the student's input at training and at use time)
 # ============================================================
 
-def coach_prompt(key: str, log_text: str) -> str:
+def coach_prompt(key: str, log_text: str, lang: str = "en") -> str:
     return f"""You are an interview coach. Coach the candidate on this one answer.
 
 {question_block(key)}
@@ -73,9 +94,16 @@ RULES
   be judged. Filler words are NOT measured: do not count or quote fillers.
 • Content matters: judge what was said against "A STRONG ANSWER" using the transcript.
   If the answer lacks a concrete example, say where one should go (cite the T item).
+• "dimension" must match the evidence: points citing T items are answer_quality; gaze ->
+  eye_contact; head -> head_pose; hand -> hand_gesture; face -> facial_expression.
+• If the answer misses something in "A STRONG ANSWER", at least one improvement must say what
+  is missing and where (cite the T item). Do not praise content the transcript does not show.
+• overall_summary: 2 sentences that only repeat the strengths and improvements you listed.
 • Give at most 3 strengths and 3 improvements, most important first. No numeric scores.
-• English fields natural; _th fields same meaning in Thai.
+{"• Write short, plain English. Keep each point to 1-2 sentences." if lang == "en" else "• English fields natural; _th fields same meaning in Thai."}
 • improved_answer: rewrite the first 1-2 sentences as a stronger opening for THIS question.
+  Use only facts the candidate said. NEVER invent jobs, numbers or events; where a real example
+  is needed write a placeholder such as [your own example: situation - what you did - result].
 """
 
 
@@ -84,10 +112,10 @@ RULES
 # ============================================================
 
 class Ollama:
-    def __init__(self, host: str, model: str, num_ctx: int):
+    def __init__(self, host: str, model: str, num_ctx: int, schema: dict):
         if urlparse(host).hostname not in LOCAL_HOSTS:
             sys.exit(f"[STOP] {host} is not local. AVI data must stay on this computer.")
-        self.base, self.model, self.num_ctx = host.rstrip("/"), model, num_ctx
+        self.base, self.model, self.num_ctx, self.schema = host.rstrip("/"), model, num_ctx, schema
 
     def check(self):
         try:
@@ -100,16 +128,17 @@ class Ollama:
 
     def ask(self, prompt: str) -> dict:
         body = json.dumps({
-            "model": self.model, "stream": False, "format": FEEDBACK_SCHEMA,
+            "model": self.model, "stream": False, "format": self.schema,
             "messages": [{"role": "user", "content": prompt}],
-            "options": {"temperature": 0.2, "seed": 42, "num_ctx": self.num_ctx},
+            "options": {"temperature": 0.2, "seed": 42, "num_ctx": self.num_ctx,
+                        "num_predict": 1200},
         }).encode("utf-8")
         req = urllib.request.Request(self.base + "/api/chat", data=body,
                                      headers={"Content-Type": "application/json"})
         last = ""
         for _ in range(3):
             try:
-                with urllib.request.urlopen(req, timeout=900) as r:
+                with urllib.request.urlopen(req, timeout=1800) as r:
                     return json.loads(json.load(r)["message"]["content"])
             except (urllib.error.URLError, ValueError, KeyError, TypeError) as e:
                 last = str(e)[:200]
@@ -133,26 +162,61 @@ def pool_keys(splits, people_split):
     return sorted(keys, key=lambda k: (not has_video(k), k))
 
 
+SOURCE_DIM = {"transcript": "answer_quality", "pause": "answer_quality", "speech": "answer_quality",
+              "gaze": "eye_contact", "head": "head_pose", "hand": "hand_gesture",
+              "face": "facial_expression"}
+
+
+def repair_dimensions(feedback: dict, log: dict) -> int:
+    """Small models often put a correct point under the wrong dimension label (e.g. a content
+    point citing T2 labelled eye_contact). If every cited item points to one other dimension,
+    relabel it instead of letting the checker drop a correct point. Returns how many changed."""
+    types = {i["id"]: i["type"] for i in log["items"]}
+    changed = 0
+    for section in ("strengths", "improvements"):
+        for item in feedback.get(section, []) or []:
+            dims = {SOURCE_DIM.get(types.get(i)) for i in item.get("evidence_ids", []) or []
+                    if types.get(i) in SOURCE_DIM}
+            if len(dims) == 1:
+                d = dims.pop()
+                if item.get("dimension") != d:
+                    item["dimension"] = d
+                    changed += 1
+    return changed
+
+
+def is_done(path: Path) -> bool:
+    if not path.exists():
+        return False
+    try:
+        return json.loads(path.read_text(encoding="utf-8")).get("coach_version") == COACH_VERSION
+    except ValueError:
+        return False
+
+
 def generate(args, llm, keys, out_dir):
     done = skipped = failed = 0
     t0 = time.time()
-    todo = [k for k in keys if args.force or not (out_dir / f"{k}.json").exists()]
+    todo = [k for k in keys if args.force or not is_done(out_dir / f"{k}.json")]
     skipped = len(keys) - len(todo)
     if args.limit:
         todo = todo[:args.limit]
     print(f"[coach-data] teacher={args.model}  to do={len(todo)}  already done={skipped}  -> {out_dir}")
     for n, key in enumerate(todo, 1):
+        t_clip = time.time()
         log = build(key)
         if not any(i["kind"] == "transcript" for i in log["items"]):
             continue
-        prompt = coach_prompt(key, to_prompt_text(log))
+        prompt = coach_prompt(key, to_prompt_text(log), args.lang)
         try:
             draft = llm.ask(prompt)
+            relabeled = repair_dimensions(draft, log)
             rep1 = check(draft, log)
             final, rep2 = draft, rep1
             if rep1["problems"]:
                 final = llm.ask(build_revision_prompt(prompt, json.dumps(draft, ensure_ascii=False),
                                                       rep1["problems"]))
+                relabeled += repair_dimensions(final, log)
                 rep2 = check(final, log)
             final, removed = drop_failed(final, rep2)
         except Exception as e:
@@ -160,10 +224,11 @@ def generate(args, llm, keys, out_dir):
             failed += 1
             continue
         (out_dir / f"{key}.json").write_text(json.dumps({
-            "key": key, "teacher": args.model, "coach_version": COACH_VERSION,
+            "key": key, "teacher": args.model, "coach_version": COACH_VERSION, "lang": args.lang,
+            "seconds": round(time.time() - t_clip, 1),
             "has_video_evidence": (EVIDENCE_DIR / f"{key}_evidence.json").exists(),
             "prompt": prompt, "draft": draft, "final": final, "removed": removed,
-            "draft_failed": rep1["n_failed"], "draft_items": rep1["n_items"],
+            "draft_failed": rep1["n_failed"], "draft_items": rep1["n_items"], "relabeled": relabeled,
             "final_items": len(final.get("strengths", [])) + len(final.get("improvements", [])),
         }, ensure_ascii=False, indent=2), encoding="utf-8")
         done += 1
@@ -178,7 +243,8 @@ def generate(args, llm, keys, out_dir):
 # ============================================================
 
 def load_done(out_dir):
-    return [json.loads(p.read_text(encoding="utf-8")) for p in sorted(out_dir.glob("*.json"))]
+    docs = [json.loads(p.read_text(encoding="utf-8")) for p in sorted(out_dir.glob("*.json"))]
+    return [d for d in docs if d.get("coach_version") == COACH_VERSION]
 
 
 def export(out_dir, people_split, min_items):
@@ -235,7 +301,9 @@ def main():
     ap.add_argument("--host", default="http://localhost:11434")
     ap.add_argument("--splits", nargs="+", default=["train", "val"], choices=["train", "val"])
     ap.add_argument("--limit", type=int, default=None, help="at most this many new clips this run")
-    ap.add_argument("--num-ctx", type=int, default=8192)
+    ap.add_argument("--num-ctx", type=int, default=6144)
+    ap.add_argument("--lang", choices=["en", "both"], default="en",
+                    help="en = English only (about half the tokens, much faster on a local model)")
     ap.add_argument("--force", action="store_true")
     ap.add_argument("--export", action="store_true", help="write sft_train / sft_val JSONL")
     ap.add_argument("--min-items", type=int, default=2, help="export: minimum supported points")
@@ -257,7 +325,7 @@ def main():
     keys = pool_keys(set(args.splits), people_split)
     if any(people_split.get(parse_key(k)["participant_id"]) == "test" for k in keys):
         sys.exit("[ERROR] a test participant reached the pool")
-    llm = Ollama(args.host, args.model, args.num_ctx)
+    llm = Ollama(args.host, args.model, args.num_ctx, SCHEMAS[args.lang])
     llm.check()
     generate(args, llm, keys, out_dir)
 
