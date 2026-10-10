@@ -94,5 +94,44 @@
     "recorded_date": null,
     "consent_obtained": false,
     "notes": ""
+  },
+  "app_20261009113223th_q1": {
+    "file_path": "videos_app/app_20261009113223th_q1.mp4",
+    "duration_sec": 30.37,
+    "fps": 30.0,
+    "resolution": "1280x720",
+    "frame_count": 911,
+    "language": "th",
+    "interviewer_present": true,
+    "recorded_date": null,
+    "consent_obtained": false,
+    "notes": "",
+    "question_id": "intro"
+  },
+  "app_20261009114704en_q1": {
+    "file_path": "videos_app/app_20261009114704en_q1.mp4",
+    "duration_sec": 90.0,
+    "fps": 30.0,
+    "resolution": "720x1280",
+    "frame_count": 2700,
+    "language": "en",
+    "interviewer_present": true,
+    "recorded_date": null,
+    "consent_obtained": false,
+    "notes": "",
+    "question_id": "q1"
+  },
+  "app_20261009121745en_q1": {
+    "file_path": "videos_app/app_20261009121745en_q1.mp4",
+    "duration_sec": 90.0,
+    "fps": 30.0,
+    "resolution": "720x1280",
+    "frame_count": 2700,
+    "language": "en",
+    "interviewer_present": true,
+    "recorded_date": null,
+    "consent_obtained": false,
+    "notes": "",
+    "question_id": "q1"
   }
 }

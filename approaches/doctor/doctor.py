@@ -56,8 +56,10 @@ TARGET = "hireability"
 # mean pitch encodes gender, and voice quality is not something the coach advises on)
 ISSUE_FEATURES = {
     "too_short":   ["sp.duration_sec", "sp.speaking_sec", "sp.word_count"],
-    "long_pauses": ["sp.pause_count", "sp.long_pause_count", "sp.pause_total_sec",
-                    "sp.pause_mean_sec", "sp.pause_max_sec", "pr.silence_ratio"],
+    # per minute / share of the clip, not counts: raw counts grow with answer length and the
+    # model then learned "more pauses = longer answer = better" (doctor v1 bug)
+    "long_pauses": ["d.long_pause_per_min", "d.pause_share", "sp.pause_mean_sec",
+                    "sp.pause_max_sec", "pr.silence_ratio"],
     "pace":        ["sp.speech_rate_wpm", "sp.articulation_wpm"],
     "eye_contact": ["vis.gaze.eye_contact_ratio", "vis.gaze.gaze_stability_x",
                     "vis.gaze.gaze_stability_y", "vis.gaze.no_face_ratio"],
@@ -74,6 +76,16 @@ MODELS = {"audio": ["too_short", "long_pauses", "pace"],
           "visual": ["eye_contact", "head_posture", "hands", "facial_expression"]}
 CONTENT = "content"            # from the text model; matches no_example / off_topic labels
 MIN_DEFICIT = 0.02             # below this (rating points x weight) -> "none"
+DOCTOR_VERSION = "doctor-v2"
+
+
+def add_derived(df: pd.DataFrame) -> pd.DataFrame:
+    """Length-free pause measures (computed after averaging, on the same rows that are scored)."""
+    df = df.copy()
+    minutes = df["sp.duration_sec"].where(df["sp.duration_sec"] > 0) / 60
+    df["d.long_pause_per_min"] = df.get("sp.long_pause_count") / minutes
+    df["d.pause_share"] = df.get("sp.pause_total_sec") / (minutes * 60)
+    return df
 
 
 # ============================================================
@@ -89,7 +101,7 @@ def training_pool(text_emb):
     pool_ids = set(labels.participant_id[labels.split.isin(["train", "val"])]) - locked
     per = participant_table(clip_features([1, 2], text_emb, None))
     lab = labels.set_index("participant_id")[[TARGET]]
-    data = per.join(lab, how="inner").dropna(subset=[TARGET])
+    data = add_derived(per.join(lab, how="inner").dropna(subset=[TARGET]))
     return data[data.index.isin(pool_ids)]
 
 
@@ -117,12 +129,14 @@ def train(args):
     if txt:
         parts["text"] = fit_one(data, txt, ALPHAS_EMB)
     MODEL_PATH.parent.mkdir(parents=True, exist_ok=True)
-    joblib.dump({"parts": parts, "text_emb": args.text_emb, "target": TARGET}, MODEL_PATH)
+    joblib.dump({"parts": parts, "text_emb": args.text_emb, "target": TARGET,
+                 "version": DOCTOR_VERSION}, MODEL_PATH)
     card = {n: {"n_people": p["n"], "cv_spearman": round(p["cv_rho"], 3),
                 "weight": round(p["weight"], 3), "features": len(p["cols"])}
             for n, p in parts.items()}
     (MODEL_PATH.parent / "model_card.json").write_text(
-        json.dumps({"text_emb": args.text_emb, "target": TARGET, "parts": card}, indent=2),
+        json.dumps({"version": DOCTOR_VERSION, "text_emb": args.text_emb, "target": TARGET,
+                    "parts": card}, indent=2),
         encoding="utf-8")
     print("Doctor trained on AVI train + val people (test people excluded):")
     for n, c in card.items():
@@ -165,7 +179,7 @@ def diagnose_row(doc, row: pd.DataFrame) -> dict:
 
 def clip_frame(keys, text_emb):
     vecs = text_embedding_columns(text_emb) if text_emb else {}
-    return pd.DataFrame([{**clip_row(k), **vecs.get(k, {})} for k in keys]).set_index("key")
+    return add_derived(pd.DataFrame([{**clip_row(k), **vecs.get(k, {})} for k in keys]).set_index("key"))
 
 
 # ---------- rule doctor (baseline: fixed thresholds, no training, cannot judge content)
@@ -199,6 +213,8 @@ def diagnose(args):
     if not MODEL_PATH.exists():
         sys.exit("[ERROR] train first:  python approaches/doctor/doctor.py train")
     doc = joblib.load(MODEL_PATH)
+    if doc.get("version") != DOCTOR_VERSION:
+        sys.exit("[ERROR] the saved doctor is an older version - run the train command again")
     keys = list(args.keys or [])
     if args.manifest:
         for r in csv.DictReader(open(GROUND_TRUTH_DIR / args.manifest, encoding="utf-8")):

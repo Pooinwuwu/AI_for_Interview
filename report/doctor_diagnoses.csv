@@ -1,0 +1,9 @@
+key,doctor_top,doctor_second,rule_top,rule_second,deficits
+own_01_q1,none,,none,,"{""pace"": 0.0017, ""eye_contact"": -0.0, ""head_posture"": -0.0, ""hands"": 0.0, ""facial_expression"": 0.0, ""too_short"": -0.0265, ""content"": -0.0267, ""long_pauses"": -0.2352}"
+own_02_q1,content,,head_posture,eye_contact,"{""content"": 0.0942, ""pace"": 0.0008, ""eye_contact"": 0.0, ""head_posture"": 0.0, ""hands"": 0.0, ""facial_expression"": -0.0, ""too_short"": -0.0039, ""long_pauses"": -0.2027}"
+own_03_q2,none,,none,,"{""eye_contact"": -0.0, ""head_posture"": 0.0, ""hands"": 0.0, ""facial_expression"": 0.0, ""pace"": -0.0007, ""too_short"": -0.0098, ""content"": -0.0551, ""long_pauses"": -0.168}"
+own_04_q2,content,,long_pauses,head_posture,"{""content"": 0.1113, ""eye_contact"": 0.0, ""head_posture"": 0.0, ""hands"": 0.0, ""facial_expression"": -0.0, ""pace"": -0.0, ""too_short"": -0.0078, ""long_pauses"": -0.1815}"
+own_05_q4,none,,head_posture,,"{""pace"": 0.0015, ""eye_contact"": -0.0, ""head_posture"": 0.0, ""hands"": -0.0, ""facial_expression"": -0.0, ""too_short"": -0.0103, ""content"": -0.0233, ""long_pauses"": -0.2388}"
+own_06_q5,content,too_short,too_short,pace,"{""content"": 0.3546, ""too_short"": 0.0459, ""eye_contact"": -0.0, ""head_posture"": 0.0, ""hands"": 0.0, ""facial_expression"": -0.0, ""pace"": -0.0008, ""long_pauses"": -0.2336}"
+own_07_q6,content,,head_posture,,"{""content"": 0.5089, ""too_short"": 0.0164, ""pace"": 0.0002, ""eye_contact"": -0.0, ""head_posture"": 0.0, ""hands"": 0.0, ""facial_expression"": -0.0, ""long_pauses"": -0.2318}"
+own_08_q1,none,,none,,"{""pace"": 0.0007, ""eye_contact"": -0.0, ""head_posture"": 0.0, ""hands"": 0.0, ""facial_expression"": -0.0, ""too_short"": -0.0001, ""content"": -0.0967, ""long_pauses"": -0.1867}"

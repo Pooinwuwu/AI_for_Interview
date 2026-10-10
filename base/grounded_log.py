@@ -75,7 +75,11 @@ def build(key: str) -> dict:
     raw = (_read(EVIDENCE_DIR / f"{key}_evidence.json") or {}).get("evidence", [])
     transcript = _read(EVIDENCE_DIR / f"{key}_transcript.json") or {}
     speech = (_read(FEATURES_DIR / f"{key}_speech.json") or {}).get("features", {})
+    return build_from(key, raw, transcript, speech)
 
+
+def build_from(key: str, raw: list, transcript: dict, speech: dict) -> dict:
+    """Same as build(), from data in memory (used for synthetic training clips)."""
     segments = transcript.get("segments", []) or []
     words = [w for s in segments for w in s.get("words", []) if "start" in w and "end" in w]
     duration = max([e.get("end", 0) for e in raw] + [s.get("end", 0) for s in segments]

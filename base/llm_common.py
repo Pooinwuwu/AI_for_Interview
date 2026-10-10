@@ -223,7 +223,7 @@ def question_context(key: str) -> dict:
     answer quality and delivery, not on personality.
     """
     import re
-    own = re.match(r"^own_\d+_q([1-6])$", key)      # researcher's own clips, e.g. own_03_q1
+    own = re.match(r"^(?:own|friend|app)_[0-9A-Za-z]+_q([1-6])$", key)   # own / friend / web-app clips, e.g. own_03_q1
     if own:
         from base.dataset.avi import load_questions
         qno = f"q{own.group(1)}"
