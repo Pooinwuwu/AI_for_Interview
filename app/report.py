@@ -212,3 +212,54 @@ def render(res: dict) -> str:
                f'ระบบยังนับคำเติม (um, uh) ไม่ได้ · ใช้เพื่อฝึกซ้อมเท่านั้น ไม่ใช่การประเมินตัวบุคคล</p>')
     out.append("</div>")
     return "".join(out)
+
+
+# ------------------------------------------------------------
+# interview session (several questions answered one after another)
+# ------------------------------------------------------------
+
+BAND_ORDER = ["ดีมาก", "ดี", "ปานกลาง", "ควรปรับ", "ควรปรับมาก"]
+BAND_COLOR = {"ดีมาก": "#2f9e44", "ดี": "#74b816", "ปานกลาง": "#f59f00", "ควรปรับ": "#e8590c",
+              "ควรปรับมาก": "#c92a2a"}
+
+
+def render_session(results: list, planned: int, errors: list = ()) -> str:
+    """results: [(question_dict, load_result dict)] in answer order. planned: questions in the round."""
+    if not results:
+        return CSS + '<div class="ic"><p>ยังไม่มีคำตอบที่วิเคราะห์ได้</p></div>'
+    thai = (results[0][1].get("meta") or {}).get("language") == "th"
+    bands = [((r.get("feedback") or {}).get("ratings") or {}).get("overall") for _, r in results]
+    known = [BAND_ORDER.index(b) for b in bands if b in BAND_ORDER]
+    overall = BAND_ORDER[round(sum(known) / len(known))] if known else "-"
+    # the dimension that most often appears as the first thing to fix
+    firsts = [((r.get("feedback") or {}).get("improvements") or [{}])[0].get("dimension")
+              for _, r in results]
+    firsts = [f for f in firsts if f]
+    common = max(set(firsts), key=firsts.count) if firsts else None
+    stopped = len(results) < planned
+    out = [CSS, '<div class="ic">',
+           f'<div class="hero">{mascot("happy" if overall in ("ดีมาก", "ดี") else "thinking")}<div>'
+           f'<h2>สรุปการสัมภาษณ์</h2>'
+           f'<p>ตอบไป {len(results)} จาก {planned} ข้อ'
+           + (' (หยุดก่อนครบ)' if stopped else '') + '</p>'
+           f'<div class="chips"><div class="chip">ภาพรวมทั้งรอบ<b style="color:{BAND_COLOR.get(overall, "#495057")}">'
+           f'{overall}</b></div>'
+           + (f'<div class="chip">เรื่องที่ควรฝึกก่อน<b>{DIM.get(common, ("", common))[1]}</b></div>' if common else "")
+           + '</div></div></div>', '<h3>📋 ผลรายข้อ</h3>']
+    for i, ((q, r), b) in enumerate(zip(results, bands), 1):
+        fb = r.get("feedback") or {}
+        top = (fb.get("improvements") or [{}])[0]
+        tip = top.get("issue_th") or top.get("issue_en") or "ไม่มีจุดสำคัญที่ต้องแก้"
+        qt = q.get("th") if thai else q.get("en")
+        out.append(f'<div class="card"><div class="top"><b>ข้อ {i}</b>'
+                   f'<span class="tag" style="background:{BAND_COLOR.get(b, "#868e96")}">{b or "-"}</span></div>'
+                   f'<div class="muted">{_esc(qt)}</div><div>🎯 {_esc(tip)}</div></div>')
+    for e in errors:
+        out.append(f'<div class="card fix">{_esc(e)}</div>')
+    out.append('<h3>🔍 รายละเอียดแต่ละข้อ</h3>')
+    for i, (q, r) in enumerate(results, 1):
+        body = render(r).replace(CSS, "", 1)
+        out.append(f'<details{" open" if i == 1 else ""}><summary>ข้อ {i}: '
+                   f'{_esc(q.get("th") if thai else q.get("en"))}</summary>{body}</details>')
+    out.append("</div>")
+    return "".join(out)

@@ -1,0 +1,9 @@
+check,n,spearman
+M5 rating vs sp.duration_sec,514,0.32664472851966714
+human rating vs sp.duration_sec,514,0.18795190756988067
+M5 rating vs sp.word_count,514,0.461613946719037
+human rating vs sp.word_count,514,0.31051063344040697
+M5 rating vs sp.speaking_sec,514,0.4622880729708962
+human rating vs sp.speaking_sec,514,0.294198044861034
+M5 rating vs human rating,514,0.37096957188400126
+"M5 vs human, length held constant (partial)",514,0.24011159956355196
