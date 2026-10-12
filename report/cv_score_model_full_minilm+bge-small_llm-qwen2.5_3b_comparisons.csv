@@ -1,0 +1,13 @@
+a,b,question,n,delta_rho,ci_low,ci_high,verdict
+all,audio_text,RQ2: visual adds over audio+text?,300,-0.006276336201578414,-0.05940956558919971,0.0489969156622638,not shown (CI includes 0)
+audio_text,length,M2 audio+text beats length?,514,0.05646873820544113,0.009532586905692083,0.10322220949360977,yes
+visual,length,M2 visual beats length?,300,-0.2682221797959968,-0.4125929581697209,-0.12320150502871173,no (worse)
+audio_text,rule,M2 learned beats hand-set rules?,300,0.09475595668266845,-0.00856489599924266,0.19677029553147057,not shown (CI includes 0)
+text_emb,length,M3 embedding beats length?,514,0.09693193147651769,0.022980288439217483,0.16901820931038422,yes
+text_emb+audio_text,audio_text,M4: embedding adds over M2?,514,0.05708180012938985,-0.003488017060638573,0.11256352118064894,not shown (CI includes 0)
+text_emb+all,text_emb+audio_text,RQ2 (M4): visual adds?,300,-0.034264464697089214,-0.07744794417897888,0.006070878863910671,not shown (CI includes 0)
+llm_zero_shot,length,M5 zero-shot beats length?,514,0.03922585195333467,-0.03805981778762428,0.11748774175799903,not shown (CI includes 0)
+llm+length,length,M5 adds over length?,514,0.062114448208416384,0.006465516658825991,0.11958263269810691,yes
+llm+audio_text,audio_text,M5 adds over M2?,514,0.041990891899666094,0.004732143755203066,0.08028007005337044,yes
+text_emb,llm_zero_shot,M3 trained beats M5 zero-shot?,514,0.05770607952318302,-0.023571070502931446,0.1348183901664168,not shown (CI includes 0)
+text_emb[bge-small],text_emb,bge-small beats minilm?,514,-0.025688551359417,-0.08080664854556381,0.031802425213819666,not shown (CI includes 0)
