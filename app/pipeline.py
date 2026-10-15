@@ -200,11 +200,11 @@ def scores(key: str):
     _save(SCORES_DIR / f"{key}.json", rs.compute_scores(key, vis, sp))
 
 
-COACH_MODES = ("auto", "gemini", "local")
+COACH_MODES = ("auto", "gemini", "local", "ollama")
 
 
-def coach_gemini(key: str, quick: bool) -> dict:
-    """Approach C: Gemini writes from the evidence log, verify.py checks it."""
+def _grounded_setup(key: str, quick: bool, writer_cls=None):
+    """Shared by the Gemini and the local-LLM coach: same prompt, judge and verifier."""
     run = _load("app_grounded_run", "approaches/approach_grounded/run.py")
     import questions
     import base.llm_common as lc
@@ -225,8 +225,24 @@ def coach_gemini(key: str, quick: bool) -> dict:
         return ratings, "rule-based measurement", {}
 
     run.judge = judge_rule_only
-    writer = run.Writer(with_video=False)
+    return run, run.Writer(with_video=False) if writer_cls is None else writer_cls(run)
+
+
+def coach_gemini(key: str, quick: bool) -> dict:
+    """Approach C: Gemini writes from the evidence log, verify.py checks it."""
+    run, writer = _grounded_setup(key, quick)
     return run.run_clip(key, writer, with_video=False, max_rounds=1)
+
+
+def coach_ollama(key: str) -> dict:
+    """Approach C-local: same prompt, schema and verifier, but a local LLM through Ollama."""
+    from ollama_writer import OllamaWriter
+    run, writer = _grounded_setup(key, False, lambda r: OllamaWriter(r.FEEDBACK_SCHEMA))
+    t0 = time.time()
+    res = run.run_clip(key, writer, with_video=False, max_rounds=1)
+    res["local_llm"] = {"model": writer.model, "num_ctx": writer.num_ctx,
+                        "seconds_per_call": writer.seconds, "seconds_total": round(time.time() - t0, 1)}
+    return res
 
 
 def coach_local(key: str) -> dict:
@@ -239,10 +255,13 @@ def coach_local(key: str) -> dict:
 
 
 def coach(key: str, mode: str = "auto") -> dict:
-    """auto = Gemini, and the local coach if Gemini is down; gemini / local = only that one."""
+    """auto = Gemini, and the local coach if Gemini is down; gemini / local / ollama = only that one."""
     reason = None
     res = None
-    if mode in ("auto", "gemini"):
+    if mode == "ollama":                 # no silent fallback: the comparison needs this coach
+        res = coach_ollama(key)
+        res["coach_used"] = "ollama"
+    elif mode in ("auto", "gemini"):
         try:
             res = coach_gemini(key, quick=(mode == "auto"))
             res["coach_used"] = "gemini"
@@ -256,7 +275,8 @@ def coach(key: str, mode: str = "auto") -> dict:
         res["coach_used"] = "local"
         if reason:
             res["fallback_reason"] = reason
-    _save(FEEDBACK_DIR / f"{key}.json", res)
+    _save(FEEDBACK_DIR / f"{key}.json", res)                    # latest: what the report shows
+    _save(FEEDBACK_DIR / "by_coach" / f"{key}__{res['coach_used']}.json", res)   # kept per coach
     return res
 
 

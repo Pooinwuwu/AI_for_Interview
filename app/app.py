@@ -44,7 +44,8 @@ ERR = '<p style="color:#d9480f">{}</p>'
 
 COACH_CHOICES = {"อัตโนมัติ: Gemini ถ้าล่มใช้โค้ชในเครื่อง": "auto",
                  "Gemini เท่านั้น": "gemini",
-                 "โค้ชในเครื่อง (ไม่ใช้เน็ต ไม่ส่งข้อมูลออก)": "local"}
+                 "โค้ชในเครื่อง (ไม่ใช้เน็ต ไม่ส่งข้อมูลออก)": "local",
+                 "LLM ในเครื่องผ่าน Ollama (ไม่ส่งข้อมูลออก)": "ollama"}
 
 BANK = [questions.as_question(q[0]) for q in questions.QUESTIONS]
 
@@ -97,7 +98,7 @@ def make_questions(job, resume, lang_label, consent, n, progress=gr.Progress()):
 def analyse(video, lang_label, qlist, label, consent, fast, coach_label, job, resume,
             progress=gr.Progress()):
     mode = COACH_CHOICES.get(coach_label, "auto")
-    if not consent and mode != "local":
+    if not consent and mode not in ("local", "ollama"):
         return ERR.format("กรุณาติ๊กยืนยันด้านบนก่อน (หรือเลือกโค้ชในเครื่องซึ่งไม่ส่งข้อมูลออก)"), gr.update()
     if not video:
         return ERR.format("ยังไม่มีคลิป อัดหรืออัปโหลดก่อนนะ"), gr.update()
@@ -162,7 +163,7 @@ def _idle(sid, md, html, history=gr.update()):
 
 def start_session(qlist, n, lang_label, consent, coach_label, fast, job, resume):
     mode = COACH_CHOICES.get(coach_label, "auto")
-    if not consent and mode != "local":
+    if not consent and mode not in ("local", "ollama"):
         return _idle(None, "", ERR.format("กรุณาติ๊กยืนยันด้านบนก่อน (หรือเลือกโค้ชในเครื่อง)"))
     sid = time.strftime("%Y%m%d%H%M%S") + uuid.uuid4().hex[:4]
     SESSIONS[sid] = {"id": sid, "qs": list(qlist)[:max(1, int(n))], "idx": 0, "lang": lang_code(lang_label),
