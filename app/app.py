@@ -45,7 +45,8 @@ ERR = '<p style="color:#d9480f">{}</p>'
 COACH_CHOICES = {"อัตโนมัติ: Gemini ถ้าล่มใช้โค้ชในเครื่อง": "auto",
                  "Gemini เท่านั้น": "gemini",
                  "โค้ชในเครื่อง (ไม่ใช้เน็ต ไม่ส่งข้อมูลออก)": "local",
-                 "LLM ในเครื่องผ่าน Ollama (ไม่ส่งข้อมูลออก)": "ollama"}
+                 "LLM ในเครื่องผ่าน Ollama (ไม่ส่งข้อมูลออก)": "ollama",
+                 "Groq API (cloud)": "groq"}
 
 BANK = [questions.as_question(q[0]) for q in questions.QUESTIONS]
 

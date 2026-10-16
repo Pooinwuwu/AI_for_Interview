@@ -13,11 +13,17 @@ Problems found per strength / improvement:
   contradicted   the cited evidence shows the opposite (says "looking away", log says camera)
   filler         talks about filler words, which are not measured
   quote          quotes words that are not in the cited transcript lines
+  too_many_ids   cites more than MAX_IDS items (citing everything is not evidence)
+  ids_in_text    writes lists of evidence IDs into the text the candidate reads
+  too_long       a text field longer than MAX_CHARS
+  duplicate      an improvement that repeats an earlier one
+Improved answer: numbers that are neither in the transcript nor in the resume (invented facts).
 Points citing only "VIDEO" (approach D) are not problems but are marked unverified.
 """
 
 import re
 import sys
+from difflib import SequenceMatcher
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
@@ -28,6 +34,54 @@ from validation.hallucination_check import (TOL, expected_values, find_times, se
 
 VISUAL = {"gaze", "head", "hand", "face"}
 SHARE_CONTRADICTS = 0.25     # claim says X but X is < 25% of the clip in the cited summary
+MAX_IDS = 4                  # the 1-4 most specific items, not the whole log
+MAX_CHARS = 320              # per text field (about two short sentences)
+DUPLICATE_RATIO = 0.6        # issue texts this similar (same dimension) = the same point
+EXTRA_FACTS = ""             # resume text; set by the app so resume numbers are allowed
+ID_IN_TEXT = re.compile(r"\b[SEPT]\d{1,3}\b")
+NUMBER = re.compile(r"\d+(?:[.,]\d+)?")
+
+
+def _all_texts(item: dict):
+    for f in ("text_en", "text_th", "issue_en", "issue_th"):
+        if item.get(f):
+            yield f, item[f]
+    for f in ("action_steps_en", "action_steps_th"):
+        for t in item.get(f, []) or []:
+            yield f, t
+
+
+def check_style(item: dict) -> list:
+    """Problems that do not depend on the log: too many IDs, IDs in the text, length."""
+    probs = []
+    label = (item.get("text_en") or item.get("issue_en") or "")[:80]
+    ids = [i for i in item.get("evidence_ids", []) or [] if str(i).upper() != "VIDEO"]
+    if len(ids) > MAX_IDS:
+        probs.append(f'"{label}": cites {len(ids)} items; cite only the {MAX_IDS} most specific')
+    for f, t in _all_texts(item):
+        if len(ID_IN_TEXT.findall(t)) > 2:
+            probs.append(f'"{label}": {f} lists evidence IDs in the text; keep IDs only in evidence_ids')
+            break
+    for f, t in _all_texts(item):
+        if len(t) > MAX_CHARS:
+            probs.append(f'"{label}": {f} is {len(t)} characters; shorten to at most 2 short sentences')
+            break
+    return probs
+
+
+def check_answer(feedback: dict, log: dict) -> list:
+    """improved_answer may only use numbers the candidate said or the resume contains."""
+    ia = feedback.get("improved_answer") or {}
+    said = " ".join(i.get("text", "") for i in log["items"] if i.get("kind") == "transcript")
+    known = set(NUMBER.findall(said + " " + (EXTRA_FACTS or "")))
+    probs = []
+    for f in ("rewritten_en", "rewritten_th"):
+        text = re.sub(r"\[[^\]]*\]", " ", ia.get(f, "") or "")   # [skill 1] = placeholder
+        new = [n for n in NUMBER.findall(text) if n not in known]
+        if new:
+            probs.append(f'improved_answer {f}: the numbers {", ".join(sorted(set(new)))} are not in '
+                         f'the transcript or resume - do not invent facts; remove them')
+    return probs
 
 
 def _texts(item: dict):
@@ -125,14 +179,29 @@ def check(feedback: dict, log: dict, allow_video: bool = False) -> dict:
     idx = index(log)
     report = {"items": [], "problems": []}
     for section in ("strengths", "improvements"):
+        seen = []
         for n, item in enumerate(feedback.get(section, []) or []):
             probs, status = check_item(item, idx, allow_video)
+            probs = probs + check_style(item)
+            if section == "improvements":
+                for m, prev in seen:
+                    if prev.get("dimension") == item.get("dimension") and SequenceMatcher(
+                            None, prev.get("issue_en", ""), item.get("issue_en", "")).ratio() > DUPLICATE_RATIO:
+                        probs.append(f'"{item.get("issue_en", "")[:80]}": repeats improvement {m + 1}; '
+                                     f'merge them or choose a different problem')
+                        break
+                seen.append((n, item))
+            if probs:
+                status = "failed"
             report["items"].append({"section": section, "index": n, "status": status,
                                     "problems": probs})
             report["problems"] += probs
     sp = check_summary(feedback.get("overall_summary_en"), log)
     report["summary_problems"] = sp
     report["problems"] += sp
+    ap = check_answer(feedback, log)
+    report["answer_problems"] = ap
+    report["problems"] += ap
     report["n_items"] = len(report["items"])
     report["n_failed"] = sum(i["status"] == "failed" for i in report["items"])
     return report
@@ -151,4 +220,7 @@ def drop_failed(feedback: dict, report: dict) -> tuple:
             else:
                 keep.append(item)
         out[section] = keep
+    if report.get("answer_problems"):          # invented facts: do not show the rewrite
+        removed.append({"section": "improved_answer", **(feedback.get("improved_answer") or {})})
+        out["improved_answer"] = {}
     return out, removed

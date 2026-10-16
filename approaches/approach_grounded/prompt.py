@@ -18,9 +18,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "approaches" / "app
 from base.llm_common import BANDS_TH, DIMENSIONS, question_block
 from prompt_builder import DIMENSION_LABEL_EN
 
-PROMPT_VERSION = "grounded-v1"
+PROMPT_VERSION = "grounded-v2"   # v2: short points, 1-4 IDs, no invented numbers
 
-_IDS = {"type": "array", "items": {"type": "string"}, "minItems": 1,
+_IDS = {"type": "array", "items": {"type": "string"}, "minItems": 1, "maxItems": 4,
         "description": "IDs from the evidence log that support this point, e.g. [\"S1\", \"E12\"]"}
 
 FEEDBACK_SCHEMA = {
@@ -85,7 +85,11 @@ EVIDENCE LOG (measured by computer vision / speech tools; cite the IDs in [ ])
 {log_text}
 
 RULES
-• Every strength and improvement must list the evidence_ids that support it.
+• Short and important only: pick the most important points (up to 3 each). Each text is at
+  most 2 short sentences; each action step is 1 short sentence the candidate can do next time.
+• No two improvements about the same problem.
+• Every strength and improvement must list the 1-4 most specific evidence_ids that support it
+  (never the whole log). Do NOT write IDs like [E12] inside the texts.
   Visual points cite S/E items of that behaviour; speech points cite S/P items;
   content points cite T items (what was said).
 • Only mention a time if it is the time of an item you cite (e.g. "41-56s").

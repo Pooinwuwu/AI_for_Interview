@@ -204,7 +204,8 @@ def render(res: dict) -> str:
     ver = fb.get("verification") or {}
     removed = len(ver.get("removed") or [])
     who = {"gemini": "เขียนโดย Gemini", "local": "เขียนโดยโค้ชในเครื่อง (แม่แบบจากค่าที่วัดได้)",
-           "ollama": "เขียนโดย LLM ในเครื่อง " + fb.get("local_llm", {}).get("model", "")}.get(
+           "ollama": "เขียนโดย LLM ในเครื่อง " + fb.get("local_llm", {}).get("model", ""),
+           "groq": "เขียนโดย Groq " + fb.get("groq", {}).get("model", "")}.get(
         fb.get("coach_used"), "")
     if fb.get("fallback_reason"):
         who += " เพราะ Gemini ใช้งานไม่ได้ตอนนี้"

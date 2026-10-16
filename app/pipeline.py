@@ -200,7 +200,7 @@ def scores(key: str):
     _save(SCORES_DIR / f"{key}.json", rs.compute_scores(key, vis, sp))
 
 
-COACH_MODES = ("auto", "gemini", "local", "ollama")
+COACH_MODES = ("auto", "gemini", "local", "ollama", "groq")
 
 
 def _grounded_setup(key: str, quick: bool, writer_cls=None):
@@ -225,6 +225,24 @@ def _grounded_setup(key: str, quick: bool, writer_cls=None):
         return ratings, "rule-based measurement", {}
 
     run.judge = judge_rule_only
+    run.verify.EXTRA_FACTS = meta.get("resume", "")      # resume numbers may be used
+    from base.grounded_log import compact_prompt_text   # app: short log for every LLM coach
+    labels = getattr(run, "DIMENSION_LABEL_EN", {})
+
+    def focused_log(log):
+        """'What matters most' first, then the short log: the coach spends its few points
+        on the weakest areas instead of describing everything."""
+        ratings, _, _ = judge_rule_only(key)
+        rank = {b: i for i, b in enumerate(run.BANDS_TH)}         # 0 = best band
+        weak = sorted((d for d in run.DIMENSIONS if ratings.get(d) in rank
+                       and rank[ratings[d]] >= rank["ปานกลาง"]),
+                      key=lambda d: -rank[ratings[d]])[:2]
+        lines = ["WHAT MATTERS MOST (spend your points here; skip minor details)"]
+        lines += [f"{n}. {labels.get(d, d)}: {ratings[d]}" for n, d in enumerate(weak, 1)]
+        lines += [f"{len(weak) + 1}. Content: does the answer meet A STRONG ANSWER above?", ""]
+        return "\n".join(lines) + compact_prompt_text(log, problems_per_type=3, good_per_type=1)
+
+    run.to_prompt_text = focused_log
     return run, run.Writer(with_video=False) if writer_cls is None else writer_cls(run)
 
 
@@ -240,8 +258,19 @@ def coach_ollama(key: str) -> dict:
     run, writer = _grounded_setup(key, False, lambda r: OllamaWriter(r.FEEDBACK_SCHEMA))
     t0 = time.time()
     res = run.run_clip(key, writer, with_video=False, max_rounds=1)
+    res["model"] = writer.model
     res["local_llm"] = {"model": writer.model, "num_ctx": writer.num_ctx,
-                        "seconds_per_call": writer.seconds, "seconds_total": round(time.time() - t0, 1)}
+                        "seconds_per_call": writer.seconds, "tokens_per_call": writer.tokens, "seconds_total": round(time.time() - t0, 1)}
+    return res
+
+
+def coach_groq(key: str) -> dict:
+    """Approach C-groq: same prompt, schema and verifier, model on the Groq API (cloud)."""
+    from groq_writer import GroqWriter
+    run, writer = _grounded_setup(key, False, lambda r: GroqWriter(r.FEEDBACK_SCHEMA))
+    res = run.run_clip(key, writer, with_video=False, max_rounds=1)
+    res["model"] = writer.model
+    res["groq"] = {"model": writer.model, "seconds_per_call": writer.seconds, "usage": writer.usage}
     return res
 
 
@@ -251,16 +280,18 @@ def coach_local(key: str) -> dict:
     import questions
     meta = (_read(METADATA_FILE) if METADATA_FILE.exists() else {}).get(key, {})
     q = questions.as_question(meta.get("question") or meta.get("question_id", "intro"))
+    tr.verify.EXTRA_FACTS = meta.get("resume", "")
     return tr.run_clip(key, focus=q["focus"], lang=meta.get("language", "en"))
 
 
 def coach(key: str, mode: str = "auto") -> dict:
-    """auto = Gemini, and the local coach if Gemini is down; gemini / local / ollama = only that one."""
+    """auto = Gemini, and the local coach if Gemini is down; gemini/local/ollama/groq = only that one."""
     reason = None
     res = None
-    if mode == "ollama":                 # no silent fallback: the comparison needs this coach
-        res = coach_ollama(key)
-        res["coach_used"] = "ollama"
+    t0 = time.time()
+    if mode in ("ollama", "groq"):       # no silent fallback: the comparison needs this coach
+        res = coach_ollama(key) if mode == "ollama" else coach_groq(key)
+        res["coach_used"] = mode
     elif mode in ("auto", "gemini"):
         try:
             res = coach_gemini(key, quick=(mode == "auto"))
@@ -275,6 +306,7 @@ def coach(key: str, mode: str = "auto") -> dict:
         res["coach_used"] = "local"
         if reason:
             res["fallback_reason"] = reason
+    res["seconds_coach"] = round(time.time() - t0, 1)
     _save(FEEDBACK_DIR / f"{key}.json", res)                    # latest: what the report shows
     _save(FEEDBACK_DIR / "by_coach" / f"{key}__{res['coach_used']}.json", res)   # kept per coach
     return res
@@ -290,10 +322,10 @@ STEPS = [("แปลงไฟล์วิดีโอ", 0.03), ("แยกเส
 
 
 def process(src_video: Path, question, lang: str = "en", progress=None, fps: int = 30,
-            coach_mode: str = "auto", resume: str = "", job: str = "") -> str:
-    """question = bank id ("q3") or a generated question dict."""
-    """Runs everything; returns the clip key. progress(fraction, text) is optional."""
-    key = f"app_{time.strftime('%Y%m%d%H%M%S')}{lang}_q1"      # question + language: metadata
+            coach_mode: str = "auto", resume: str = "", job: str = "", key: str = None) -> str:
+    """question = bank id ("q3") or a generated question dict.
+    Runs everything; returns the clip key. progress(fraction, text) is optional."""
+    key = key or f"app_{time.strftime('%Y%m%d%H%M%S')}{lang}_q1"   # question + language: metadata
     done = 0.0
 
     def step(i, fn, *a):

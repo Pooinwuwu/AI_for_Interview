@@ -188,5 +188,40 @@ def to_prompt_text(log: dict) -> str:
     return "\n".join(lines)
 
 
+GOOD_VALUES = {"eye_contact", "centered", "smiling"}
+
+
+def _is_good(item: dict) -> bool:
+    v = str(item.get("value", ""))
+    if item["type"] == "hand":
+        return v != "hands_hidden"
+    return v in GOOD_VALUES
+
+
+def compact_prompt_text(log: dict, problems_per_type: int = 5, good_per_type: int = 2) -> str:
+    """Shorter log for the app's LLM coaches (small local models get lost in 80+ episodes).
+    Keeps every pause, the longest problem episodes per behaviour and a few good ones;
+    everything else is still covered by the SUMMARY percentages. IDs stay the same, so the
+    checker (which sees the full log) is unchanged."""
+    ev = [i for i in log["items"] if i["kind"] == "event"]
+    keep = [i for i in ev if i["type"] == "pause"]
+    for t in sorted({i["type"] for i in ev} - {"pause"}):
+        for good, n in ((False, problems_per_type), (True, good_per_type)):
+            grp = [i for i in ev if i["type"] == t and _is_good(i) == good]
+            keep += sorted(grp, key=lambda i: i["end"] - i["start"], reverse=True)[:n]
+    keep = sorted(keep, key=lambda i: i["start"])
+    lines = [f"Clip length: {log['duration']:.1f}s", "", "SUMMARY"]
+    lines += [f"[{i['id']}] {i['text']}" for i in log["items"] if i["kind"] == "summary"]
+    lines += ["", f"KEY EPISODES ({len(keep)} of {len(ev)}: all pauses, the longest problems and a "
+                  f"few good moments; the SUMMARY covers the rest)"]
+    lines += [f"[{i['id']}] {i['start']:.1f}-{i['end']:.1f}s {i['type']}: {i['text']}" for i in keep] \
+        or ["(none)"]
+    lines += ["", "TRANSCRIPT"]
+    tr = [i for i in log["items"] if i["kind"] == "transcript"]
+    lines += [f"[{i['id']}] {i['start']:.1f}-{i['end']:.1f}s \"{i['text']}\"" for i in tr] \
+        or ["(no transcript)"]
+    return "\n".join(lines)
+
+
 def index(log: dict) -> dict:
     return {i["id"]: i for i in log["items"]}

@@ -102,7 +102,7 @@ def _context(resume: str, job: str) -> str:
     if resume:
         out += ("\nCANDIDATE RESUME (background only - it is NOT evidence of what was said; you may suggest "
                 "resume experiences the answer could have used, and use resume facts in improved_answer):\n"
-                + resume[:3000])
+                + resume[:1500])
     return out
 
 

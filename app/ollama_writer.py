@@ -47,6 +47,7 @@ class OllamaWriter:
         self.schema, self.temperature, self.num_ctx = schema, temperature, ctx
         self.with_video, self.video = False, None
         self.seconds = []                      # time per call, for the report
+        self.tokens = []                       # prompt / output tokens per call (to size num_ctx)
         self._check()
 
     def _check(self):
@@ -59,15 +60,35 @@ class OllamaWriter:
             raise RuntimeError(f"model '{self.model}' not installed - run: ollama pull {self.model}")
 
     def _post(self, think_off: bool):
-        body = {"model": self.model, "stream": False, "format": self.schema,
+        """Streams the answer, so progress shows and Ctrl+C works between pieces."""
+        body = {"model": self.model, "stream": True, "format": self.schema,
                 "messages": [{"role": "user", "content": self._prompt}],
                 "options": {"temperature": self.temperature, "seed": 42, "num_ctx": self.num_ctx}}
         if think_off:
             body["think"] = False              # qwen3 & co: skip the long hidden reasoning
         req = urllib.request.Request(self.url, data=json.dumps(body).encode("utf-8"),
                                      headers={"Content-Type": "application/json"})
-        with urllib.request.urlopen(req, timeout=900) as r:
-            return json.load(r)["message"]["content"]
+        parts, t0, shown = [], time.time(), 0.0
+        print(f"[local LLM] {self.model}: reading the prompt (no output for a while is normal) ...",
+              flush=True)
+        with urllib.request.urlopen(req, timeout=300) as r:
+            for line in r:
+                if not line.strip():
+                    continue
+                d = json.loads(line)
+                if d.get("error"):
+                    raise RuntimeError(d["error"])
+                parts.append(d.get("message", {}).get("content", ""))
+                if time.time() - shown > 2 or d.get("done"):
+                    shown = time.time()
+                    n = sum(len(x) for x in parts)
+                    print(f"\r[local LLM] writing ... {n} characters, {time.time() - t0:.0f} s",
+                          end="", flush=True)
+                if d.get("done"):
+                    self.tokens.append({"prompt": d.get("prompt_eval_count"), "output": d.get("eval_count")})
+                    break
+        print(flush=True)
+        return "".join(parts)
 
     def write(self, prompt: str) -> dict:
         self._prompt = prompt
@@ -83,7 +104,7 @@ class OllamaWriter:
                     content = self._post(think_off=False)
                 self.seconds.append(round(time.time() - t0, 1))
                 return json.loads(content)
-            except (urllib.error.URLError, ValueError, KeyError) as e:
+            except (urllib.error.URLError, ValueError, KeyError, TimeoutError, OSError) as e:
                 last = str(e)[:200]
                 time.sleep(2)
         raise RuntimeError(f"local LLM gave no valid JSON after 2 tries: {last}")
