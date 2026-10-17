@@ -7,6 +7,7 @@ no hiring use, no identity work, no model trained on it in any app or demo.
 
 Steps (each skips clips already done; the speech scripts process every wav in output/audio):
   sample      one clip per participant (user_no), seeded -> input/ground_truth/recruitview_sample.csv
+              + intro set: one self-introduction clip per participant -> recruitview_intro.csv
   audio       ffmpeg -> output/audio/rv_<id>.wav
   prosody     -> output/evidence/rv_<id>_prosody.json
   transcript  WhisperX (our own transcript, same as AVI; the dataset's transcript is not used)
@@ -43,9 +44,12 @@ if sys.platform == "win32":
 
 RV_DIRS = [INPUT_DIR / "input" / "RecruitView", INPUT_DIR / "RecruitView"]
 SAMPLE = GROUND_TRUTH_DIR / "recruitview_sample.csv"
+INTRO = GROUND_TRUTH_DIR / "recruitview_intro.csv"          # one self-introduction clip per participant
+INTRO_QUESTIONS = {"introduce yourself", "tell me about yourself"}
 LABELS = ["interview_score", "overall_performance", "answer_score", "speaking_skills",
           "confidence_score", "facial_expression"]
 LOG = OUTPUT_DIR / "recruitview_log.txt"
+FIELDS = ["key", "file", "user_no", "question_id", "question", "duration", *LABELS]
 STEPS = ["sample", "audio", "prosody", "transcript", "speech", "embed"]
 SCRIPTS = {
     "prosody":    ROOT / "base/measurement/speech/prosody.py",
@@ -95,6 +99,49 @@ def step_sample(n, seed):
     return True
 
 
+def _row(r):
+    return {"key": f"rv_{r['id']}", "file": r["file_name"], "user_no": r["user_no"],
+            "question_id": r["question_id"], "question": r["question"],
+            "duration": r.get("duration"), **{k: r[k] for k in LABELS}}
+
+
+def step_intro(seed):
+    """Secondary set (pre-registered 2026-10-17): one self-introduction clip per participant,
+    the question type closest to AVI q1/q2. Reuses the random-sample clip when it is already an
+    introduction; otherwise picks one at random (seeded)."""
+    d = rv_dir()
+    rows = [json.loads(l) for l in open(d / "metadata.jsonl", encoding="utf-8") if l.strip()]
+    in_sample = {r["key"] for r in csv.DictReader(open(SAMPLE, encoding="utf-8"))} if SAMPLE.exists() else set()
+    rng = random.Random(seed)
+    by_user = {}
+    for r in sorted(rows, key=lambda r: r["id"]):
+        if r["question"].strip().lower() in INTRO_QUESTIONS:
+            by_user.setdefault(r["user_no"], []).append(r)
+    picked = []
+    for u in sorted(by_user):
+        clips = by_user[u]
+        reuse = [r for r in clips if f"rv_{r['id']}" in in_sample]
+        picked.append(reuse[0] if reuse else rng.choice(clips))
+    with open(INTRO, "w", encoding="utf-8", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=FIELDS)
+        w.writeheader()
+        for r in sorted(picked, key=lambda r: r["id"]):
+            w.writerow(_row(r))
+    shared = sum(f"rv_{r['id']}" in in_sample for r in picked)
+    log(f"    intro set: {len(picked)} clips from {len(picked)} participants "
+        f"({shared} also in the random sample) -> {INTRO.name}")
+    return True
+
+
+def all_clips():
+    seen = {}
+    for path in (SAMPLE, INTRO):
+        if path.exists():
+            for r in csv.DictReader(open(path, encoding="utf-8")):
+                seen.setdefault(r["key"], r)
+    return list(seen.values())
+
+
 def step_audio():
     from base.preprocessing.extract_audio import check_ffmpeg, extract_audio
     if not check_ffmpeg():
@@ -102,7 +149,7 @@ def step_audio():
     d = rv_dir()
     AUDIO_DIR.mkdir(parents=True, exist_ok=True)
     made = have = missing = failed = 0
-    for r in csv.DictReader(open(SAMPLE, encoding="utf-8")):
+    for r in all_clips():                               # random sample + intro set
         out = AUDIO_DIR / f"{r['key']}.wav"
         if out.exists():
             have += 1
@@ -131,6 +178,8 @@ def main():
     if args.start == "sample" and SAMPLE.exists():
         log(f"    {SAMPLE.name} exists - keeping it (delete it to draw a new sample)")
         args.start = "audio"
+    if not INTRO.exists() and args.start in ("sample", "audio"):
+        step_intro(args.seed)
     steps = STEPS[STEPS.index(args.start):]
     log("=" * 60)
     log(f"RECRUITVIEW (evaluation only)  steps={', '.join(steps)}")

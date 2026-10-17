@@ -21,7 +21,7 @@ that a trained small model and Gemini are compared with.
 
 import re
 
-TEMPLATE_VERSION = "template-v1"
+TEMPLATE_VERSION = "template-v2"   # v2: Thai pace, all issues listed
 
 GOOD = ("ดีมาก", "ดี")
 SEVERITY = {"ควรปรับมาก": 0, "ควรปรับ": 1, "ปานกลาง": 2}
@@ -36,7 +36,9 @@ ORDER = ["answer_quality", "eye_contact", "head_pose", "facial_expression", "han
 SHARE_MIN = 0.30           # only state "X% of the time" when X is a real share of the clip
 LONG_PAUSE = 3.0           # a pause this long is worth mentioning
 SLOW_START = 3.0           # silence before the first word
-PACE_EN = (100, 170)       # comfortable English pace (words/min while speaking)
+PACE_EN = (100, 170)       # comfortable English pace (words/min while speaking); conversation ~150 wpm (NCVS)
+PACE_TH_SYL = (3.5, 6.0)   # Thai syllables/second. Mean Thai rate 4.7 syll/s (Coupe et al. 2019,
+                           # Science Advances; read speech); +-25% margin set by the researcher
 LEN_SEC = (40, 150)        # comfortable answer length (seconds of speech)
 
 
@@ -220,6 +222,15 @@ def face(L: Log, good: bool):
     return None, None
 
 
+def _thai_syllables(text: str):
+    """Thai syllable count with PyThaiNLP; None if the tokenizer is not available."""
+    try:
+        from pythainlp.tokenize import syllable_tokenize
+        return sum(1 for t in syllable_tokenize(text) if t.strip() and any("\u0e00" <= ch <= "\u0e7f" for ch in t))
+    except Exception:
+        return None
+
+
 def answer(L: Log, good: bool, lang: str):
     """Spoken answer: length, pace, pauses. Returns (strengths list, improvements list)."""
     sp = L.speech()
@@ -275,6 +286,30 @@ def answer(L: Log, good: bool, lang: str):
         else:
             strengths.append({"text_en": f"Comfortable pace: about {sp['wpm']} words per minute.",
                               "text_th": f"ความเร็วพูดกำลังดี ประมาณ {sp['wpm']} คำต่อนาที",
+                              "evidence_ids": [sid]})
+
+    if lang == "th" and sp["spoken"] > 0:
+        n = _thai_syllables(" ".join(t.get("text", "") for t in L.transcript))
+        rate = n / sp["spoken"] if n else None
+        if rate and rate > PACE_TH_SYL[1]:
+            issues.append((2, {"issue_en": f"You spoke quickly, about {rate:.1f} Thai syllables per second.",
+                               "issue_th": f"พูดเร็วไป ประมาณ {rate:.1f} พยางค์ต่อวินาที",
+                               "evidence_ids": [sid],
+                               "action_steps_en": ["Breathe at every full stop.",
+                                                   "Slow down on numbers, names and your key sentence."],
+                               "action_steps_th": ["หายใจทุกครั้งที่จบประโยค",
+                                                   "พูดช้าลงตอนพูดตัวเลข ชื่อ และประโยคสำคัญ"]}))
+        elif rate and rate < PACE_TH_SYL[0]:
+            issues.append((2, {"issue_en": f"You spoke slowly, about {rate:.1f} Thai syllables per second.",
+                               "issue_th": f"พูดช้าไป ประมาณ {rate:.1f} พยางค์ต่อวินาที",
+                               "evidence_ids": [sid],
+                               "action_steps_en": ["Practise the answer aloud 2-3 times so the words come easily.",
+                                                   "Prepare 3 keywords: beginning, middle and end."],
+                               "action_steps_th": ["ซ้อมพูดออกเสียง 2-3 รอบให้คำพูดลื่นขึ้น",
+                                                   "เตรียมคีย์เวิร์ด 3 คำ: ต้น กลาง จบ"]}))
+        elif rate:
+            strengths.append({"text_en": f"Comfortable pace: about {rate:.1f} Thai syllables per second.",
+                              "text_th": f"ความเร็วพูดกำลังดี ประมาณ {rate:.1f} พยางค์ต่อวินาที",
                               "evidence_ids": [sid]})
 
     # pauses (always flagged when long, even if the answer was rated good)
@@ -382,7 +417,7 @@ def write(log: dict, ratings: dict, focus: str = "intro", lang: str = "en") -> d
 
     issues.sort(key=lambda x: x[0])
     improvements = []
-    for (sev, _), it in issues[:3]:
+    for (sev, _), it in issues:          # all issues, most urgent first (the report shows 3 first)
         improvements.append({**it, "priority": "high" if sev <= 1 else "medium" if sev == 2 else "low"})
     if not strengths and L.speech():
         sp = L.speech()

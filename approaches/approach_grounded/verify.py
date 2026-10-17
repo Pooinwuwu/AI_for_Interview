@@ -85,10 +85,13 @@ def check_answer(feedback: dict, log: dict) -> list:
 
 
 def _texts(item: dict):
+    """(is_action_step, text). Action steps say what to DO next time ("keep your head
+    centred"), so they are not claims about the clip and skip the whole-clip share check."""
     for f in ("text_en", "issue_en"):
         if item.get(f):
-            yield item[f]
-    yield from item.get("action_steps_en", []) or []
+            yield False, item[f]
+    for t in item.get("action_steps_en", []) or []:
+        yield True, t
 
 
 def check_item(item: dict, idx: dict, allow_video: bool) -> tuple:
@@ -118,7 +121,7 @@ def check_item(item: dict, idx: dict, allow_video: bool) -> tuple:
         probs.append(f'"{label}": is about {dim} but cites {", ".join(ids)} '
                      f'({", ".join(sorted({c["type"] for c in cited}))})')
 
-    for text in _texts(item):
+    for is_step, text in _texts(item):
         for sent in sentences(text):
             topic_s = topic_for(sent, 0, dim)
             if topic_s == "filler":
@@ -148,7 +151,7 @@ def check_item(item: dict, idx: dict, allow_video: bool) -> tuple:
             # whole-clip claims against cited summaries ("good eye contact" while 24%)
             topic = topic_for(sent, 0, dim)
             exp = expected_values(topic, sent) if topic in VISUAL else None
-            if exp and not find_times(sent):
+            if exp and not find_times(sent) and not is_step:
                 for c in cited:
                     if c["kind"] == "summary" and c["type"] == topic and c.get("share"):
                         share = sum(c["share"].get(v, 0) for v in exp)

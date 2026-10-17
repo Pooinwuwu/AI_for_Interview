@@ -12,6 +12,9 @@ Usage
 Output
   report/crosstest_recruitview.csv          model x RecruitView score: Spearman + 95% CI
   report/crosstest_recruitview_length.csv   raw length features vs each score
+  report/crosstest_recruitview_delta.csv    paired delta rho (each model - M0 length) + 95% CI
+  Sets: random300 (primary, one random clip per participant) and intro (secondary, one
+  self-introduction clip per participant). Column "set" in every csv.
 """
 
 import argparse
@@ -30,7 +33,7 @@ from base.dataset.avi import load_labels
 from base.learned_features import (LENGTH, clip_features, clip_row, feature_groups,
                                    participant_table, text_embedding_columns)
 from validation.train_score_model import (ALPHAS, ALPHAS_EMB, has_modalities, make_model,
-                                          spearman_ci)
+                                          paired_diff_ci, spearman_ci)
 
 if sys.platform == "win32":
     try:
@@ -39,6 +42,8 @@ if sys.platform == "win32":
         pass
 
 SAMPLE = GROUND_TRUTH_DIR / "recruitview_sample.csv"
+INTRO = GROUND_TRUTH_DIR / "recruitview_intro.csv"
+SETS = [("random300", SAMPLE), ("intro", INTRO)]     # primary, secondary (report/prereg_recruitview.md)
 RV_TARGETS = ["interview_score", "overall_performance", "answer_score", "speaking_skills",
               "confidence_score", "facial_expression"]
 GROUPS = ["length", "audio_text", "text_emb", "text_emb+audio_text"]
@@ -53,8 +58,8 @@ def avi_pool(emb, target):
     return data[data.index.isin(pool_ids)]
 
 
-def rv_table(emb):
-    sample = pd.read_csv(SAMPLE, dtype={"user_no": str})
+def rv_table(emb, path=SAMPLE):
+    sample = pd.read_csv(path, dtype={"user_no": str})
     vecs = text_embedding_columns(emb) if emb else {}
     rows = [{**clip_row(k), **vecs.get(k, {})} for k in sample.key]
     feats = pd.DataFrame(rows).set_index("key")
@@ -70,37 +75,61 @@ def main():
     if not SAMPLE.exists():
         sys.exit("[ERROR] run  python run_recruitview.py  first")
 
-    rows = []
-    for k, emb in enumerate(args.text_emb or [None]):
-        fit = avi_pool(emb, args.target)
-        rv = rv_table(emb)
-        groups = feature_groups(fit.columns)
-        for name in GROUPS:
-            if k > 0 and not name.startswith("text_emb"):
-                continue                                   # length / audio once is enough
-            cols = [c for c in groups.get(name, []) if c in rv.columns]
-            if not cols:
-                continue
-            f = fit[has_modalities(fit, cols)]
-            r = rv[has_modalities(rv, cols)]
-            m = make_model(ALPHAS_EMB if name.startswith("text_emb") else ALPHAS)
-            m.fit(f[cols], f[args.target])
-            pred = m.predict(r[cols])
-            label = name if (k == 0 or not name.startswith("text_emb")) \
-                else name.replace("text_emb", f"text_emb[{emb}]")
-            for t in RV_TARGETS:
-                rho, lo, hi = spearman_ci(pred, r[t].to_numpy())
-                rows.append({"model": label, "rv_score": t, "n_fit_avi": len(f), "n_rv": len(r),
-                             "spearman": rho, "ci_low": lo, "ci_high": hi})
-            print(f"  {label:32s} AVI n={len(f):3d}  RecruitView n={len(r):3d}  "
-                  f"interview_score rho={rows[-len(RV_TARGETS)]['spearman']:.3f}")
+    rows, drows = [], []
+    for set_name, path in SETS:
+        if not path.exists():
+            print(f"[WARN] {path.name} missing - skipping set {set_name}")
+            continue
+        preds = {}                                             # model label -> predictions (first emb)
+        targets_rv = None
+        for k, emb in enumerate(args.text_emb or [None]):
+            fit = avi_pool(emb, args.target)
+            rv = rv_table(emb, path)
+            groups = feature_groups(fit.columns)
+            for name in GROUPS:
+                if k > 0 and not name.startswith("text_emb"):
+                    continue                                   # length / audio once is enough
+                cols = [c for c in groups.get(name, []) if c in rv.columns]
+                if not cols:
+                    continue
+                f = fit[has_modalities(fit, cols)]
+                r = rv[has_modalities(rv, cols)]
+                m = make_model(ALPHAS_EMB if name.startswith("text_emb") else ALPHAS)
+                m.fit(f[cols], f[args.target])
+                pred = m.predict(r[cols])
+                if k == 0:
+                    preds[name] = pd.Series(pred, index=r.index)
+                    targets_rv = rv[RV_TARGETS] if targets_rv is None else targets_rv
+                label = name if (k == 0 or not name.startswith("text_emb")) \
+                    else name.replace("text_emb", f"text_emb[{emb}]")
+                for t in RV_TARGETS:
+                    rho, lo, hi = spearman_ci(pred, r[t].to_numpy())
+                    rows.append({"set": set_name, "model": label, "rv_score": t, "n_fit_avi": len(f), "n_rv": len(r),
+                                 "spearman": rho, "ci_low": lo, "ci_high": hi})
+                print(f"  [{set_name}] {label:28s} AVI n={len(f):3d}  RecruitView n={len(r):3d}  "
+                      f"interview_score rho={rows[-len(RV_TARGETS)]['spearman']:.3f}")
 
+        # pre-registered comparisons (report/prereg_recruitview.md): each model minus M0 length
+        if "length" in preds:
+            for name in [g for g in GROUPS if g != "length" and g in preds]:
+                for t in RV_TARGETS:
+                    y = targets_rv[t].dropna()
+                    obs, lo, hi, n = paired_diff_ci(preds[name], preds["length"], y)
+                    drows.append({"set": set_name, "comparison": f"{name} - length", "rv_score": t, "n": n,
+                                  "delta_rho": obs, "ci_low": lo, "ci_high": hi,
+                                  "primary": set_name == "random300" and name == "audio_text" and t == "interview_score"})
     res = pd.DataFrame(rows)
     REPORT_DIR.mkdir(parents=True, exist_ok=True)
     res.to_csv(REPORT_DIR / "crosstest_recruitview.csv", index=False)
     pd.set_option("display.width", 160)
-    print("\nAVI-trained models on RecruitView (Spearman, rows = model, columns = RecruitView score)")
-    print(res.pivot(index="model", columns="rv_score", values="spearman")[RV_TARGETS].round(3).to_string())
+    print("\nAVI-trained models on RecruitView (Spearman, random300 set; all sets in the csv)")
+    print(res[res.set == "random300"].pivot(index="model", columns="rv_score", values="spearman")[RV_TARGETS].round(3).to_string())
+
+    dres = pd.DataFrame(drows)
+    dres.to_csv(REPORT_DIR / "crosstest_recruitview_delta.csv", index=False)
+    if not dres.empty:
+        print("\nPaired delta rho vs M0 length (95% bootstrap CI); primary = audio_text on interview_score")
+        print(dres.round(3).to_string(index=False))
 
     rv = rv_table(None)
     lrows = []

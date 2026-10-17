@@ -1,0 +1,109 @@
+{
+  "agreement": {
+    "items": 46,
+    "occurred_agree": 1.0,
+    "timed": 18,
+    "time_overlap": 1.0,
+    "mean_boundary_diff_s": 0.8333333333333334
+  },
+  "rq2": {
+    "recall": 0.5806451612903226,
+    "detected": 18,
+    "scored": 31,
+    "not_scored": {
+      "": 1,
+      "Thai speech rate has no norm (not flagged by design)": 2,
+      "content - judged by the coach, not by measurement": 4,
+      "filler words are not measured (by design)": 4
+    },
+    "by_type": {
+      "hands_busy": "0/2",
+      "hands_hidden": "2/2",
+      "head_down": "2/6",
+      "head_left": "2/2",
+      "head_right": "1/2",
+      "long_pause": "3/4",
+      "look_away": "2/2",
+      "neutral_face": "0/4",
+      "slow_start": "2/2",
+      "too_fast": "1/2",
+      "too_long": "1/1",
+      "too_short": "2/2"
+    },
+    "by_lang": {
+      "อังกฤษ": 0.533,
+      "ไทย": 0.625
+    },
+    "by_person": {
+      "P1": 0.625,
+      "P2": 0.533
+    },
+    "alerts": 142,
+    "alerts_matched": 18,
+    "precision": 0.1267605633802817,
+    "unmatched_by_type": {
+      "head_down": 53,
+      "head_left": 24,
+      "hands_hidden": 24,
+      "look_away": 8,
+      "head_right": 6,
+      "too_short": 3,
+      "head_up": 2,
+      "neutral_face": 2,
+      "long_pause": 2
+    },
+    "control_clip_alerts": {
+      "head_down": 11,
+      "hands_hidden": 4,
+      "head_left": 1,
+      "head_right": 1,
+      "long_pause": 1
+    },
+    "false_alarm_on_negative_labels": 0
+  },
+  "rq3": {
+    "local_v1": {
+      "labelled": 41.0,
+      "covered": 20.0,
+      "improvements": 40.0,
+      "removed": 6.0,
+      "off_label": 27.0,
+      "coverage": 0.488
+    },
+    "local_v2": {
+      "labelled": 41.0,
+      "covered": 23.0,
+      "improvements": 46.0,
+      "removed": 0.0,
+      "off_label": 31.0,
+      "coverage": 0.561
+    },
+    "ollama_v1": {
+      "labelled": 41.0,
+      "covered": 20.0,
+      "improvements": 28.0,
+      "removed": 36.0,
+      "off_label": 15.0,
+      "coverage": 0.488
+    },
+    "ollama_v2": {
+      "labelled": 41.0,
+      "covered": 23.0,
+      "improvements": 38.0,
+      "removed": 26.0,
+      "off_label": 23.0,
+      "coverage": 0.561
+    }
+  },
+  "rq3_control_improvements": {
+    "local_v1": 5,
+    "local_v2": 5,
+    "ollama_v1": 5,
+    "ollama_v2": 5
+  },
+  "typhoon_seconds": {
+    "mean": 333.1,
+    "min": 124.4,
+    "max": 612.8
+  }
+}

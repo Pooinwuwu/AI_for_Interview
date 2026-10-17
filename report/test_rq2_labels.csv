@@ -1,0 +1,47 @@
+﻿clip,lang,type,label,occurred,start,end,detected,note,false_alarm
+P1_C01,ไทย,none,ไม่มีปัญหา (คลิปควบคุม),True,,,,control,
+P1_C02,ไทย,head_down,ก้มหน้า (ดูโน้ต),True,21.0,39.0,False,,False
+P1_C03,ไทย,slow_start,เริ่มตอบช้า (≥3 วิ),True,0.0,6.0,True,,False
+P1_C03,ไทย,long_pause,หยุดพูดนาน (≥3 วิ),True,33.0,38.0,False,,False
+P1_C04,ไทย,head_left,หันหน้าซ้าย,True,22.0,33.0,True,,False
+P1_C04,ไทย,head_right,หันหน้าขวา,True,51.0,61.0,True,,False
+P1_C05,ไทย,hands_hidden,มือไม่อยู่ในเฟรม,True,,,True,,False
+P1_C05,ไทย,neutral_face,หน้านิ่ง/ไม่ยิ้ม,True,,,False,,False
+P1_C06,ไทย,too_short,คำตอบสั้นไป (<30 วิ),True,,,True,,False
+P1_C06,ไทย,no_example,เนื้อหาขาดตัวอย่าง,True,,,,"content - judged by the coach, not by measurement",
+P1_C07,ไทย,too_fast,พูดเร็วเกินไป,True,,,,Thai speech rate has no norm (not flagged by design),
+P1_C07,ไทย,fillers,คำฟุ่มเฟือย (เอ่อ/อ่า),True,,,,filler words are not measured (by design),
+P1_C08,อังกฤษ,none,ไม่มีปัญหา (คลิปควบคุม),True,,,,control,
+P1_C09,อังกฤษ,look_away,มองออกนอกกล้อง,True,18.0,37.0,True,,False
+P1_C10,อังกฤษ,long_pause,หยุดพูดนาน (≥3 วิ),True,56.0,60.0,True,,False
+P1_C11,อังกฤษ,head_down,ก้มหน้า,True,16.0,32.0,True,,False
+P1_C11,อังกฤษ,head_down,ก้มหน้า,True,54.0,66.0,True,,False
+P1_C12,อังกฤษ,hands_busy,มือขยับมาก,True,,,False,,False
+P1_C12,อังกฤษ,neutral_face,หน้านิ่ง/ไม่ยิ้ม,True,,,False,,False
+P1_C13,อังกฤษ,too_long,คำตอบยาวไป (>150 วิ),True,,,True,,False
+P1_C13,อังกฤษ,no_example,เนื้อหาขาดตัวอย่าง,True,,,,"content - judged by the coach, not by measurement",
+P1_C14,อังกฤษ,too_fast,พูดเร็วเกินไป,True,,,False,,False
+P1_C14,อังกฤษ,fillers,คำฟุ่มเฟือย (um/uh),True,,,,filler words are not measured (by design),
+P2_C01,ไทย,none,ไม่มีปัญหา (คลิปควบคุม),True,,,,control,
+P2_C02,ไทย,head_down,ก้มหน้า (ดูโน้ต),True,15.0,31.0,False,,False
+P2_C03,ไทย,slow_start,เริ่มตอบช้า (≥3 วิ),True,0.0,5.0,True,,False
+P2_C03,ไทย,long_pause,หยุดพูดนาน (≥3 วิ),True,28.0,32.0,True,,False
+P2_C04,ไทย,head_left,หันหน้าซ้าย,True,14.0,21.0,True,,False
+P2_C04,ไทย,head_right,หันหน้าขวา,True,42.0,50.0,False,,False
+P2_C05,ไทย,hands_hidden,มือไม่อยู่ในเฟรม,True,,,True,,False
+P2_C05,ไทย,neutral_face,หน้านิ่ง/ไม่ยิ้ม,True,,,False,,False
+P2_C06,ไทย,too_short,คำตอบสั้นไป (<30 วิ),True,,,True,,False
+P2_C06,ไทย,no_example,เนื้อหาขาดตัวอย่าง,True,,,,"content - judged by the coach, not by measurement",
+P2_C07,ไทย,too_fast,พูดเร็วเกินไป,True,,,,Thai speech rate has no norm (not flagged by design),
+P2_C07,ไทย,fillers,คำฟุ่มเฟือย (เอ่อ/อ่า),True,,,,filler words are not measured (by design),
+P2_C08,อังกฤษ,none,ไม่มีปัญหา (คลิปควบคุม),True,,,,control,
+P2_C09,อังกฤษ,look_away,มองออกนอกกล้อง,True,14.0,30.0,True,,False
+P2_C10,อังกฤษ,long_pause,หยุดพูดนาน (≥3 วิ),True,37.0,42.0,True,,False
+P2_C11,อังกฤษ,head_down,ก้มหน้า,True,11.0,21.0,False,,False
+P2_C11,อังกฤษ,head_down,ก้มหน้า,True,40.0,50.0,False,,False
+P2_C12,อังกฤษ,hands_busy,มือขยับมาก,True,,,False,,False
+P2_C12,อังกฤษ,neutral_face,หน้านิ่ง/ไม่ยิ้ม,True,,,False,,False
+P2_C13,อังกฤษ,too_long,คำตอบยาวไป (>150 วิ),False,,,,,False
+P2_C13,อังกฤษ,no_example,เนื้อหาขาดตัวอย่าง,True,,,,"content - judged by the coach, not by measurement",
+P2_C14,อังกฤษ,too_fast,พูดเร็วเกินไป,True,,,True,,False
+P2_C14,อังกฤษ,fillers,คำฟุ่มเฟือย (um/uh),True,,,,filler words are not measured (by design),

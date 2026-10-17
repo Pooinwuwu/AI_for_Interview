@@ -157,7 +157,9 @@ def render(res: dict) -> str:
     marks = []
     if improvements:
         out.append("<h3>🎯 เริ่มแก้ตรงนี้ก่อน</h3>")
-        for it in improvements:
+        for n, it in enumerate(improvements):
+            if n == 3:
+                out.append("<h3>🗂️ เรื่องอื่นที่พบ (แก้ทีหลังได้)</h3>")
             icon, name = DIM.get(it.get("dimension"), ("📌", it.get("dimension")))
             plabel, pcol = PRIORITY.get(it.get("priority"), ("ควรแก้", "#e8a317"))
             steps = it.get("action_steps_th") or it.get("action_steps_en") or []
