@@ -9765,5 +9765,26 @@
     },
     "job": "",
     "resume": ""
+  },
+  "app_20261018150425th_q1": {
+    "file_path": "videos_app/app_20261018150425th_q1.mp4",
+    "duration_sec": 69.97,
+    "fps": 30.0,
+    "resolution": "1920x1080",
+    "frame_count": 2099,
+    "language": "th",
+    "interviewer_present": true,
+    "recorded_date": null,
+    "consent_obtained": false,
+    "notes": "",
+    "question_id": "intro",
+    "question": {
+      "id": "intro",
+      "focus": "intro",
+      "en": "Tell me about yourself.",
+      "th": "แนะนำตัวเองสั้น ๆ ให้ฟังหน่อย"
+    },
+    "job": "",
+    "resume": ""
   }
 }

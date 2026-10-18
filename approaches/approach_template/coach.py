@@ -21,7 +21,8 @@ that a trained small model and Gemini are compared with.
 
 import re
 
-TEMPLATE_VERSION = "template-v2"   # v2: Thai pace, all issues listed
+TEMPLATE_VERSION = "template-v3"   # v2: Thai pace, all issues listed; v3 (after the 28-clip test):
+                                  # face / eye-contact advice is optional, with a verbal alternative
 
 GOOD = ("ดีมาก", "ดี")
 SEVERITY = {"ควรปรับมาก": 0, "ควรปรับ": 1, "ปานกลาง": 2}
@@ -110,9 +111,10 @@ def gaze(L: Log, good: bool):
         return None, None
     return None, {"issue_en": " ".join(en), "issue_th": " ".join(th), "evidence_ids": ids,
                   "action_steps_en": ["Put a small sticker beside the recording light and say your key sentences to it.",
-                                      "If you need to think, pause first, then come back to the note before you speak again."],
+                                      "If looking straight into the lens is uncomfortable, looking just above or "
+                                      "beside it works too."],
                   "action_steps_th": ["แปะกระดาษโน้ตเล็ก ๆ ข้างเลนส์กล้อง แล้วพูดประโยคสำคัญกับมัน",
-                                      "ถ้าต้องหยุดคิด ให้หยุดก่อน แล้วกลับมามองกล้องก่อนเริ่มพูดต่อ"]}
+                                      "ถ้ามองเลนส์ตรง ๆ แล้วไม่สบายใจ มองเหนือหรือข้างเลนส์เล็กน้อยก็ได้"]}
 
 
 HEAD_FIX = {
@@ -212,13 +214,15 @@ def face(L: Log, good: bool):
                 "text_th": f"ยิ้ม {_pct(sm)} ของเวลาที่วัดได้ ดูเป็นมิตร",
                 "evidence_ids": [s["id"]]}, None
     if not good and ne >= SHARE_MIN:
-        return None, {"issue_en": f"Your face was neutral {_pct(ne)} of the measured time, which can look tense.",
-                      "issue_th": f"หน้านิ่ง {_pct(ne)} ของเวลาที่วัดได้ อาจดูเกร็ง",
+        return None, {"issue_en": f"Your face was neutral {_pct(ne)} of the measured time. Some interviewers may "
+                                  f"read this as low interest; changing your expression is optional.",
+                      "issue_th": f"หน้านิ่ง {_pct(ne)} ของเวลาที่วัดได้ ผู้สัมภาษณ์บางคนอาจอ่านว่าไม่ค่อยสนใจ "
+                                  f"(ไม่จำเป็นต้องเปลี่ยนสีหน้า ถ้าไม่สะดวก)",
                       "evidence_ids": [s["id"]],
-                      "action_steps_en": ["Begin and end the answer with a small, natural friendly expression.",
-                                          "Before recording, think of one thing you enjoy about this job."],
-                      "action_steps_th": ["เริ่มและจบคำตอบด้วยสีหน้าเป็นมิตรเล็กน้อย",
-                                          "ก่อนอัด ลองนึกถึงสิ่งที่ชอบเกี่ยวกับงานนี้สักอย่าง"]}
+                      "action_steps_en": ["Say your interest in words, e.g. 'I am excited about this role because ...'.",
+                                          "If it feels natural, add a small friendly expression at the start or end."],
+                      "action_steps_th": ["บอกความสนใจเป็นคำพูดแทน เช่น 'ผมสนใจงานนี้เพราะ ...'",
+                                          "ถ้าทำได้อย่างเป็นธรรมชาติ เพิ่มสีหน้าเป็นมิตรเล็กน้อยตอนเริ่มหรือจบ"]}
     return None, None
 
 

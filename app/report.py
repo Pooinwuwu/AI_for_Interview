@@ -120,6 +120,13 @@ def timeline(log: dict, marks) -> str:
     return "".join(parts)
 
 
+def visible_improvements(fb: dict) -> tuple:
+    """Improvements minus the dimensions the user chose not to get advice on (fb["user_skip"])."""
+    skip = set(fb.get("user_skip") or [])
+    items = fb.get("improvements") or []
+    return [i for i in items if i.get("dimension") not in skip], [i for i in items if i.get("dimension") in skip]
+
+
 def render(res: dict) -> str:
     fb = res.get("feedback") or {}
     if not fb:
@@ -129,7 +136,7 @@ def render(res: dict) -> str:
     sp = (res.get("speech") or {}).get("features", {})
     vis = res.get("visual") or {}
     eye = (vis.get("gaze") or {}).get("eye_contact_ratio")
-    improvements = fb.get("improvements") or []
+    improvements, hidden = visible_improvements(fb)
     strengths = fb.get("strengths") or []
     mood = "happy" if len(strengths) >= len(improvements) else "thinking"
     meta = res.get("meta") or {}
@@ -173,6 +180,11 @@ def render(res: dict) -> str:
                 e = idx.get(i)
                 if e and e.get("kind") != "summary":
                     marks.append((e["start"], e["end"], it.get("issue_th") or it.get("issue_en")))
+
+    if hidden:
+        names = sorted({DIM.get(i.get("dimension"), ("", i.get("dimension")))[1] for i in hidden})
+        out.append(f'<p class="muted">🙈 ไม่แสดงคำแนะนำเรื่อง {_esc(", ".join(names))} ตามที่คุณตั้งค่าไว้ '
+                   f'(ยังดูช่วงเวลาได้ในไทม์ไลน์)</p>')
 
     if strengths:
         out.append("<h3>🌟 จุดเด่นของคุณ</h3>")
@@ -236,7 +248,7 @@ def render_session(results: list, planned: int, errors: list = ()) -> str:
     known = [BAND_ORDER.index(b) for b in bands if b in BAND_ORDER]
     overall = BAND_ORDER[round(sum(known) / len(known))] if known else "-"
     # the dimension that most often appears as the first thing to fix
-    firsts = [((r.get("feedback") or {}).get("improvements") or [{}])[0].get("dimension")
+    firsts = [(visible_improvements(r.get("feedback") or {})[0] or [{}])[0].get("dimension")
               for _, r in results]
     firsts = [f for f in firsts if f]
     common = max(set(firsts), key=firsts.count) if firsts else None
@@ -252,7 +264,7 @@ def render_session(results: list, planned: int, errors: list = ()) -> str:
            + '</div></div></div>', '<h3>📋 ผลรายข้อ</h3>']
     for i, ((q, r), b) in enumerate(zip(results, bands), 1):
         fb = r.get("feedback") or {}
-        top = (fb.get("improvements") or [{}])[0]
+        top = (visible_improvements(fb)[0] or [{}])[0]
         tip = top.get("issue_th") or top.get("issue_en") or "ไม่มีจุดสำคัญที่ต้องแก้"
         qt = q.get("th") if thai else q.get("en")
         out.append(f'<div class="card"><div class="top"><b>ข้อ {i}</b>'

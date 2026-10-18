@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Interview Coach</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="app">
+
+  <!-- ============ HOME ============ -->
+  <section id="v-home" class="view active">
+    <header class="hello">
+      <div>
+        <p class="eyebrow">AI โค้ชฝึกสัมภาษณ์ · ทำงานในเครื่องนี้</p>
+        <h1>พร้อมซ้อมสัมภาษณ์<br>กันไหม? 👋</h1>
+        <p class="sub">ไม่ให้คะแนนว่าน่าจ้างไหม แต่บอกว่า<b>ควรแก้ตรงไหน</b> พร้อม<b>เวลาในคลิป</b></p>
+      </div>
+      <div class="mascot" aria-hidden="true">
+        <svg viewBox="0 0 100 100"><circle cx="50" cy="52" r="40" fill="#ffd8a8"/><path d="M14 44 Q50 2 86 44 Q70 30 50 30 Q30 30 14 44Z" fill="#495057"/><circle cx="37" cy="50" r="5" fill="#212529"/><circle cx="63" cy="50" r="5" fill="#212529"/><circle cx="39" cy="48" r="1.6" fill="#fff"/><circle cx="65" cy="48" r="1.6" fill="#fff"/><circle cx="28" cy="60" r="5" fill="#ffa8a8" opacity=".7"/><circle cx="72" cy="60" r="5" fill="#ffa8a8" opacity=".7"/><path d="M38 62 Q50 72 62 62" stroke="#212529" stroke-width="3" fill="none" stroke-linecap="round"/><rect x="30" y="86" width="40" height="10" rx="5" fill="#1c7ed6"/></svg>
+      </div>
+    </header>
+
+    <div class="badges">
+      <span>🔒 วิดีโอไม่ออกนอกเครื่อง</span><span>⏱ ทุกข้อมีเวลากำกับ</span><span>✅ ตัวตรวจตัดข้อที่อ้างไม่ได้</span>
+    </div>
+
+    <div class="modes">
+      <button class="mode m1" data-go="practice"><span class="ic">🎯</span><b>ฝึกทีละข้อ</b><small>เลือกคำถาม อัด ดูผล</small></button>
+      <button class="mode m2" data-go="interview"><span class="ic">🎙️</span><b>สัมภาษณ์ต่อเนื่อง</b><small>ตอบหลายข้อเหมือนจริง</small></button>
+      <button class="mode m3" data-go="history"><span class="ic">🗂️</span><b>ผลครั้งก่อน</b><small>เปิดรายงานเก่า</small></button>
+    </div>
+
+    <div class="card">
+      <h2>① ตั้งค่า</h2>
+      <label class="lbl">ภาษาที่ใช้ตอบ</label>
+      <div class="pills" id="langPills">
+        <button data-lang="en" class="on">English</button><button data-lang="th">ภาษาไทย</button>
+      </div>
+      <label class="lbl">โค้ช</label>
+      <div class="coaches" id="coaches"></div>
+      <label class="toggle"><input type="checkbox" id="fast" checked><span></span>โหมดเร็ว (วิเคราะห์ภาพ 15 เฟรม/วินาที)</label>
+      <label class="lbl">ไม่ต้องให้คำแนะนำเรื่อง <small>(เลือกได้ เช่น ถ้าสีหน้าหรือการสบตาของคุณเป็นแบบนี้โดยธรรมชาติ)</small></label>
+      <div class="skips" id="skips">
+        <label><input type="checkbox" value="facial_expression"><span>😊 สีหน้า</span></label>
+        <label><input type="checkbox" value="eye_contact"><span>👀 การสบตา</span></label>
+        <label><input type="checkbox" value="hand_gesture"><span>👐 การใช้มือ</span></label>
+        <label><input type="checkbox" value="head_pose"><span>🙆 ท่าทางศีรษะ</span></label>
+      </div>
+      <p class="note">ทุกคนแสดงออกต่างกันได้ แอปไม่ได้ให้คะแนนจากสีหน้าหรือท่าทาง เรื่องที่ปิดไว้จะไม่ขึ้นเป็นข้อควรแก้ แต่ยังดูช่วงเวลาได้ในไทม์ไลน์</p>
+    </div>
+
+    <div class="card">
+      <h2>② ตำแหน่งงานและ resume <small>(ไม่บังคับ)</small></h2>
+      <input id="job" class="inp" placeholder="ตำแหน่งที่สมัคร เช่น Data Analyst Intern">
+      <div class="row">
+        <label class="btn ghost file">📄 อัปโหลด resume<input type="file" id="resumeFile" accept=".pdf,.docx,.txt" hidden></label>
+        <span id="resumeNote" class="note"></span>
+      </div>
+      <textarea id="resume" class="inp" rows="4" placeholder="หรือวางข้อความ resume ตรงนี้"></textarea>
+      <div class="row">
+        <select id="nq" class="inp small"><option>3</option><option>4</option><option selected>5</option><option>6</option><option>7</option><option>8</option></select>
+        <button class="btn" id="genBtn">✨ สร้างคำถามจาก resume</button>
+      </div>
+      <p id="genNote" class="note"></p>
+    </div>
+
+    <label class="consent card" id="consentBox">
+      <input type="checkbox" id="consent">
+      <span>คลิปและ resume เป็นของฉัน/ได้รับความยินยอมแล้ว และยอมให้ส่ง <b>resume ข้อความถอดเสียง และผลวัด (ไม่ใช่วิดีโอ)</b> ให้บริการ AI ออนไลน์ (Gemini/Groq) — จำเป็นเฉพาะโค้ช ☁️ และการสร้างคำถามจาก resume</span>
+    </label>
+    <p class="foot">ต้นแบบงานวิจัย · ใช้กับคลิปของตัวเองหรือผู้ที่ยินยอมเท่านั้น · ไม่ใช่เครื่องมือคัดเลือกพนักงาน</p>
+  </section>
+
+  <!-- ============ PRACTICE ============ -->
+  <section id="v-practice" class="view">
+    <div class="topbar"><button class="back" data-go="home">‹</button><h2>🎯 ฝึกทีละข้อ</h2></div>
+    <div id="practiceSetup">
+      <div class="card">
+        <label class="lbl">เลือกคำถาม</label>
+        <div id="qList" class="qlist"></div>
+      </div>
+      <div class="card qcard"><p class="qnum">คำถาม</p><h3 id="pQuestion"></h3><p id="pWhy" class="why"></p></div>
+      <div class="card" id="pRecorder"></div>
+      <button class="btn big" id="pGo" disabled>วิเคราะห์คำตอบ ➜</button>
+    </div>
+    <div id="practiceWait" class="card wait hidden"></div>
+    <div id="practiceReport" class="report hidden"></div>
+    <button class="btn ghost hidden" id="pAgain">↺ ฝึกอีกครั้ง</button>
+  </section>
+
+  <!-- ============ INTERVIEW ============ -->
+  <section id="v-interview" class="view">
+    <div class="topbar"><button class="back" data-go="home">‹</button><h2>🎙️ สัมภาษณ์ต่อเนื่อง</h2></div>
+    <div id="iStart" class="card">
+      <p>ตอบทีละข้อเหมือนสัมภาษณ์จริง ระบบวิเคราะห์ข้อก่อนหน้าไปพร้อมกันระหว่างที่คุณตอบข้อถัดไป กดหยุดได้ทุกเมื่อ</p>
+      <label class="lbl">จำนวนข้อ: <b id="iNLabel">3</b></label>
+      <input type="range" id="iN" min="1" max="8" value="3">
+      <button class="btn big" id="iStartBtn">▶ เริ่มสัมภาษณ์</button>
+    </div>
+    <div id="iRun" class="hidden">
+      <div class="steps" id="iSteps"></div>
+      <div class="card qcard"><p class="qnum" id="iNum"></p><h3 id="iQuestion"></h3><p id="iWhy" class="why"></p></div>
+      <div class="card" id="iRecorder"></div>
+      <div class="row">
+        <button class="btn big" id="iNext" disabled>ข้อต่อไป ➜</button>
+        <button class="btn ghost" id="iStop">⏹ หยุดและดูผล</button>
+      </div>
+    </div>
+    <div id="iWait" class="card wait hidden"></div>
+    <div id="iReport" class="report hidden"></div>
+    <button class="btn ghost hidden" id="iAgain">↺ สัมภาษณ์อีกรอบ</button>
+  </section>
+
+  <!-- ============ HISTORY ============ -->
+  <section id="v-history" class="view">
+    <div class="topbar"><button class="back" data-go="home">‹</button><h2>🗂️ ผลครั้งก่อน</h2></div>
+    <div id="hList"></div>
+    <div id="hReport" class="report hidden"></div>
+    <button class="btn ghost hidden" id="hBack">‹ กลับไปรายการ</button>
+  </section>
+
+  <div id="toast" class="toast"></div>
+</div>
+<script src="/static/app.js"></script>
+</body>
+</html>

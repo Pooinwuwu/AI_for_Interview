@@ -42,11 +42,11 @@ CONSENT = ("คลิปและ resume เป็นของฉัน/ได�
            "และผลวัด (ไม่ใช่วิดีโอ) ให้ Gemini เพื่อสร้างคำถามและเขียนคำแนะนำ")
 ERR = '<p style="color:#d9480f">{}</p>'
 
-COACH_CHOICES = {"อัตโนมัติ: Gemini ถ้าล่มใช้โค้ชในเครื่อง": "auto",
-                 "Gemini เท่านั้น": "gemini",
-                 "โค้ชในเครื่อง (ไม่ใช้เน็ต ไม่ส่งข้อมูลออก)": "local",
-                 "LLM ในเครื่องผ่าน Ollama (ไม่ส่งข้อมูลออก)": "ollama",
-                 "Groq API (cloud)": "groq"}
+COACH_CHOICES = {"🔒 Typhoon ในเครื่อง (ไม่ส่งข้อมูลออก)": "ollama",
+                 "🔒 โค้ชแม่แบบ (เร็ว ไม่ใช้ LLM)": "local",
+                 "☁️ อัตโนมัติ: Gemini ถ้าล่มใช้โค้ชในเครื่อง": "auto",
+                 "☁️ Gemini เท่านั้น": "gemini",
+                 "☁️ Groq API": "groq"}
 
 BANK = [questions.as_question(q[0]) for q in questions.QUESTIONS]
 
@@ -89,7 +89,7 @@ def load_resume(file, current):
 
 def make_questions(job, resume, lang_label, consent, n, progress=gr.Progress()):
     if (resume or "").strip() and not consent:
-        return (BANK, gr.update(), ERR.format("ติ๊กยืนยันด้านบนก่อน เพราะต้องส่ง resume ให้ Gemini"), "")
+        return (BANK, gr.update(), ERR.format("ติ๊กยืนยันใน “ตั้งค่าเพิ่มเติม” ก่อน เพราะต้องส่ง resume ให้ Gemini"), "")
     progress(0.2, desc="AI กำลังอ่าน resume และสร้างคำถาม ...")
     qlist, note = question_gen.generate(resume, job, int(n))
     ch = labels(qlist, lang_code(lang_label))
@@ -100,7 +100,7 @@ def analyse(video, lang_label, qlist, label, consent, fast, coach_label, job, re
             progress=gr.Progress()):
     mode = COACH_CHOICES.get(coach_label, "auto")
     if not consent and mode not in ("local", "ollama"):
-        return ERR.format("กรุณาติ๊กยืนยันด้านบนก่อน (หรือเลือกโค้ชในเครื่องซึ่งไม่ส่งข้อมูลออก)"), gr.update()
+        return ERR.format("โค้ช ☁️ ต้องติ๊กยืนยันใน “ตั้งค่าเพิ่มเติม” ก่อน (หรือเลือกโค้ช 🔒 ในเครื่อง)"), gr.update()
     if not video:
         return ERR.format("ยังไม่มีคลิป อัดหรืออัปโหลดก่อนนะ"), gr.update()
     try:
@@ -165,7 +165,7 @@ def _idle(sid, md, html, history=gr.update()):
 def start_session(qlist, n, lang_label, consent, coach_label, fast, job, resume):
     mode = COACH_CHOICES.get(coach_label, "auto")
     if not consent and mode not in ("local", "ollama"):
-        return _idle(None, "", ERR.format("กรุณาติ๊กยืนยันด้านบนก่อน (หรือเลือกโค้ชในเครื่อง)"))
+        return _idle(None, "", ERR.format("โค้ช ☁️ ต้องติ๊กยืนยันใน “ตั้งค่าเพิ่มเติม” ก่อน (หรือเลือกโค้ช 🔒 ในเครื่อง)"))
     sid = time.strftime("%Y%m%d%H%M%S") + uuid.uuid4().hex[:4]
     SESSIONS[sid] = {"id": sid, "qs": list(qlist)[:max(1, int(n))], "idx": 0, "lang": lang_code(lang_label),
                      "mode": mode, "fast": fast, "job": job or "", "resume": resume or "",
@@ -220,17 +220,69 @@ def stop_session(sid, video, progress=gr.Progress()):
     return _finish(s, progress)
 
 
-# Gradio 5 takes theme in Blocks(); Gradio 6 takes it in launch()
+# Gradio 5 takes theme/css in Blocks(); Gradio 6 takes them in launch()
 GR6 = int(gr.__version__.split(".")[0]) >= 6
-THEME = gr.themes.Soft()
+THEME = gr.themes.Soft(
+    primary_hue="orange", secondary_hue="blue", neutral_hue="slate", radius_size="lg",
+    font=[gr.themes.GoogleFont("Prompt"), "Sarabun", "Tahoma", "sans-serif"],
+)
 
-with gr.Blocks(title="AI Interview Coach", **({} if GR6 else {"theme": THEME})) as demo:
-    gr.Markdown(INTRO)
+HERO = """
+<div class="hero">
+  <div class="hero-text">
+    <div class="eyebrow">ต้นแบบงานวิจัย · ทำงานในเครื่องนี้</div>
+    <h1>ฝึกสัมภาษณ์งานกับ AI โค้ช</h1>
+    <p>ไม่ให้คะแนนว่าคุณน่าจ้างไหม แต่ชี้ว่า <b>ควรแก้ตรงไหน</b> พร้อม <b>เวลาในคลิป</b> และหลักฐานที่ตรวจได้</p>
+    <div class="steps">
+      <span><i>1</i> ตำแหน่งงาน / resume</span>
+      <span><i>2</i> อัดคำตอบ</span>
+      <span><i>3</i> ดูคำแนะนำพร้อมเวลา</span>
+    </div>
+  </div>
+  <div class="hero-badges">
+    <div class="badge">🔒 วิดีโอไม่ออกนอกเครื่อง</div>
+    <div class="badge">⏱ ทุกคำแนะนำมีเวลากำกับ</div>
+    <div class="badge">✅ ตัวตรวจตัดข้อที่อ้างไม่ได้</div>
+  </div>
+</div>
+"""
+TIPS = "💡 นั่งหน้าตรง แสงด้านหน้าพอ วางกล้องระดับสายตา แล้วมองเลนส์"
+FOOT = ('<div class="foot">ต้นแบบงานวิจัย · ใช้เฉพาะคลิปของตัวเองหรือที่ได้รับความยินยอม · '
+        'ไม่ใช่เครื่องมือคัดเลือกพนักงาน</div>')
+
+CSS = """
+.gradio-container{max-width:1200px !important;margin:0 auto !important}
+.hero{display:flex;gap:24px;align-items:center;justify-content:space-between;flex-wrap:wrap;
+  background:linear-gradient(135deg,#fff4e6 0%,#ffe8cc 40%,#e7f5ff 100%);
+  border-radius:24px;padding:28px 32px;margin:4px 0 8px}
+.hero h1{font-size:30px;margin:4px 0 8px;color:#1b2436;font-weight:700}
+.hero p{font-size:16px;margin:0;color:#343a40;line-height:1.6;max-width:560px}
+.hero .eyebrow{font-size:13px;letter-spacing:1px;color:#d9480f;font-weight:600}
+.hero .steps{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.hero .steps span{background:#fff;border-radius:999px;padding:6px 14px 6px 6px;font-size:14px;
+  box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.hero .steps i{font-style:normal;display:inline-grid;place-items:center;width:24px;height:24px;
+  border-radius:50%;background:#f76707;color:#fff;font-size:13px;margin-right:6px}
+.hero-badges{display:flex;flex-direction:column;gap:8px}
+.hero .badge{background:rgba(255,255,255,.85);border-radius:12px;padding:8px 14px;font-size:14px}
+.panel{border-radius:20px !important;padding:6px !important}
+.tips{color:#495057;font-size:14px}
+.foot{text-align:center;color:#868e96;font-size:13px;margin:14px 0 4px}
+button.lg{font-size:16px !important}
+@media (prefers-color-scheme: dark){
+  .hero{background:linear-gradient(135deg,#3b2a1a 0%,#2b2f3a 100%)}
+  .hero h1{color:#f8f9fa} .hero p{color:#dee2e6}
+  .hero .steps span,.hero .badge{background:rgba(0,0,0,.35);color:#f1f3f5}
+}
+"""
+
+with gr.Blocks(title="AI Interview Coach",
+               **({} if GR6 else {"theme": THEME, "css": CSS})) as demo:
+    gr.HTML(HERO)
     qlist = gr.State(BANK)
     sid = gr.State(None)
     with gr.Row():
-        with gr.Column(scale=1):
-            consent = gr.Checkbox(label=CONSENT)
+        with gr.Column(scale=1, elem_classes="panel"):
             with gr.Accordion("① ตำแหน่งงานและ resume (ไม่บังคับ)", open=True):
                 job = gr.Textbox(label="ตำแหน่งที่สมัคร", placeholder="เช่น Data Analyst Intern, วิศวกรซอฟต์แวร์")
                 resume_file = gr.File(label="อัปโหลด resume (.pdf .docx .txt)",
@@ -241,10 +293,14 @@ with gr.Blocks(title="AI Interview Coach", **({} if GR6 else {"theme": THEME})) 
                 gen_note = gr.Markdown("")
             lang = gr.Radio(list(questions.LANGS.values()), value=questions.LANGS["en"],
                             label="ภาษาที่ใช้ตอบ")
-            coach_pick = gr.Radio(list(COACH_CHOICES), value=list(COACH_CHOICES)[0], label="โค้ช")
-            fast = gr.Checkbox(label="โหมดเร็ว (วิเคราะห์ภาพ 15 เฟรม/วินาที)", value=True)
+            coach_pick = gr.Radio(list(COACH_CHOICES), value=list(COACH_CHOICES)[0],
+                                  label="② เลือกโค้ช  (🔒 = ในเครื่อง · ☁️ = ส่งข้อความออกไป)")
+            with gr.Accordion("ตั้งค่าเพิ่มเติม", open=False):
+                consent = gr.Checkbox(label=CONSENT)
+                fast = gr.Checkbox(label="โหมดเร็ว (วิเคราะห์ภาพ 15 เฟรม/วินาที)", value=True)
             history = gr.Dropdown(past_results(), label="ดูผลครั้งก่อน (รายข้อ)", allow_custom_value=False)
-        with gr.Column(scale=2):
+        with gr.Column(scale=2, elem_classes="panel"):
+            gr.Markdown(TIPS, elem_classes="tips")
             with gr.Tabs():
                 with gr.Tab("🎙️ สัมภาษณ์ต่อเนื่อง"):
                     n_session = gr.Slider(1, 8, value=3, step=1, label="จำนวนข้อในรอบนี้")
@@ -263,6 +319,7 @@ with gr.Blocks(title="AI Interview Coach", **({} if GR6 else {"theme": THEME})) 
                     video = gr.Video(sources=["webcam", "upload"], label="คลิปคำตอบ", include_audio=True)
                     go = gr.Button("วิเคราะห์", variant="primary")
                     out = gr.HTML("<p style='color:#868e96'>ผลจะแสดงตรงนี้</p>")
+    gr.HTML(FOOT)
     resume_file.change(load_resume, [resume_file, resume], [resume, gen_note])
     gen.click(make_questions, [job, resume, lang, consent, n_q], [qlist, question, gen_note, why])
     lang.change(change_lang, [lang, qlist], question)
@@ -277,4 +334,4 @@ with gr.Blocks(title="AI Interview Coach", **({} if GR6 else {"theme": THEME})) 
 
 if __name__ == "__main__":
     demo.queue().launch(server_name="127.0.0.1", share=False, inbrowser=True,
-                        **({"theme": THEME} if GR6 else {}))
+                        **({"theme": THEME, "css": CSS} if GR6 else {}))

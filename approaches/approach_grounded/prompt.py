@@ -18,7 +18,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "approaches" / "app
 from base.llm_common import BANDS_TH, DIMENSIONS, question_block
 from prompt_builder import DIMENSION_LABEL_EN
 
-PROMPT_VERSION = "grounded-v2"   # v2: short points, 1-4 IDs, no invented numbers
+PROMPT_VERSION = "grounded-v3"   # v2: short points, 1-4 IDs, no invented numbers
+                                 # v3 (after the 28-clip test): face / eye contact framed as optional
 
 _IDS = {"type": "array", "items": {"type": "string"}, "minItems": 1, "maxItems": 4,
         "description": "IDs from the evidence log that support this point, e.g. [\"S1\", \"E12\"]"}
@@ -96,6 +97,10 @@ RULES
 • Do not claim anything the log does not show. Filler words are NOT measured: do not
   count or quote fillers.
 {video_rule}
+• People differ in facial expression and eye contact (e.g. autistic or anxious candidates).
+  Never say the candidate must smile or stare at the camera. Frame such points as optional,
+  and offer a spoken alternative (say the interest or enthusiasm in words). Prefer content
+  and speech points over face points.
 • Content matters: judge what was said against "A STRONG ANSWER" using the transcript.
 • Never quote numeric scores; use bands. English fields natural; _th fields same meaning in Thai.
 • improved_answer: rewrite the first 1-2 sentences as a stronger opening for THIS question.

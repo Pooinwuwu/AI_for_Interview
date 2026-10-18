@@ -58,3 +58,21 @@ Cannot be decided from the data alone -> ask the dataset authors.
 Consequence for H1-RV as written ("M2 > M0", signed): numerically M2 (-0.42) > M0 (-0.52), but this
 is not a meaningful confirmation. Under either sign, |M0| >= |M2|: answer length carries at least as
 much signal as audio/text on RecruitView, i.e. the AVI finding is NOT replicated.
+
+## Full results 2026-10-18 (Windows run; files report/crosstest_recruitview*.csv)
+interview_score, Spearman rho (random300 / intro): M0 length -0.52 / -0.72, M2 audio/text -0.42 / -0.67,
+M3 -0.26 / -0.50, M4 -0.30 / -0.57. Same sign and similar size for all six RecruitView scores.
+H1-RV (primary, signed, as pre-registered): delta = +0.095 [0.016, 0.172] -> formally "M2 > M0", but
+only because M2 is less negative; NOT interpreted as support (see post-hoc note above).
+If the RecruitView scores are reversed (higher = less of the attribute): M0 beats M2 by 0.095
+[0.016, 0.172] on random300, and no difference on intro (0.048 [-0.027, 0.122]).
+Either way the AVI finding "audio/text > length" does not replicate on RecruitView.
+
+## Sign check 2 (post-hoc, 2026-10-18) — independent of our features
+The dataset's own `gemini_summary` (AI text description of each clip, all 2,011 clips, read locally,
+keyword count only): net count of positive words (confident, clear, articulate, fluent,
+well-structured) minus negative words (nervous, hesitant, unclear, lacks, struggle, pause,
+uncertain, vague, filler) vs scores: rho -0.30 (confidence) / -0.33 (interview); with transcript
+word count held constant -0.15 / -0.17. Median interview_score falls steadily from +0.25 (most
+negative summaries) to -0.37 (most positive). A third line of evidence that the distributed scores
+run opposite to their names. Still unconfirmed by the authors.
