@@ -9786,5 +9786,26 @@
     },
     "job": "",
     "resume": ""
+  },
+  "app_20261018155328th_q1": {
+    "file_path": "videos_app/app_20261018155328th_q1.mp4",
+    "duration_sec": 69.97,
+    "fps": 30.0,
+    "resolution": "1920x1080",
+    "frame_count": 2099,
+    "language": "th",
+    "interviewer_present": true,
+    "recorded_date": null,
+    "consent_obtained": false,
+    "notes": "",
+    "question_id": "q1",
+    "question": {
+      "id": "q1",
+      "focus": "strengths",
+      "en": "What would you consider among your greatest strengths and weaknesses as an employee?",
+      "th": "คุณคิดว่าจุดแข็งและจุดอ่อนที่สำคัญที่สุดของคุณในฐานะพนักงานคืออะไร"
+    },
+    "job": "",
+    "resume": ""
   }
 }
