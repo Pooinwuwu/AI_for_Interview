@@ -36,6 +36,9 @@ from sklearn.model_selection import GridSearchCV, KFold
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVR
+import sklearn
+
+_SK = tuple(int(x) for x in sklearn.__version__.split(".")[:2])
 
 from base._paths import REPORT_DIR
 from base.dataset.avi import load_labels, TARGETS
@@ -58,9 +61,15 @@ def learner(name, cols):
     if name == "ridge":
         return make_model(ALPHAS_EMB if emb else ALPHAS)
     if name == "elasticnet":
-        return make_pipeline(SimpleImputer(strategy="median"), StandardScaler(),
-                             ElasticNetCV(l1_ratio=[0.2, 0.5, 0.8, 1.0], n_alphas=30, cv=5,
-                                          max_iter=5000, random_state=0))
+        kw = dict(l1_ratio=[0.2, 0.5, 0.8, 1.0], cv=5, max_iter=5000, random_state=0)
+        try:                                   # scikit-learn >= 1.7: alphas=<int>
+            enet = ElasticNetCV(alphas=30, **kw)
+            enet.get_params()
+        except TypeError:
+            enet = None
+        if enet is None or _SK < (1, 7):       # older scikit-learn: n_alphas
+            enet = ElasticNetCV(n_alphas=30, **kw)
+        return make_pipeline(SimpleImputer(strategy="median"), StandardScaler(), enet)
     if name == "rf":
         return make_pipeline(SimpleImputer(strategy="median"),
                              RandomForestRegressor(n_estimators=300, min_samples_leaf=5,

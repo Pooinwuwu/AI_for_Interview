@@ -43,3 +43,18 @@ does not transfer to other question types" (AVI models learn from generic q1/q2 
   - intro yes, random no -> finding likely holds but the model does not transfer to new question types;
   - neither -> finding does not transfer to RecruitView.
 - The random 300 set and H1-RV remain the primary test.
+
+## Post-hoc note 2026-10-17 23:55 (UTC+7) — written AFTER first results were seen
+First output (random300, interview_score): M0 length rho = -0.52, M2 audio/text -0.42,
+M3 -0.26, M4 -0.30; intro set: M0 -0.72, M2 -0.67, M3 -0.50. All AVI-trained models correlate
+NEGATIVELY with RecruitView scores.
+Diagnostic (not pre-registered): with word count held constant, every acoustic cue points the
+opposite way to AVI and to the speech literature (intro set vs confidence_score / AVI vs hireability):
+silence ratio +0.35 / -0.30, mean pause +0.26 / -0.21, intensity -0.27 / +0.19, jitter +0.26 / -0.12.
+Raw word count vs RecruitView scores: -0.63 to -0.71. The RecruitView paper and README do not
+state the sign convention of the MNL scores. Working hypothesis: the distributed scores are
+oriented so that higher = less of the attribute, OR the raters strongly preferred short answers.
+Cannot be decided from the data alone -> ask the dataset authors.
+Consequence for H1-RV as written ("M2 > M0", signed): numerically M2 (-0.42) > M0 (-0.52), but this
+is not a meaningful confirmation. Under either sign, |M0| >= |M2|: answer length carries at least as
+much signal as audio/text on RecruitView, i.e. the AVI finding is NOT replicated.
